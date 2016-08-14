@@ -27,3 +27,20 @@ typedef struct Ponto2D {
 typedef struct Ponto3D {
 	int x, y, z;
 };
+
+Ponto2D set2DPoint( int x, int y ) {
+	Ponto2D retorno;
+	retorno.x = x;
+	retorno.y = y;
+	return retorno;
+}
+
+Ponto2D set3DPoint( int x, int y, int z ) {
+	Ponto3D retorno;
+	retorno.x = x;
+	retorno.y = y;
+	retorno.z = z;
+	return retorno;
+}
+
+
