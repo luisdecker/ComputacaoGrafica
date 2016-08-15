@@ -1,6 +1,7 @@
 /*
- * <one line to give the program's name and a brief idea of what it does.>
- * Copyright (C) 2016  <copyright holder> <email>
+ * Objeto de mundo de um Sistema Gráfico Interativo
+ * Copyright (C) 2016  <Luís Gustavo Lorgus Decker> <decker@incod.ufsc.br>
+ * 		       <Cesar Smaniotto Júnior>     <cesarsjb@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,14 +20,7 @@
 
 #include "objeto.h"
 
-//-----------------------------------------------
-Objeto::Objeto() {
 
-}
-//-----------------------------------------------
-Objeto::~Objeto() {
-
-}
 //-----------------------------------------------
 Ponto::Ponto( Ponto2D coordenada ) {
 	this->coordenada = coordenada;
@@ -39,6 +33,7 @@ Reta::Reta( Ponto2D pontoInicial, Ponto2D pontoFinal ) {
 Wireframe::Wireframe( std::vector< Ponto2D > pontos ) {
 	this->pontos = pontos;
 }
+//-----------------------------------------------
 
 
 

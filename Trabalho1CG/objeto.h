@@ -38,8 +38,8 @@ public:
 
     tipo tipoObjeto;//O tipo do objeto
 
-    Objeto();//Construtor padrão
-    ~Objeto();//Destrutor
+    Objeto(){};//Construtor padrão
+    ~Objeto(){};//Destrutor
 private:
 
 };
