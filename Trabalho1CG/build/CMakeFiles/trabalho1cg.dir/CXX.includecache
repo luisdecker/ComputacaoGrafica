@@ -11,6 +11,10 @@ iostream
 -
 objectfile.h
 /home/decker/projects/CG/Trabalho1CG/objectfile.h
+window.h
+/home/decker/projects/CG/Trabalho1CG/window.h
+viewport.h
+/home/decker/projects/CG/Trabalho1CG/viewport.h
 
 /home/decker/projects/CG/Trabalho1CG/objectfile.cpp
 objectfile.h
@@ -45,4 +49,14 @@ tipos.hpp
 /home/decker/projects/CG/Trabalho1CG/tipos.hpp
 cstdlib
 -
+
+/home/decker/projects/CG/Trabalho1CG/viewport.h
+tipos.hpp
+/home/decker/projects/CG/Trabalho1CG/tipos.hpp
+window.h
+/home/decker/projects/CG/Trabalho1CG/window.h
+
+/home/decker/projects/CG/Trabalho1CG/window.h
+tipos.hpp
+/home/decker/projects/CG/Trabalho1CG/tipos.hpp
 

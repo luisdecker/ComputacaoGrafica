@@ -5,6 +5,8 @@ CMakeFiles/trabalho1cg.dir/main.cpp.o: ../main.cpp
 CMakeFiles/trabalho1cg.dir/main.cpp.o: ../objectfile.h
 CMakeFiles/trabalho1cg.dir/main.cpp.o: ../objeto.h
 CMakeFiles/trabalho1cg.dir/main.cpp.o: ../tipos.hpp
+CMakeFiles/trabalho1cg.dir/main.cpp.o: ../viewport.h
+CMakeFiles/trabalho1cg.dir/main.cpp.o: ../window.h
 
 CMakeFiles/trabalho1cg.dir/objectfile.cpp.o: ../objectfile.cpp
 CMakeFiles/trabalho1cg.dir/objectfile.cpp.o: ../objectfile.h

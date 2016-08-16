@@ -6,5 +6,3 @@ aux_source_directory(. src_list)
 add_executable(trabalho1cg ${src_list})
 
 install(TARGETS trabalho1cg RUNTIME DESTINATION bin)
-
-add_subdirectory(src)
