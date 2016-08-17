@@ -1,7 +1,0 @@
-/home/decker/projects/CG/Trabalho1CG/build/CMakeFiles/install.dir
-/home/decker/projects/CG/Trabalho1CG/build/CMakeFiles/list_install_components.dir
-/home/decker/projects/CG/Trabalho1CG/build/CMakeFiles/rebuild_cache.dir
-/home/decker/projects/CG/Trabalho1CG/build/CMakeFiles/trabalho1cg.dir
-/home/decker/projects/CG/Trabalho1CG/build/CMakeFiles/install/strip.dir
-/home/decker/projects/CG/Trabalho1CG/build/CMakeFiles/install/local.dir
-/home/decker/projects/CG/Trabalho1CG/build/CMakeFiles/edit_cache.dir

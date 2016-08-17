@@ -1,1 +1,0 @@
-/usr/bin/c++   -g   CMakeFiles/trabalho1cg.dir/main.cpp.o CMakeFiles/trabalho1cg.dir/objectfile.cpp.o CMakeFiles/trabalho1cg.dir/objeto.cpp.o  -o trabalho1cg -rdynamic 

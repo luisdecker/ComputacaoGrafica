@@ -1,2 +1,0 @@
-/home/decker/Documents/CG/git/Trabalho1CG/src/CMakeFiles/edit_cache.dir
-/home/decker/Documents/CG/git/Trabalho1CG/src/CMakeFiles/rebuild_cache.dir
