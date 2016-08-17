@@ -2,7 +2,7 @@
 TARGET=sisgraf
  
 # compiler
-CC=gcc
+CC=g++
 # debug
 DEBUG=-g
 # optimisation
@@ -17,7 +17,7 @@ CCFLAGS=$(DEBUG) $(OPT) $(WARN) $(PTHREAD) -pipe
 GTKLIB=`pkg-config --cflags --libs gtk+-3.0`
  
 # linker
-LD=gcc
+LD=g++
 LDFLAGS=$(PTHREAD) $(GTKLIB) -export-dynamic
  
 OBJS=    main.o
