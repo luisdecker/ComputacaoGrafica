@@ -1,34 +1,27 @@
-#include <iostream>
-#include "MainWindow.h"
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
+#include <gtkmm/window.h>
+#include <gtkmm/button.h>
+#include "IncludeObjectDialog.cpp"
 
-MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) :
-    Gtk::Window(cobject), builder(refGlade) {
+class MainWindow : public Gtk::Window
+{
 
-    includeObjDiag = nullptr;
+protected:
 
-    builder->get_widget("btn_include",btnInclude);
-    builder->get_widget("btn_in",btnIn);
-    builder->get_widget("btn_out",btnOut);
-    builder->get_widget_derived("diag_incl_obj",includeObjDiag);
+    Glib::RefPtr<Gtk::Builder> builder;
+    IncludeObjectDialog *includeObjDiag;
+    Gtk::Button *btnInclude;
+    Gtk::Button *btnIn;
+    Gtk::Button *btnOut;
 
+public:
 
-    btnInclude->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_btn_include_clicked));
-    btnIn->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::on_btn_in_clicked));
-    btnOut->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::on_btn_out_clicked));
+    MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
+    void on_btn_include_clicked();
+    void on_btn_in_clicked();
+    void on_btn_out_clicked();
 
-}
-
-void MainWindow::on_btn_include_clicked() {
-
-    includeObjDiag->executar();
-
-}
-
-void MainWindow::on_btn_in_clicked(){
-
-}
-
-void MainWindow::on_btn_out_clicked(){
-	
-}
+};
+#endif // MAINWINDOW_H
