@@ -155,7 +155,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkButton" id="button1">
+                  <object class="GtkButton" id="btn_in">
                     <property name="label" translatable="yes">In</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -172,7 +172,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="button2">
+                  <object class="GtkButton" id="btn_out">
                     <property name="label" translatable="yes">Out</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -199,19 +199,11 @@
           </packing>
         </child>
         <child>
-          <object class="GtkViewport" id="viewport1">
+          <object class="GtkDrawingArea" id="drawingarea">
+            <property name="width_request">500</property>
+            <property name="height_request">500</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="margin_left">1</property>
-            <property name="hexpand">True</property>
-            <child>
-              <object class="GtkDrawingArea" id="drawingarea1">
-                <property name="width_request">500</property>
-                <property name="height_request">500</property>
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-              </object>
-            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -296,7 +288,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="entry2">
+                  <object class="GtkEntry" id="in_name">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                   </object>
@@ -314,7 +306,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkNotebook" id="notebook1">
+              <object class="GtkNotebook" id="tabs">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="margin_left">5</property>
@@ -353,7 +345,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry1">
+                          <object class="GtkEntry" id="x_point">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                           </object>
@@ -376,7 +368,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry3">
+                          <object class="GtkEntry" id="y_point">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                           </object>
@@ -439,7 +431,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry4">
+                          <object class="GtkEntry" id="x0_str_line">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                           </object>
@@ -462,7 +454,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry5">
+                          <object class="GtkEntry" id="y0_str_line">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                           </object>
@@ -508,7 +500,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry6">
+                          <object class="GtkEntry" id="x1_str_line">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                           </object>
@@ -531,7 +523,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry7">
+                          <object class="GtkEntry" id="y1_str_line">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                           </object>
