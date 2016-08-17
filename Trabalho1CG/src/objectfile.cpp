@@ -21,17 +21,17 @@
 #include "objectfile.h"
 //-----------------------------------------------
 bool ObjectFile::contemObjeto( std::string nome ) {
-	for( Objeto obj : *objectFile ) {
-		if( obj.nome == nome ) {
-			
+	for( Objeto * obj : *objectFile ) {
+		if( obj->nome == nome ) {
+
 			return true;
 		}
 	}
 	return false;
 }
 //-----------------------------------------------
-void ObjectFile::inserirObjeto( Objeto objeto ) {
-	if( contemObjeto( objeto.nome ) ) {
+void ObjectFile::inserirObjeto( Objeto * objeto ) {
+	if( contemObjeto( objeto->nome ) ) {
 		return;
 	}
 	objectFile->push_back( objeto );
@@ -39,28 +39,28 @@ void ObjectFile::inserirObjeto( Objeto objeto ) {
 //-----------------------------------------------
 Objeto * ObjectFile::obterObjetoNome( std::string nome ) {
 	for( int iterator = 0; iterator < objectFile->size(); iterator++ ) {
-		if( objectFile->at( iterator ).nome == nome ) {
-			return & objectFile->at( iterator );
+		if( objectFile->at( iterator )->nome == nome ) {
+			return  objectFile->at( iterator );
 		}
 	}
 	return nullptr;
 }
 //-----------------------------------------------
-void ObjectFile::atualizarObjeto( Objeto objeto ) {
+void ObjectFile::atualizarObjeto( Objeto * objeto ) {
 	for( int iterator = 0; iterator < objectFile->size(); iterator++ ) {
-		if( objectFile->at( iterator ).nome == objeto.nome ) {
+		if( objectFile->at( iterator )->nome == objeto->nome ) {
 			objectFile->at( iterator ) = objeto;
 		}
 	}
 }
 //-----------------------------------------------
-std::vector< Objeto > ObjectFile::obterObjetos() {
-	return std::vector<Objeto>( *objectFile );
+std::vector< Objeto * > ObjectFile::obterObjetos() {
+	return std::vector<Objeto *>( *objectFile );
 }
 //-----------------------------------------------
-void ObjectFile::retirarObjeto( Objeto objeto ) {
+void ObjectFile::retirarObjeto( Objeto * objeto ) {
 	for( int iterator = 0; iterator < objectFile->size(); iterator++ ) {
-		if( objectFile->at( iterator ).nome == objeto.nome ) {
+		if( objectFile->at( iterator )->nome == objeto->nome ) {
 			objectFile->erase( objectFile->begin() + ( iterator - 1 ) );
 		}
 	}

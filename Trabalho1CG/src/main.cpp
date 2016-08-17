@@ -1,21 +1,47 @@
 #include <gtkmm/builder.h>
 #include <gtkmm/application.h>
-#include "view/MainWindow.hpp"
+#include "view/MainWindow.cpp"
+
+
 #include <iostream>
 
 int main( int argc, char * argv[] ) {
+
+
+
+
 	std::cout << "INICIANDO PROGRAMA\n";
 
 	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create( argc, argv, "org.gtkmm.example" );
 
+	std::cout << "Criou Aplicacao\n";
 
 	//Aloca um ponteiro para um mainwindow
-	MainWindow * mainWindow = nullptr;
+	MainWindow * mainWindow = NULL;
+	std::cout << "Alocou ponteiro\n";
+
 
 	//Cria o objeto a partir do XLM do GLADE
 	Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file( "../glade/window_main.glade" );
+	std::cout << "Parseou o XLM\n";
+
+
 
 	builder->get_widget_derived( "window_main", mainWindow );
+	std::cout << "get_derived\n";
+
+
+	/*Puta gambiarra de testes
+	std::cout << "Entrando na sessao gambiarra" << std::endl;
+
+	ObjectFile of;
+	Ponto ponto( "Ponto", set2DPoint( 1, 1 ) );
+	Reta reta( "Reta", set2DPoint( 1, 3 ), set2DPoint( 3, 3 ) );
+	of.inserirObjeto( &ponto );
+	of.inserirObjeto( &reta );
+	mainWindow->atualizaObjectFile( &of );
+	std::cout << "Saindo da sessao gambiarra\n";
+	/*Deleta pelo amor*/
 
 	app->run( *mainWindow );
 
@@ -117,3 +143,9 @@ int main( int argc, char * argv[] ) {
 //     return 0;
 // }
 //
+
+
+
+
+
+
