@@ -9,14 +9,19 @@ class MainWindow : public Gtk::Window
 {
 
 protected:
+
     Glib::RefPtr<Gtk::Builder> builder;
-    Gtk::Button *btnInclude;
     IncludeObjectDialog *includeObjDiag;
+    Gtk::Button *btnInclude;
+    Gtk::Button *btnIn;
+    Gtk::Button *btnOut;
 
 public:
 
     MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
     void on_btn_include_clicked();
+    void on_btn_in_clicked();
+    void on_btn_out_clicked();
 
 };
 #endif // MAINWINDOW_H
