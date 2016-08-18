@@ -19,6 +19,7 @@
 #include <gtkmm/treemodelcolumn.h>
 #include "DrawingArea.cpp"
 
+
 class MainWindow : public Gtk::Window {
 
 protected:
@@ -41,7 +42,9 @@ protected:
 	ModelColumns * m_Columns;
 	Gtk::TreeView * m_TreeView;
 	Glib::RefPtr<Gtk::ListStore>  m_refTreeModel;
+
 	Window2D * windowPrincipal;
+
 
 
 public:

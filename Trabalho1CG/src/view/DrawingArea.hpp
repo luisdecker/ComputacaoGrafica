@@ -2,6 +2,7 @@
 #define DRAWINGAREA_H
 
 #include <gtkmm/drawingarea.h>
+
 #include "../objectfile.h"
 #include "../window.h"
 #include "../viewport.cpp"
@@ -22,6 +23,7 @@ protected:
 	ObjectFile * mainOf;
 	Window2D * mainWindow;
 	ViewPort * viewPort;
+
 
 };
 

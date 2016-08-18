@@ -2,7 +2,6 @@
 #include "MainWindow.hpp"
 #include "../window.h"
 
-
 MainWindow::MainWindow( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builder> & refGlade ) :
 	Gtk::Window( cobject ), builder( refGlade ) {
 
@@ -20,6 +19,7 @@ MainWindow::MainWindow( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builde
 	builder->get_widget_derived( "diag_incl_obj", includeObjDiag );
 	builder->get_widget_derived( "drawingarea", drawingArea );
 
+
 	of = new ObjectFile();
 	atualizaObjectFile( of );
 	atualizaWindow( new Window2D( set2DPoint( 0, 0 ), set2DPoint( 500, 500 ) ) );
@@ -27,9 +27,11 @@ MainWindow::MainWindow( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builde
 
 	builder->get_widget( "list_obj", m_TreeView );
 
+
 	m_Columns = new ModelColumns();
 
 	Gtk::TreeModelColumnRecord * tmcr = dynamic_cast<Gtk::TreeModelColumnRecord *>( m_Columns );
+
 
 	m_refTreeModel = Gtk::ListStore::create( *tmcr );
 	m_TreeView->set_model( m_refTreeModel );
@@ -44,6 +46,7 @@ MainWindow::MainWindow( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builde
 
 	m_TreeView->append_column( "Nome", m_Columns->nameObj );
 	m_TreeView->append_column( "Tipo", m_Columns->typeObj );
+
 
 
 
@@ -178,6 +181,7 @@ bool MainWindow::drawObject( GtkWidget * widget ) {
 	queue_draw();
 
 }*/
+
 
 
 

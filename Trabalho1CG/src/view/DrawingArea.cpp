@@ -1,6 +1,7 @@
 #include "DrawingArea.hpp"
 #include <cairomm/context.h>
 
+
 DrawingArea::DrawingArea( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builder> & refGlade ) :
 	Gtk::DrawingArea( cobject ), builder( refGlade ) {
 }
@@ -76,4 +77,5 @@ bool DrawingArea::on_draw( const Cairo::RefPtr<Cairo::Context> & cr ) {
 		cr->stroke();
 	*/
 	return true;
+
 }
