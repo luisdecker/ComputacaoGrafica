@@ -1,23 +1,39 @@
 #include <iostream>
-
 #include "MainWindow.hpp"
-
 
 
 MainWindow::MainWindow( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builder> & refGlade ) :
 	Gtk::Window( cobject ), builder( refGlade ) {
 
 	includeObjDiag = nullptr;
-
-
-
+	drawingArea = nullptr;
 
 	builder->get_widget( "btn_include", btnInclude );
 	builder->get_widget( "btn_in", btnIn );
 	builder->get_widget( "btn_out", btnOut );
 	builder->get_widget_derived( "diag_incl_obj", includeObjDiag );
+	builder->get_widget_derived( "drawingarea", drawingArea );
 	builder->get_widget( "drawingarea", papel );
 
+	builder->get_widget( "list_obj", m_TreeView );
+
+	m_Columns = new ModelColumns();
+
+	Gtk::TreeModelColumnRecord * tmcr = dynamic_cast<Gtk::TreeModelColumnRecord *>( m_Columns );
+
+	m_refTreeModel = Gtk::ListStore::create(*tmcr);
+	m_TreeView->set_model(m_refTreeModel);
+
+	Gtk::TreeModel::Row row = *(m_refTreeModel->append());
+	  row[m_Columns->nameObj] = "teste";
+	  row[m_Columns->typeObj] = "recta";
+
+	  row = *(m_refTreeModel->append());
+	    row[m_Columns->nameObj] = "2";
+	    row[m_Columns->typeObj] = "point";
+
+	  m_TreeView->append_column("Nome", m_Columns->nameObj);
+	    m_TreeView->append_column("Tipo", m_Columns->typeObj);
 
 
 

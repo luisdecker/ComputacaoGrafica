@@ -11,6 +11,13 @@
 #include <cairomm/context.h>
 #include "../objectfile.cpp"
 #include <math.h>
+#include "ModelColumns.cpp"
+#include <gtkmm/treeview.h>
+#include <gtkmm/liststore.h>
+#include <glibmm/refptr.h>
+#include <gtkmm/treemodel.h>
+#include <gtkmm/treemodelcolumn.h>
+#include "DrawingArea.cpp"
 
 
 class MainWindow : public Gtk::Window {
@@ -19,12 +26,16 @@ protected:
 
 	Glib::RefPtr<Gtk::Builder> builder;
 	IncludeObjectDialog * includeObjDiag;
+	DrawingArea * drawingArea;
 	Gtk::Button * btnInclude;
 	Gtk::Button * btnIn;
 	Gtk::Button * btnOut;
 	Gtk::DrawingArea * papel;
 	ObjectFile * of;
 	Cairo::RefPtr<Cairo::Context> cr;
+	ModelColumns * m_Columns;
+	Gtk::TreeView * m_TreeView;
+	Glib::RefPtr<Gtk::ListStore>  m_refTreeModel;
 
 
 public:
