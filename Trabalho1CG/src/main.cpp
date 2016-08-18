@@ -1,7 +1,8 @@
 #include <gtkmm/builder.h>
 #include <gtkmm/application.h>
 #include "view/MainWindow.cpp"
-
+#include "window.cpp"
+#include "window.h"
 
 #include <iostream>
 
@@ -30,16 +31,20 @@ int main( int argc, char * argv[] ) {
 	builder->get_widget_derived( "window_main", mainWindow );
 	std::cout << "get_derived\n";
 
+	//mainWindow->set_resizable( false );
 
-	/*Puta gambiarra de testes
+	/*Puta gambiarra de testes*
 	std::cout << "Entrando na sessao gambiarra" << std::endl;
 
+	Window2D window( set2DPoint( 0, 0 ), set2DPoint( 500, 500 ) );
+
 	ObjectFile of;
-	Ponto ponto( "Ponto", set2DPoint( 1, 1 ) );
-	Reta reta( "Reta", set2DPoint( 1, 3 ), set2DPoint( 3, 3 ) );
+	Ponto ponto( "Ponto", set2DPoint( 2, 1 ) );
+	Reta reta( "Reta", set2DPoint( 1, 3 ), set2DPoint( 200, 200 ) );
 	of.inserirObjeto( &ponto );
 	of.inserirObjeto( &reta );
 	mainWindow->atualizaObjectFile( &of );
+	mainWindow->atualizaWindow( &window );
 	std::cout << "Saindo da sessao gambiarra\n";
 	/*Deleta pelo amor*/
 

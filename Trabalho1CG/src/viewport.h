@@ -43,7 +43,7 @@ public:
 	//-----------------------------------------------
 	int obterYMaximo();//Retorna o y máximo da ViewPort.
 	//-----------------------------------------------
-	Ponto2D tranformarCoordenadas( Window window, Ponto2D ponto );
+	Ponto2D tranformarCoordenadas( Window2D window, Ponto2D ponto );
 	//-----------------------------------------------
 	~ViewPort();
 private:

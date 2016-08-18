@@ -3,6 +3,7 @@
 #include <gtkmm/builder.h>
 #include "IncludeObjectDialog.hpp"
 
+
 using namespace std;
 
 IncludeObjectDialog::IncludeObjectDialog( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builder> & refGlade ) :
@@ -19,7 +20,8 @@ IncludeObjectDialog::IncludeObjectDialog( BaseObjectType * cobject, const Glib::
 
 }
 
-void IncludeObjectDialog::executar() {
+void IncludeObjectDialog::executar( ObjectFile * of ) {
+	this->lastOf = of;
 	int result = run();
 
 	switch( result ) {
@@ -51,14 +53,21 @@ void IncludeObjectDialog::incluirObjeto() {
 
 		//case 0: ponto
 		case 0: {
-
+			double x, y;
 			if( x_point->get_text().size() > 0 && y_point->get_text().size() > 0 ) {
 
-				double x = stod( x_point->get_text() );
-				double y = stod( y_point->get_text() );
+				x = stod( x_point->get_text() );
+				y = stod( y_point->get_text() );
 			}
 
-			//rotina para add ponto
+			Ponto * p = new Ponto( objName, set2DPoint( x, y ) );
+			if( !lastOf->contemObjeto( objName ) ) {
+				lastOf->inserirObjeto( p );
+			} else {
+				lastOf->atualizarObjeto( p );
+			}
+
+
 		}
 
 		break;
@@ -66,16 +75,25 @@ void IncludeObjectDialog::incluirObjeto() {
 		//case 1: reta
 		case 1: {
 
+			double x0;
+			double y0;
+			double x1;
+			double y1;
 			if( x0_str_line->get_text().size() > 0 && y0_str_line->get_text().size() > 0 &&
 				x1_str_line->get_text().size() > 0 && y1_str_line->get_text().size() > 0 ) {
 
-				double x0 = stod( x0_str_line->get_text() );
-				double y0 = stod( y0_str_line->get_text() );
-				double x1 = stod( x1_str_line->get_text() );
-				double y1 = stod( y1_str_line->get_text() );
+				x0 = stod( x0_str_line->get_text() );
+				y0 = stod( y0_str_line->get_text() );
+				x1 = stod( x1_str_line->get_text() );
+				y1 = stod( y1_str_line->get_text() );
+			}
+			Reta * r = new Reta( objName, set2DPoint( x0, y0 ), set2DPoint( x1, y1 ) );
+			if( !lastOf->contemObjeto( objName ) ) {
+				lastOf->inserirObjeto( r );
+			} else {
+				lastOf->atualizarObjeto( r );
 			}
 
-			//rotina para add reta
 
 		}
 
@@ -87,4 +105,5 @@ void IncludeObjectDialog::incluirObjeto() {
 	}
 
 }
+
 

@@ -41,8 +41,9 @@ int ViewPort::obterYMinimo() {
 	return se.y;
 }
 //-----------------------------------------------
-Ponto2D ViewPort::tranformarCoordenadas( Window window, Ponto2D ponto ) {// Confia que essa tripa ta certa.
-	return set2DPoint( ( ( ponto.x - window.obterXMinimo() ) / window.obterXMaximo() - window.obterXMinimo() ) * obterXMaximo() - obterXMinimo(),
-					   ( ( 1 - ( ponto.y - window.obterYMinimo() ) / ( window.obterYMaximo() - window.obterYMinimo() ) ) * ( obterYMaximo() - obterYMinimo() ) ));
+Ponto2D ViewPort::tranformarCoordenadas( Window2D window, Ponto2D ponto ) {// Confia que essa tripa ta certa.
+	double xvp = ( ( ponto.x - window.obterXMinimo() ) / ( window.obterXMaximo() - window.obterXMinimo() ) ) * ( obterXMaximo() - obterXMinimo() );
+	double yvp = ( 1 - ( ( ponto.y - window.obterYMinimo() ) / ( window.obterYMaximo() - window.obterYMinimo() ) ) ) * ( obterYMaximo() - obterYMinimo() );
+	return set2DPoint( xvp, yvp );
 }
 //-----------------------------------------------

@@ -19,24 +19,24 @@
 
 #include "window.h"
 //-----------------------------------------------
-Window::Window( Ponto2D inferiorEsquerdo, Ponto2D superiorDireito ) {
+Window2D::Window2D( Ponto2D inferiorEsquerdo, Ponto2D superiorDireito ) {
 	this->ie = inferiorEsquerdo;
 	this->sd = superiorDireito;
 }
 //-----------------------------------------------
-int Window::obterXMaximo() {
+int Window2D::obterXMaximo() {
 	return sd.x;
 }
 //-----------------------------------------------
-int Window::obterXMinimo() {
+int Window2D::obterXMinimo() {
 	return ie.x;
 }
 //-----------------------------------------------
-int Window::obterYMaximo() {
+int Window2D::obterYMaximo() {
 	return sd.y;
 }
 //-----------------------------------------------
-int Window::obterYMinimo() {
+int Window2D::obterYMinimo() {
 	return ie.y;
 }
 //-----------------------------------------------

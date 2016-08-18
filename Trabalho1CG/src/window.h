@@ -22,15 +22,15 @@
 #define WINDOW_H
 #include "tipos.hpp"
 
-class Window {
+class Window2D {
 public:
-	Window() { //Construtor padrão
+	Window2D() { //Construtor padrão
 		ie = set2DPoint( 0, 0 );
 		sd = set2DPoint( 1, 1 );
 
 	}
 	//-----------------------------------------------
-	Window( Ponto2D inferiorEsquerdo, Ponto2D superiorDireito );
+	Window2D( Ponto2D inferiorEsquerdo, Ponto2D superiorDireito );
 	//-----------------------------------------------
 	int obterXMinimo();//Retorna o x mínimo da window.
 	//-----------------------------------------------
@@ -40,10 +40,12 @@ public:
 	//-----------------------------------------------
 	int obterYMaximo();//Retorna o y máximo da window.
 	//-----------------------------------------------
-	~Window();
+	//~Window2D();
+	Ponto2D inferiorEsquerdo() {return ie;}
+	Ponto2D superiorDireito() {return sd;}
 private:
 	Ponto2D ie;//Ponto inferior Esquerdo.
-	Ponto2D sd;//Ponto inferior Direito.
+	Ponto2D sd;//Ponto superior Direito.
 };
 
 #endif // WINDOW_H
