@@ -55,7 +55,14 @@ bool DrawingArea::on_draw( const Cairo::RefPtr<Cairo::Context> & cr ) {
 
 				break;
 			}
-			case Objeto::wireframe: {break;}
+			case Objeto::wireframe: {
+
+
+
+
+				break;
+
+			}
 		}
 	}
 

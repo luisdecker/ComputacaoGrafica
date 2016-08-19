@@ -36,19 +36,8 @@ MainWindow::MainWindow( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builde
 	m_refTreeModel = Gtk::ListStore::create( *tmcr );
 	m_TreeView->set_model( m_refTreeModel );
 
-	Gtk::TreeModel::Row row = *( m_refTreeModel->append() );
-	row[m_Columns->nameObj] = "teste";
-	row[m_Columns->typeObj] = "recta";
-
-	row = *( m_refTreeModel->append() );
-	row[m_Columns->nameObj] = "2";
-	row[m_Columns->typeObj] = "point";
-
 	m_TreeView->append_column( "Nome", m_Columns->nameObj );
 	m_TreeView->append_column( "Tipo", m_Columns->typeObj );
-
-
-
 
 	btnInclude->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_include_clicked ) );
 	btnIn->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_in_clicked ) );
@@ -65,8 +54,9 @@ MainWindow::MainWindow( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builde
 
 void MainWindow::on_btn_include_clicked() {
 
-	includeObjDiag->executar( of );
-	atualizaObjectFile( of );
+	if(includeObjDiag->executar( of )){
+		atualizaObjectFile( of );
+	}
 
 }
 
@@ -142,6 +132,29 @@ void MainWindow::on_btn_out_clicked() {
 
 void MainWindow::atualizaObjectFile( ObjectFile * newOf ) {
 	this->of = newOf;
+
+	if(this->of->obterObjetos().size() > 0){
+		Objeto * ultimo = this->of->obterObjetos().back();
+
+		Gtk::TreeModel::Row row = *( m_refTreeModel->append() );
+		row[m_Columns->nameObj] = ultimo->nome;
+
+		switch(ultimo->tipoObjeto){
+			case 0:{
+				row[m_Columns->typeObj] = "Ponto";
+			}
+			break;
+			case 1:{
+				row[m_Columns->typeObj] = "Reta";
+			}
+			break;
+			case 2:{
+				row[m_Columns->typeObj] = "Wireframe";
+			}
+			break;
+		}
+	}
+
 	this->drawingArea->atualizaObjectFile( newOf );
 }
 void MainWindow::atualizaWindow( Window2D * window ) {

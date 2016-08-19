@@ -106,6 +106,8 @@ public:
 	//-------------------------------------------
 	std::vector<Ponto2D> obterPontos();//Retorna um vetor com os pontos do poligono.
 	//-------------------------------------------
+	void adicionarPonto(Ponto2D ponto);//Adiciona um ponto a lista.
+	//-------------------------------------------
 private:
 	std::vector<Ponto2D> pontos;//Vetor de pontos ordenados. O poligono é ligado seguinto a ordem desta lista.
 };

@@ -19,7 +19,6 @@
 #include <gtkmm/treemodelcolumn.h>
 #include "DrawingArea.cpp"
 
-
 class MainWindow : public Gtk::Window {
 
 protected:

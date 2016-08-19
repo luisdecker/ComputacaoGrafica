@@ -52,5 +52,9 @@ std::vector< Ponto2D > Wireframe::obterPontos() {
 }
 //-------------------------------------------
 
+void Wireframe::adicionarPonto(Ponto2D ponto){
+	this->pontos.push_back(ponto);
+}
+
 
 
