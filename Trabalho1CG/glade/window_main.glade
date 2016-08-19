@@ -611,10 +611,10 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <child>
-                          <object class="GtkLabel" id="label17">
+                          <object class="GtkLabel" id="label18">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Número de pontos </property>
+                            <property name="label" translatable="yes">x:</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -623,7 +623,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="spinbutton1">
+                          <object class="GtkEntry" id="x_wire">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                           </object>
@@ -634,19 +634,26 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton" id="button1">
-                            <property name="label" translatable="yes">OK</property>
+                          <object class="GtkLabel" id="label17">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="relief">none</property>
-                            <property name="xalign">0.50999999046325684</property>
-                            <property name="yalign">0.49000000953674316</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">y:</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
                             <property name="position">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="y_wire">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">3</property>
                           </packing>
                         </child>
                       </object>
@@ -657,7 +664,19 @@
                       </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <object class="GtkButton" id="btn_add_point_wire">
+                        <property name="label" translatable="yes">Adicionar ponto</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="margin_left">237</property>
+                        <signal name="clicked" handler="on_btn_add_point_wire_clicked" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
                     </child>
                   </object>
                   <packing>
@@ -695,5 +714,12 @@
       <action-widget response="-5">btn_ok</action-widget>
       <action-widget response="-6">btn_cancel</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkAdjustment" id="nro_pontos_wireframe">
+    <property name="lower">3</property>
+    <property name="upper">100</property>
+    <property name="value">3</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
 </interface>
