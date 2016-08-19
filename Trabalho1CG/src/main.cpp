@@ -31,7 +31,7 @@ int main( int argc, char * argv[] ) {
 	builder->get_widget_derived( "window_main", mainWindow );
 	std::cout << "get_derived\n";
 
-	//mainWindow->set_resizable( false );
+	mainWindow->set_resizable( false );
 
 	/*Puta gambiarra de testes*
 	std::cout << "Entrando na sessao gambiarra" << std::endl;

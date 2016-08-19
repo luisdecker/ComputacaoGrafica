@@ -56,8 +56,18 @@ bool DrawingArea::on_draw( const Cairo::RefPtr<Cairo::Context> & cr ) {
 				break;
 			}
 			case Objeto::wireframe: {
-
-
+				Wireframe * wf = dynamic_cast<Wireframe *>( objeto );
+				std::vector<Ponto2D> pontosWF = wf->obterPontos();
+				pontosWF.erase( pontosWF.begin() );
+				Ponto2D inicial = viewPort->tranformarCoordenadas( *mainWindow, pontosWF.front() );
+				cr->move_to( inicial.x, inicial.y );
+				for( Ponto2D ponto : pontosWF ) {
+					ponto = viewPort->tranformarCoordenadas( *mainWindow, ponto );
+					cr->line_to( ponto.x, ponto.y );
+					cr->move_to( ponto.x, ponto.y );
+				}
+				cr->line_to( inicial.x, inicial.y );
+				cr->stroke();
 
 
 				break;
