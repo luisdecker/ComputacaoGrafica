@@ -1,7 +1,7 @@
 #include <gtkmm/builder.h>
 #include <gtkmm/application.h>
-#include "view/MainWindow.cpp"
-#include "window.cpp"
+#include "view/MainWindow.hpp"
+
 #include "window.h"
 
 #include <iostream>

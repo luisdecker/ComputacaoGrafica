@@ -5,7 +5,8 @@
 
 #include "../objectfile.h"
 #include "../window.h"
-#include "../viewport.cpp"
+#include "../viewport.h"
+#include <gtkmm/builder.h>
 
 class DrawingArea : public Gtk::DrawingArea {
 public:

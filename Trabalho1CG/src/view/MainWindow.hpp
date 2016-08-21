@@ -1,23 +1,23 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-
+#include <gtkmm/builder.h>
 #include <gtkmm/window.h>
 #include <gtkmm/button.h>
 #include <gtkmm/drawingarea.h>
 #include <gtkmm/widget.h>
-#include "IncludeObjectDialog.cpp"
-#include "../objeto.cpp"
+#include "IncludeObjectDialog.hpp"
+#include "../objeto.h"
 #include <cairomm/context.h>
-#include "../objectfile.cpp"
+#include "../objectfile.h"
 #include <math.h>
 #include "ModelColumns.cpp"
 #include <gtkmm/treeview.h>
 #include <gtkmm/liststore.h>
-#include <glibmm/refptr.h>
+#include <gtkmm/container.h>
 #include <gtkmm/treemodel.h>
 #include <gtkmm/treemodelcolumn.h>
-#include "DrawingArea.cpp"
+#include "DrawingArea.hpp"
 
 class MainWindow : public Gtk::Window {
 
