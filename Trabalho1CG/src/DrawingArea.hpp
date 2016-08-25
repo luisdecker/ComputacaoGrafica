@@ -3,9 +3,9 @@
 
 #include <gtkmm/drawingarea.h>
 
-#include "../objectfile.h"
-#include "../window.h"
-#include "../viewport.h"
+#include "objectfile.h"
+#include "window.h"
+#include "viewport.h"
 #include <gtkmm/builder.h>
 
 class DrawingArea : public Gtk::DrawingArea {

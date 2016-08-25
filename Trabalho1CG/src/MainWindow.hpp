@@ -7,9 +7,9 @@
 #include <gtkmm/drawingarea.h>
 #include <gtkmm/widget.h>
 #include "IncludeObjectDialog.hpp"
-#include "../objeto.h"
+#include "objeto.h"
 #include <cairomm/context.h>
-#include "../objectfile.h"
+#include "objectfile.h"
 #include <math.h>
 #include "ModelColumns.cpp"
 #include <gtkmm/treeview.h>

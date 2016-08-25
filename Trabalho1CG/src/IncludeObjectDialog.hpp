@@ -6,7 +6,7 @@
 #include <gtkmm/entry.h>
 #include <gtkmm/label.h>
 #include <gtkmm/button.h>
-#include "../objectfile.h"
+#include "objectfile.h"
 
 
 
