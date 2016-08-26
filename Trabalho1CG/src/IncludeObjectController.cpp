@@ -32,11 +32,12 @@ bool IncludeObjectController::incluirPontoWireframe(string nome, double x, doubl
     if( obf->contemObjeto( nome ) ) {
         Wireframe * wire = dynamic_cast<Wireframe * > (obf->obterObjetoNome( nome ));
         wire->adicionarPonto(set2DPoint(x,y));
+        obf->atualizarObjeto( wire );
 
     } else {
         Wireframe * wire = new Wireframe(nome);
-        obf->inserirObjeto( wire );
         wire->adicionarPonto(set2DPoint(x,y));
+        obf->inserirObjeto( wire );
     }
 
     return true;
