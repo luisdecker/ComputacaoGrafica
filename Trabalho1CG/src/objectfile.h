@@ -25,34 +25,35 @@
 #include <vector>
 //Local Includes
 #include "objeto.h"
+#include "Subject.hpp"
 
-class ObjectFile {
+class ObjectFile : public Subject {
 public:
 
-	ObjectFile() {
-		objectFile = new std::vector<Objeto*>;
-	}//Construtor Padrão
+    ObjectFile() {
+        objectFile = new std::vector<Objeto*>;
+    }//Construtor Padrão
 
-	~ObjectFile() {
-		delete objectFile;
-	}
+    ~ObjectFile() {
+        delete objectFile;
+    }
 
-	void inserirObjeto( Objeto * objeto );  //Insere um objeto no fim do ObjectFile.
+    void inserirObjeto( Objeto * objeto );  //Insere um objeto no fim do ObjectFile.
 
-	std::vector<Objeto *> obterObjetos();  //Recupera os objetos do ObjectFile.
+    std::vector<Objeto *> obterObjetos();  //Recupera os objetos do ObjectFile.
 
-	void retirarObjeto( Objeto * objeto );  //Retira o dado objeto do ObjectFile.
+    void retirarObjeto( Objeto * objeto );  //Retira o dado objeto do ObjectFile.
 
-	Objeto * obterObjetoNome( std::string nome );  //Obtém um objeto a partir do seu nome.
+    Objeto * obterObjetoNome( std::string nome );  //Obtém um objeto a partir do seu nome.
 
-	void atualizarObjeto( Objeto * objeto ); //Modifica o objeto no ObjectFile.
+    void atualizarObjeto( Objeto * objeto ); //Modifica o objeto no ObjectFile.
 
-	bool contemObjeto( std::string nome ); //Verifica se o objet com dado nome está na ObjectFile.
+    bool contemObjeto( std::string nome ); //Verifica se o objet com dado nome está na ObjectFile.
 
 
 private:
 
-	std::vector<Objeto *> * objectFile;
+    std::vector<Objeto *> * objectFile;
 };
 
 #endif // OBJECTFILE_H

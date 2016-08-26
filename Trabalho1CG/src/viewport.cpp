@@ -22,28 +22,28 @@
 
 //-----------------------------------------------
 ViewPort::ViewPort( Ponto2D superiorEsquerdo, Ponto2D inferiorDireito ) {
-	this->se = superiorEsquerdo, this->id = inferiorDireito;
+    this->se = superiorEsquerdo, this->id = inferiorDireito;
 }
 //-----------------------------------------------
 int ViewPort::obterXMaximo() {
-	return id.x;
+    return id.x;
 }
 //-----------------------------------------------
 int ViewPort::obterXMinimo() {
-	return se.x;
+    return se.x;
 }
 //-----------------------------------------------
 int ViewPort::obterYMaximo() {
-	return id.y;
+    return id.y;
 }
 //-----------------------------------------------
 int ViewPort::obterYMinimo() {
-	return se.y;
+    return se.y;
 }
 //-----------------------------------------------
 Ponto2D ViewPort::tranformarCoordenadas( Window2D window, Ponto2D ponto ) {// Confia que essa tripa ta certa.
-	double xvp = ( ( ponto.x - window.obterXMinimo() ) / ( window.obterXMaximo() - window.obterXMinimo() ) ) * ( obterXMaximo() - obterXMinimo() );
-	double yvp = ( 1 - ( ( ponto.y - window.obterYMinimo() ) / ( window.obterYMaximo() - window.obterYMinimo() ) ) ) * ( obterYMaximo() - obterYMinimo() );
-	return set2DPoint( xvp, yvp );
+    double xvp = ( ( ponto.x - window.obterXMinimo() ) / ( window.obterXMaximo() - window.obterXMinimo() ) ) * ( obterXMaximo() - obterXMinimo() );
+    double yvp = ( 1 - ( ( ponto.y - window.obterYMinimo() ) / ( window.obterYMaximo() - window.obterYMinimo() ) ) ) * ( obterYMaximo() - obterYMinimo() );
+    return set2DPoint( xvp, yvp );
 }
 //-----------------------------------------------

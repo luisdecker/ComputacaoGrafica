@@ -18,50 +18,62 @@
 #include <gtkmm/treemodel.h>
 #include <gtkmm/treemodelcolumn.h>
 #include "DrawingArea.hpp"
+#include "Observer.hpp"
+#include "MainWindowController.hpp"
+#include <gtkmm/treemodel.h>
+#include "TransformationDialog.hpp"
 
-class MainWindow : public Gtk::Window {
+class MainWindow : public Gtk::Window, public Observer {
 
 protected:
 
-	Glib::RefPtr<Gtk::Builder> builder;
-	IncludeObjectDialog * includeObjDiag;
-	DrawingArea * drawingArea;
-	Gtk::Button * btnInclude;
-	Gtk::Button * btnIn;
-	Gtk::Button * btnOut;
-	Gtk::Button * btnUp;
-	Gtk::Button * btnDown;
-	Gtk::Button * btnLeft;
-	Gtk::Button * btnRight;
+    Glib::RefPtr<Gtk::Builder> builder;
+    IncludeObjectDialog * includeObjDiag;
+    DrawingArea * drawingArea;
+    TransformationDialog * transformationDialog;
+    Gtk::Button * btnInclude;
+    Gtk::Button * btnTransf;
+    Gtk::Button * btnIn;
+    Gtk::Button * btnOut;
+    Gtk::Button * btnUp;
+    Gtk::Button * btnDown;
+    Gtk::Button * btnLeft;
+    Gtk::Button * btnRight;
+    Glib::RefPtr<Gtk::TreeSelection> refTreeSelection;
 
+    ObjectFile * of;
+    Cairo::RefPtr<Cairo::Context> cr;
+    ModelColumns * m_Columns;
+    Gtk::TreeView * m_TreeView;
+    Glib::RefPtr<Gtk::ListStore>  m_refTreeModel;
 
-	Gtk::DrawingArea * papel;
-	ObjectFile * of;
-	Cairo::RefPtr<Cairo::Context> cr;
-	ModelColumns * m_Columns;
-	Gtk::TreeView * m_TreeView;
-	Glib::RefPtr<Gtk::ListStore>  m_refTreeModel;
+    Window2D * window;
 
-	Window2D * windowPrincipal;
+    int nroObjetos;
 
-
+    MainWindowController *controller;
 
 public:
 
+    MainWindow( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builder> & refGlade );
 
-	MainWindow( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builder> & refGlade );
+    void setObjectFile(ObjectFile * of);
+    void setWindow(Window2D * window);
+    void setDrawingArea(DrawingArea * drawingArea);
+    void setTransformationDialog(TransformationDialog * transformationDialog);
+    void setIncludeObjectDialog(IncludeObjectDialog * includeObjDiag);
 
-	void on_btn_include_clicked();
-	void on_btn_in_clicked();
-	void on_btn_out_clicked();
-	void on_btn_up_clicked();
-	void on_btn_down_clicked();
-	void on_btn_left_clicked();
-	void on_btn_right_clicked();
+    void on_btn_include_clicked();
+    void on_btn_in_clicked();
+    void on_btn_out_clicked();
+    void on_btn_up_clicked();
+    void on_btn_down_clicked();
+    void on_btn_left_clicked();
+    void on_btn_right_clicked();
+    void on_selection_obj_changed();
+    void on_btn_transf_activate();
 
-//	bool drawObject( GtkWidget * widget );
-	void atualizaObjectFile( ObjectFile * newOf );
-	void atualizaWindow( Window2D * window );
+    void update();
 
 };
 #endif // MAINWINDOW_H

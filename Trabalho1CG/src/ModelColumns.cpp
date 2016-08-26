@@ -3,9 +3,12 @@
 class ModelColumns : public Gtk::TreeModelColumnRecord {
 public:
 
-	ModelColumns()
-	{ add( nameObj ); add( typeObj ); }
+    ModelColumns()
+    {
+        add( nameObj );
+        add( typeObj );
+    }
 
-	Gtk::TreeModelColumn<Glib::ustring> nameObj;
-	Gtk::TreeModelColumn<Glib::ustring> typeObj;
+    Gtk::TreeModelColumn<Glib::ustring> nameObj;
+    Gtk::TreeModelColumn<Glib::ustring> typeObj;
 };

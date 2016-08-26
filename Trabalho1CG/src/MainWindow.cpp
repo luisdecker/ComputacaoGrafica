@@ -4,197 +4,167 @@
 
 
 MainWindow::MainWindow( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builder> & refGlade ) :
-	Gtk::Window( cobject ), builder( refGlade ) {
+    Gtk::Window( cobject ), builder( refGlade ) {
 
-	includeObjDiag = nullptr;
-	drawingArea = nullptr;
+    nroObjetos = 0;
+    controller = new MainWindowController();
 
-	builder->get_widget( "btn_include", btnInclude );
-	builder->get_widget( "btn_in", btnIn );
-	builder->get_widget( "btn_out", btnOut );
-	builder->get_widget( "btn_up", btnUp );
-	builder->get_widget( "btn_down", btnDown );
-	builder->get_widget( "btn_left", btnLeft );
-	builder->get_widget( "btn_right", btnRight );
+    builder->get_widget( "btn_include", btnInclude );
+    builder->get_widget( "btn_transf", btnTransf );
+    builder->get_widget( "btn_in", btnIn );
+    builder->get_widget( "btn_out", btnOut );
+    builder->get_widget( "btn_up", btnUp );
+    builder->get_widget( "btn_down", btnDown );
+    builder->get_widget( "btn_left", btnLeft );
+    builder->get_widget( "btn_right", btnRight );
+    builder->get_widget( "list_obj", m_TreeView );
 
-	builder->get_widget_derived( "diag_incl_obj", includeObjDiag );
-	builder->get_widget_derived( "drawingarea", drawingArea );
+    btnTransf->set_sensitive(false);
 
+    refTreeSelection = m_TreeView->get_selection();
 
-	of = new ObjectFile();
-	atualizaObjectFile( of );
-	atualizaWindow( new Window2D( set2DPoint( 0, 0 ), set2DPoint( 500, 500 ) ) );
+    m_Columns = new ModelColumns();
 
+    Gtk::TreeModelColumnRecord * tmcr = dynamic_cast<Gtk::TreeModelColumnRecord *>( m_Columns );
 
-	builder->get_widget( "list_obj", m_TreeView );
+    m_refTreeModel = Gtk::ListStore::create( *tmcr );
 
+    m_TreeView->set_model( m_refTreeModel );
+    m_TreeView->append_column( "Nome", m_Columns->nameObj );
+    m_TreeView->append_column( "Tipo", m_Columns->typeObj );
 
-	m_Columns = new ModelColumns();
+    btnInclude->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_include_clicked ) );
+    btnIn->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_in_clicked ) );
+    btnOut->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_out_clicked ) );
+    btnUp->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_up_clicked ) );
+    btnDown->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_down_clicked ) );
+    btnLeft->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_left_clicked ) );
+    btnRight->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_right_clicked ) );
+    refTreeSelection->signal_changed().connect(sigc::mem_fun( *this, &MainWindow::on_selection_obj_changed ) );
+    btnTransf->signal_clicked().connect(sigc::mem_fun( *this, &MainWindow::on_btn_transf_activate ));
+}
 
-	Gtk::TreeModelColumnRecord * tmcr = dynamic_cast<Gtk::TreeModelColumnRecord *>( m_Columns );
+void MainWindow::update() {
 
+    if(controller->obtemTamanhoObjectFile() > nroObjetos) {
 
-	m_refTreeModel = Gtk::ListStore::create( *tmcr );
-	m_TreeView->set_model( m_refTreeModel );
+        nroObjetos++;
 
-	m_TreeView->append_column( "Nome", m_Columns->nameObj );
-	m_TreeView->append_column( "Tipo", m_Columns->typeObj );
+        Objeto * ultimo = controller->obtemUltimoObjInserido();
 
-	btnInclude->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_include_clicked ) );
-	btnIn->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_in_clicked ) );
-	btnOut->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_out_clicked ) );
-	btnUp->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_up_clicked ) );
-	btnDown->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_down_clicked ) );
-	btnLeft->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_left_clicked ) );
-	btnRight->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_right_clicked ) );
+        Gtk::TreeModel::Row row = *( m_refTreeModel->append() );
+        row[m_Columns->nameObj] = ultimo->nome;
 
-
-	//papel->signal_draw().connect( sigc::mem_fun( *this, &MainWindow::drawObject ) );
+        switch(ultimo->tipoObjeto) {
+        case 0: {
+            row[m_Columns->typeObj] = "Ponto";
+        }
+        break;
+        case 1: {
+            row[m_Columns->typeObj] = "Reta";
+        }
+        break;
+        case 2: {
+            row[m_Columns->typeObj] = "Wireframe";
+        }
+        break;
+        }
+    }
 
 }
 
+void MainWindow::setObjectFile(ObjectFile * obf) {
+
+    this->of = obf;
+    controller->setObjectFile(obf);
+
+    of->subscribe(this);
+
+}
+
+void MainWindow::setIncludeObjectDialog(IncludeObjectDialog * includeObjDiag) {
+
+    this->includeObjDiag = includeObjDiag;
+
+}
+
+void MainWindow::setDrawingArea(DrawingArea * drawingArea) {
+
+    this->drawingArea = drawingArea;
+
+}
+
+void MainWindow::setTransformationDialog(TransformationDialog * transformationDialog) {
+
+    this->transformationDialog = transformationDialog;
+
+}
+
+void MainWindow::setWindow(Window2D * window) {
+
+    this->window = window;
+    controller->setWindow(window);
+
+}
+
+void MainWindow::on_selection_obj_changed() {
+
+    btnTransf->set_sensitive(true);
+
+}
+
+void MainWindow::on_btn_transf_activate() {
+
+    Gtk::TreeModel::iterator iter = refTreeSelection->get_selected();
+    if(iter) //If anything is selected
+    {
+        Gtk::TreeModel::Row row = *iter;
+
+        std::string nomeObj = row->get_value(m_Columns->nameObj);
+        transformationDialog->executar(nomeObj);
+
+    }
+
+}
+
+
 void MainWindow::on_btn_include_clicked() {
 
-	if(includeObjDiag->executar( of )){
-		atualizaObjectFile( of );
-	}
+    includeObjDiag->executar();
 
 }
 
 void MainWindow::on_btn_in_clicked() {
-	Ponto2D ie = this->windowPrincipal->inferiorEsquerdo();
-	ie.x += 10, ie.y += 10;
-	Ponto2D sd = this->windowPrincipal->superiorDireito();
-	sd.x -= 10, sd.y -= 10;
 
-	Window2D * newWindow = new Window2D( ie, sd );
-	std::cout << "Novas coordenadas da window: " << ie.x << "," << ie.y << " | " << sd.x << "," << sd.y << std::endl;
-	atualizaWindow( newWindow );
+    controller->windowZoomIn();
 }
+
 void MainWindow::on_btn_down_clicked() {
-	Ponto2D ie = this->windowPrincipal->inferiorEsquerdo();
-	ie.y -= 10;
-	Ponto2D sd = this->windowPrincipal->superiorDireito();
-	sd.y -= 10;
 
-	Window2D * newWindow = new Window2D( ie, sd );
-	std::cout << "Novas coordenadas da window: " << ie.x << "," << ie.y << " | " << sd.x << "," << sd.y << std::endl;
-
-	atualizaWindow( newWindow );
+    controller->windowDown();
 }
 
 void MainWindow::on_btn_left_clicked() {
-	Ponto2D ie = this->windowPrincipal->inferiorEsquerdo();
-	ie.x -= 10;
-	Ponto2D sd = this->windowPrincipal->superiorDireito();
-	sd.x -= 10;
 
-	Window2D * newWindow = new Window2D( ie, sd );
-	std::cout << "Novas coordenadas da window: " << ie.x << "," << ie.y << " | " << sd.x << "," << sd.y << std::endl;
-
-	atualizaWindow( newWindow );
+    controller->windowLeft();
 }
 
 void MainWindow::on_btn_right_clicked() {
-	Ponto2D ie = this->windowPrincipal->inferiorEsquerdo();
-	ie.x += 10;
-	Ponto2D sd = this->windowPrincipal->superiorDireito();
-	sd.x += 10;
 
-	Window2D * newWindow = new Window2D( ie, sd );
-	std::cout << "Novas coordenadas da window: " << ie.x << "," << ie.y << " | " << sd.x << "," << sd.y << std::endl;
+    controller->windowRight();
 
-	atualizaWindow( newWindow );
 }
 void MainWindow::on_btn_up_clicked() {
-	Ponto2D ie = this->windowPrincipal->inferiorEsquerdo();
-	ie.y += 10;
-	Ponto2D sd = this->windowPrincipal->superiorDireito();
-	sd.y += 10;
 
-	Window2D * newWindow = new Window2D( ie, sd );
-	std::cout << "Novas coordenadas da window: " << ie.x << "," << ie.y << " | " << sd.x << "," << sd.y << std::endl;
-
-	atualizaWindow( newWindow );
+    controller->windowUp();
 }
-
-
 
 void MainWindow::on_btn_out_clicked() {
-	Ponto2D ie = this->windowPrincipal->inferiorEsquerdo();
-	ie.x -= 10, ie.y -= 10;
-	Ponto2D sd = this->windowPrincipal->superiorDireito();
-	sd.x += 10, sd.y += 10;
 
-	Window2D * newWindow = new Window2D( ie, sd );
-	std::cout << "Novas coordenadas da window: " << ie.x << "," << ie.y << " | " << sd.x << "," << sd.y << std::endl;
-	atualizaWindow( newWindow );
+    controller->windowZoomOut();
 }
 
-void MainWindow::atualizaObjectFile( ObjectFile * newOf ) {
-	this->of = newOf;
 
-	if(this->of->obterObjetos().size() > 0){
-		Objeto * ultimo = this->of->obterObjetos().back();
-
-		Gtk::TreeModel::Row row = *( m_refTreeModel->append() );
-		row[m_Columns->nameObj] = ultimo->nome;
-
-		switch(ultimo->tipoObjeto){
-			case 0:{
-				row[m_Columns->typeObj] = "Ponto";
-			}
-			break;
-			case 1:{
-				row[m_Columns->typeObj] = "Reta";
-			}
-			break;
-			case 2:{
-				row[m_Columns->typeObj] = "Wireframe";
-			}
-			break;
-		}
-	}
-
-	this->drawingArea->atualizaObjectFile( newOf );
-}
-void MainWindow::atualizaWindow( Window2D * window ) {
-	this->windowPrincipal = window;
-	this->drawingArea->atualizaWindow( window );
-}
-
-/*
-bool MainWindow::drawObject( GtkWidget * widget ) {
-	this->cr->set_line_width( 1.0 );
-	for( Objeto * objeto : of->obterObjetos() ) {
-		switch( objeto->tipoObjeto ) {
-			case Objeto::ponto: {
-				Ponto * ponto = dynamic_cast<Ponto *>( objeto );
-				Ponto2D coordenada = ponto->obterCoordenada();
-				this->cr->arc( coordenada.x, coordenada.y, 1., 0., 2 * M_PI );
-				this->cr->stroke();
-
-				break;
-			}
-			case Objeto::reta: {
-				Reta * reta = dynamic_cast<Reta *>( objeto );
-				Ponto2D inicial = reta->obterCoordenadaInicial();
-				Ponto2D final = reta->obterCoordenadaFinal();
-				this->cr->move_to( inicial.x, inicial.y );
-				this->cr->line_to( final.x, final.y );
-				this->cr->stroke();
-
-
-
-				break;
-			}
-			case Objeto::wireframe: {break;}
-		}
-	}
-	//Redesenha a tela
-	queue_draw();
-
-}*/
 
 
 
