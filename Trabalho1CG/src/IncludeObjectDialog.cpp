@@ -114,7 +114,7 @@ void IncludeObjectDialog::incluirObjeto() {
             x1 = stod( x1_str_line->get_text() );
             y1 = stod( y1_str_line->get_text() );
 
-            controller->incluirReta(objName,x0,y0,x1,y0);;
+            controller->incluirReta(objName,x0,y0,x1,y1);;
         }
 
 
