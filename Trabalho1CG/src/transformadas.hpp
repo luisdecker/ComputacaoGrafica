@@ -8,9 +8,9 @@
 
 class Tranformadas {
 public:
-	static Objeto transladar( Objeto obj, Ponto2D direcao );
-	static Objeto rotacionar( Objeto obj, double graus, Ponto2D pontoReferencia );
-	static Objeto redimensionar( Objeto obj, Ponto2D escala );
+	static Objeto transladar( Objeto * obj, Ponto2D direcao );
+	static Objeto rotacionar( Objeto * obj, double graus, Ponto2D pontoReferencia );
+	Objeto * redimensionar( Objeto * obj, Ponto2D escala );
 private:
 	static Matriz ponto2DparaMatriz( Ponto2D ponto );
 	static Ponto2D matrizParaPonto2D( Matriz matriz );
