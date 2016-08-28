@@ -1,10 +1,16 @@
 #include "matriz.hpp"
 //-----------------------------------------------
 Matriz::Matriz( int linhas, int colunas ) {
+	assert( linhas >= 1 );
+	assert( colunas >= 1 );
 	double ** newMat = new double * [linhas];
 	for( linhas; linhas > 0; linhas-- ) {
 		newMat[linhas - 1] = new double[colunas];
 	}
+	this->data = newMat;
+	this->linhas = linhas, this->colunas = colunas;
+	Matriz * x;
+
 }
 //-----------------------------------------------
 double & Matriz::at( int linha, int coluna ) {
@@ -53,5 +59,29 @@ Matriz Matriz::subtrair( Matriz outra )  {
 		}
 	}
 	return retorno;
+}
+//-----------------------------------------------
+bool Matriz::igual( Matriz outra ) {
+	if( this->colunas != outra.colunas || this->linhas != outra.linhas ) {
+		return false;
+	}
+	bool retorno = true;
+	for( int linha = 1; linha <= this->linhas; linha++ ) {
+		for( int coluna = 1; coluna <= this->colunas; coluna++ ) {
+			if( this->at( linha, coluna ) != outra.at( linha, coluna ) ) {
+				retorno = false;
+			}
+		}
+	}
+	return retorno;
+}
+//-----------------------------------------------
+Matriz Matriz::transpor() {
+	Matriz transposta( colunas, linhas );
+	for( int linha = 1; linha <= this->linhas; linha++ ) {
+		for( int coluna = 1; coluna <= this->colunas; coluna++ ) {
+			transposta.at( coluna, linha ) = this->at( linha, coluna );
+		}
+	}
 }
 

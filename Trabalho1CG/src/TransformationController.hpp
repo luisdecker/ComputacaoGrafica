@@ -8,15 +8,15 @@ using namespace std;
 
 class TransformationController {
 
-    ObjectFile *obf;
+	ObjectFile * obf;
 
 public:
-    void setObjectFile(ObjectFile *obf);
-    void aplicarTranslacao(string nomeObj, double x, double y);
-    void aplicarEscalonamento(string nomeObj, double x, double y);
-    void aplicarRotacaoCentroMundo(string nomeObj, double angulo);
-    void aplicarRotacaoCentroObjeto(string nomeObj, double angulo);
-    void aplicarRotacaoPontoArbitrario(string nomeObj, double angulo, double x, double y);
+	void setObjectFile( ObjectFile * obf );
+	void aplicarTranslacao( string nomeObj, double x, double y );
+	void aplicarEscalonamento( string nomeObj, double x, double y );
+	void aplicarRotacaoCentroMundo( string nomeObj, double angulo );
+	void aplicarRotacaoCentroObjeto( string nomeObj, double angulo );
+	void aplicarRotacaoPontoArbitrario( string nomeObj, double angulo, double x, double y );
 
 };
 

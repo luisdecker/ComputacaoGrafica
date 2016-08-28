@@ -30,14 +30,19 @@ public:
 	double & at( int linha, int coluna );
 	Matriz operator * ( const Matriz outra ) {return multiplicar( outra );}
 	Matriz operator + ( const Matriz outra ) {return somar( outra );}
-	Matriz operator = ( const Matriz outra ) {return subtrair( outra );}
-
+	Matriz operator - ( const Matriz outra ) {return subtrair( outra );}
+	bool  operator == ( const Matriz outra ) {return igual( outra );}
+	Matriz transpor();
+	int numLinhas() {return linhas;}
+	int numColunas() {return colunas;}
 private:
 	int linhas, colunas;
 	double ** data;
 	Matriz multiplicar( Matriz outra );
 	Matriz somar( Matriz outra );
 	Matriz subtrair( Matriz outra );
+	bool igual( Matriz outra );
+
 };
 
 #endif // MATRIZ_H
