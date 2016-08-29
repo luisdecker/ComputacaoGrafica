@@ -36,6 +36,7 @@ Matriz Tranformadas::ponto3DparaMatriz( Ponto3D ponto ) {
 	novaMat.at( 1, 1 ) = ponto.x;
 	novaMat.at( 1, 2 ) = ponto.y;
 	novaMat.at( 1, 3 ) = ponto.z;
+	std::cout << "[Transformadas]Converteu ponto 3D - " << novaMat.numLinhas() << "x" << novaMat.numColunas() << std::endl;
 	return novaMat;
 
 }
@@ -201,13 +202,19 @@ Objeto * Tranformadas::transladar( Objeto * obj, Ponto2D direcao ) {
 			Matriz operacao = translacaoOrigem ;
 
 			//Converte os pontos da reta
-			Matriz pontoInicial = ponto3DparaMatriz( ponto2DParaHomogeneo( reta->obterCoordenadaInicial() ) );
-			Matriz pontoFinal = ponto3DparaMatriz( ponto2DParaHomogeneo( reta->obterCoordenadaInicial() ) );
+			Ponto2D coordenadaInicial = reta->obterCoordenadaInicial();
+			Ponto3D coordenadaInicialHomogenea = ponto2DParaHomogeneo( coordenadaInicial );
+			Matriz pontoInicial( 1, 3 );
+			pontoInicial = ponto3DparaMatriz( ponto2DParaHomogeneo( reta->obterCoordenadaInicial() ) );
+			Matriz pontoFinal = ponto3DparaMatriz( ponto2DParaHomogeneo( reta->obterCoordenadaFinal() ) );
+			std::cout << "[Transformadas]Ponto inicial tem " << pontoInicial.numLinhas() << "x" << pontoInicial.numColunas() << std::endl;
+			std::cout << "[Transformadas]Ponto final tem " << pontoFinal.numLinhas() << "x" << pontoFinal.numColunas() << std::endl;
 			//Aplica a tranformada nos pontos
-			pontoInicial = pontoInicial * operacao;
-			pontoFinal = pontoFinal * operacao;
-			Ponto3D inicial = matrizParaPonto3D( pontoInicial );
-			Ponto3D final = matrizParaPonto3D( pontoFinal );
+
+			Matriz pontoInicialTranformado = pontoInicial * operacao;
+			Matriz pontoFinalTransformado = pontoFinal * operacao;
+			Ponto3D inicial = matrizParaPonto3D( pontoInicialTranformado );
+			Ponto3D final = matrizParaPonto3D( pontoFinalTransformado );
 			return new Reta( obj->nome, set2DPoint( inicial.x, inicial.y ), set2DPoint( final.x, final.y ) );
 			break;
 		}

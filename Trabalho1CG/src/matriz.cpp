@@ -4,23 +4,27 @@ Matriz::Matriz( int linhas, int colunas ) {
 	assert( linhas >= 1 );
 	assert( colunas >= 1 );
 	double ** newMat = new double * [linhas];
+	int linhaOrg = linhas;
 	for( linhas; linhas > 0; linhas-- ) {
 		newMat[linhas - 1] = new double[colunas];
 	}
 	this->data = newMat;
-	this->linhas = linhas, this->colunas = colunas;
-	Matriz * x;
+	this->linhas = linhaOrg;
+	this->colunas = colunas;
+	std::cout << "[Matriz]Criou uma matriz tamanho " << this->linhas << "x" << colunas << std::endl;
 
 }
+
 //-----------------------------------------------
 double & Matriz::at( int linha, int coluna ) {
 	return data[linha - 1][coluna - 1];
 }
 //-----------------------------------------------
 Matriz Matriz::multiplicar( Matriz outra )  {
+	std::cout << "[Matriz]Vai multiplicar matrizes " << this->linhas << "x" << this->colunas << " e " << outra.linhas << "x" << outra.colunas << std::endl;
 	assert( this->colunas == outra.linhas );
-	Matriz resposta( this->colunas, outra.linhas );
-	for( int linha1 = 1; linha1 <= this->linhas; linha1 ) {
+	Matriz resposta( this->linhas, outra.colunas );
+	for( int linha1 = 1; linha1 <= this->linhas; linha1++ ) {
 		for( int coluna2 = 0; coluna2 <= outra.colunas; coluna2++ ) {
 			double soma = 0;
 			for( int coluna1 = 1;  coluna1 <= this->colunas; coluna1++ ) {
@@ -29,6 +33,7 @@ Matriz Matriz::multiplicar( Matriz outra )  {
 			resposta.at( linha1, coluna2 ) = soma;
 		}
 	}
+	std::cout << "[Matriz]Multiplicou!" << std::endl;
 	return resposta;
 }
 //-----------------------------------------------

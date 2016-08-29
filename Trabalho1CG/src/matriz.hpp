@@ -23,9 +23,11 @@
 
 #include <cassert>
 #include "tipos.hpp"
+#include <iostream>
 
 class Matriz {
 public:
+	Matriz() {std::cout << "Criou uma matriz padrão, não sei como\n";}
 	Matriz( int linhas, int colunas );
 	double & at( int linha, int coluna );
 	Matriz operator * ( const Matriz outra ) {return multiplicar( outra );}

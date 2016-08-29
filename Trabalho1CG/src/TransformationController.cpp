@@ -7,7 +7,7 @@ void TransformationController::setObjectFile( ObjectFile * obf ) {
 void TransformationController::aplicarTranslacao( string nomeObj, double x, double y ) {
 	Objeto * obj = this->obf->obterObjetoNome( nomeObj );
 
-	// faz o que tem que fazer...
+	obj = Tranformadas::transladar( obj, set2DPoint( x, y ) );
 
 	this->obf->atualizarObjeto( obj );
 }
@@ -16,7 +16,7 @@ void TransformationController::aplicarEscalonamento( string nomeObj, double x, d
 
 	Objeto * obj = this->obf->obterObjetoNome( nomeObj );
 
-	// faz o que tem que fazer...
+	obj = Tranformadas::redimensionar( obj, set2DPoint( x, y ) );
 
 	this->obf->atualizarObjeto( obj );
 
@@ -26,7 +26,7 @@ void TransformationController::aplicarRotacaoCentroMundo( string nomeObj, double
 
 	Objeto * obj = this->obf->obterObjetoNome( nomeObj );
 
-	// faz o que tem que fazer...
+	obj = Tranformadas::rotacionar( obj, angulo, set2DPoint( 0, 0 ) );
 
 	this->obf->atualizarObjeto( obj );
 
@@ -36,7 +36,9 @@ void TransformationController::aplicarRotacaoCentroObjeto( string nomeObj, doubl
 
 	Objeto * obj = this->obf->obterObjetoNome( nomeObj );
 
-	// faz o que tem que fazer...
+	Ponto2D centro = obj->obterCentro();
+
+	obj = Tranformadas::rotacionar( obj, angulo, centro );
 
 	this->obf->atualizarObjeto( obj );
 
@@ -46,7 +48,7 @@ void TransformationController::aplicarRotacaoPontoArbitrario( string nomeObj, do
 
 	Objeto * obj = this->obf->obterObjetoNome( nomeObj );
 
-	// faz o que tem que fazer...
+	obj = Tranformadas::rotacionar( obj, angulo, set2DPoint( x, y ) );
 
 	this->obf->atualizarObjeto( obj );
 

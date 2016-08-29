@@ -4,7 +4,7 @@
 #include "objectfile.h"
 #include "window.h"
 
-#define ZOOM 10
+#define ZOOM 1
 
 class MainWindowController {
 

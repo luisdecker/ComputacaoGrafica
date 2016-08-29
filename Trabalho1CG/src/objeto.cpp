@@ -23,38 +23,77 @@
 
 //-----------------------------------------------
 Ponto::Ponto( std::string nome, Ponto2D coordenada ) {
-    this->coordenada = coordenada, this->nome = nome, this->tipoObjeto = Objeto::ponto;
+	this->coordenada = coordenada, this->nome = nome, this->tipoObjeto = Objeto::ponto;
 }
 //-----------------------------------------------
 Ponto2D Ponto::obterCoordenada() {
-    return  set2DPoint( this->coordenada.x, this->coordenada.y );
+	return  set2DPoint( this->coordenada.x, this->coordenada.y );
 }
-//-------------------------------------------
+//-----------------------------------------------
 Reta::Reta( std::string nome, Ponto2D pontoInicial, Ponto2D pontoFinal ) {
-    this->pontoInicial = pontoInicial, this->pontoFinal = pontoFinal, this->nome = nome, this->tipoObjeto = Objeto::reta;
+	this->pontoInicial = pontoInicial, this->pontoFinal = pontoFinal, this->nome = nome, this->tipoObjeto = Objeto::reta;
 }
 //-----------------------------------------------
 Ponto2D Reta::obterCoordenadaInicial() {
-    return set2DPoint( this->pontoInicial.x, this->pontoInicial.y );
+	return set2DPoint( this->pontoInicial.x, this->pontoInicial.y );
 }
 
-//-------------------------------------------
+//-----------------------------------------------
 Ponto2D Reta::obterCoordenadaFinal() {
-    return set2DPoint( this->pontoFinal.x, this->pontoFinal.y );
+	return set2DPoint( this->pontoFinal.x, this->pontoFinal.y );
 }
 //-------------------------------------------
 Wireframe::Wireframe( std::string nome, std::vector< Ponto2D > pontos ) {
-    this->pontos = pontos, this->nome = nome, this->tipoObjeto = Objeto::wireframe;
+	this->pontos = pontos, this->nome = nome, this->tipoObjeto = Objeto::wireframe;
 }
 //-----------------------------------------------
 std::vector< Ponto2D > Wireframe::obterPontos() {
-    return std::vector<Ponto2D>( this->pontos );
+	return std::vector<Ponto2D>( this->pontos );
 }
-//-------------------------------------------
+//-----------------------------------------------
 
-void Wireframe::adicionarPonto(Ponto2D ponto) {
-    this->pontos.push_back(ponto);
+void Wireframe::adicionarPonto( Ponto2D ponto ) {
+	this->pontos.push_back( ponto );
 }
+//-----------------------------------------------
+Ponto2D Ponto::obterCentro() {
+	return coordenada;
+}
+//-----------------------------------------------
+Ponto2D Reta::obterCentro() {
+	double mediaX = ( this->pontoInicial.x + this->pontoFinal.x ) / 2;
+	double mediaY = ( this->pontoInicial.y + this->pontoFinal.y ) / 2;
+	return set2DPoint( mediaX, mediaY );
+
+}
+//-----------------------------------------------
+Ponto2D Wireframe::obterCentro() {
+	double somaX;
+	double somaY;
+	for( Ponto2D ponto : this->obterPontos() ) {
+		somaX += ponto.x;
+		somaY += ponto.y;
+	}
+	double mediaX = somaX / pontos.size();
+	double mediaY = somaY / pontos.size();
+	return set2DPoint( mediaX, mediaY );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

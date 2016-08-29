@@ -31,9 +31,11 @@ bool DrawingArea::on_draw( const Cairo::RefPtr<Cairo::Context> & cr ) {
     Gtk::Allocation allocation = get_allocation();
     const int width = allocation.get_width();
     const int height = allocation.get_height();
-    std::cout << "ViewPort de tamanho  " << width << "," << height << std::endl;
+    std::cout << "[DrawingArea]ViewPort de tamanho  " << width << "," << height << std::endl;
+    std::cout << "[DrawingArea]Window de tamanho  " << mainWindow->obterXMaximo()-mainWindow->obterXMinimo() << "," << mainWindow->obterYMaximo()-mainWindow->obterYMinimo()  << std::endl;
+    
     this->viewPort = new ViewPort( set2DPoint( 0, 0 ), set2DPoint( width, height ) );
-    std::cout << "Vai desenhar " << mainOf->obterObjetos().size() << " objetos" << std::endl;
+    std::cout << "[DrawingArea]Vai desenhar " << mainOf->obterObjetos().size() << " objetos" << std::endl;
     for( Objeto * objeto : mainOf->obterObjetos() ) {
         switch( objeto->tipoObjeto ) {
         case Objeto::ponto: {
@@ -52,7 +54,7 @@ bool DrawingArea::on_draw( const Cairo::RefPtr<Cairo::Context> & cr ) {
             inicial = viewPort->tranformarCoordenadas( *mainWindow, inicial );
             Ponto2D final = reta->obterCoordenadaFinal();
             final = viewPort->tranformarCoordenadas( *mainWindow, final );
-            std::cout << "Vai desenhar uma reta de " << inicial.x << "," << inicial.y
+            std::cout << "[DrawingArea]Vai desenhar uma reta de " << inicial.x << "," << inicial.y
                       << " até " << final.x << "," << final.y << std::endl;
             cr->move_to( inicial.x, inicial.y );
             cr->line_to( final.x, final.y );

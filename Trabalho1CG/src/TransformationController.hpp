@@ -3,6 +3,7 @@
 
 #include <string>
 #include "objectfile.h"
+#include "transformadas.hpp"
 
 using namespace std;
 
