@@ -43,8 +43,8 @@ Matriz Tranformadas::ponto3DparaMatriz( Ponto3D ponto ) {
 Objeto * Tranformadas::redimensionar( Objeto * obj, Ponto2D escala ) {
 	switch( obj->tipoObjeto ) {
 		case Objeto::ponto: {
-			//Ponto nao redimensiona o.O
-			return obj;
+			Ponto * ponto = dynamic_cast<Ponto *>( obj );
+			return new Ponto( obj->nome, set2DPoint( ponto->obterCoordenada().x * escala.x, ponto->obterCoordenada().y * escala.y ) );
 			break;
 		}
 		case Objeto::reta: {
@@ -107,9 +107,83 @@ Objeto * Tranformadas::redimensionar( Objeto * obj, Ponto2D escala ) {
 	}
 }
 //-----------------------------------------------
-Objeto Tranformadas::rotacionar( Objeto * obj, double graus, Ponto2D pontoReferencia ) {
+Objeto * Tranformadas::rotacionar( Objeto * obj, double graus, Ponto2D pontoReferencia ) {
+	switch( obj->tipoObjeto ) {
+		case Objeto::ponto: {
+			Ponto * ponto = dynamic_cast<Ponto *>( obj );
+			//O centro do ponto é ele mesmo(Não usa pra nada centro hue)
 
+			//translada o ponto de referencia para o origem
+			Matriz translacaoOrigem = gerarMatrizTranslacao( set2DPoint( - pontoReferencia.x, -pontoReferencia.y ) );
+			//rotaciona o ponto
+			Matriz rotacao = gerarMatrizRotacao( graus );
+			//translada pra posicao original
+			Matriz transacaoVolta = gerarMatrizTranslacao( pontoReferencia );
+			//Gera a matriz de operacao;
+			Matriz operacao = translacaoOrigem * rotacao;
+			operacao = operacao * transacaoVolta;
+			//Gera a matriz do ponto
+			Ponto3D pontoHomogeneo = ponto2DParaHomogeneo( ponto->obterCoordenada() );
+			Matriz matPonto = ponto3DparaMatriz( pontoHomogeneo );
+			//Aplica a transformacao
+			matPonto = matPonto * operacao;
+			Ponto3D pontoTransformadoHomogeneo = matrizParaPonto3D( matPonto );
+			return new Ponto( obj->nome, set2DPoint( pontoTransformadoHomogeneo.x, pontoTransformadoHomogeneo.y ) );
+
+
+			break;
+		}
+		case Objeto::reta: {
+			Reta * reta = dynamic_cast<Reta *>( obj );
+			//translada o ponto de referencia para o origem
+			Matriz translacaoOrigem = gerarMatrizTranslacao( set2DPoint( - pontoReferencia.x, -pontoReferencia.y ) );
+			//rotaciona o ponto
+			Matriz rotacao = gerarMatrizRotacao( graus );
+			//translada pra posicao original
+			Matriz transacaoVolta = gerarMatrizTranslacao( pontoReferencia );
+			//Gera a matriz de operacao;
+			Matriz operacao = translacaoOrigem * rotacao;
+			operacao = operacao * transacaoVolta;
+			//Aplica a operacao aos dois pontos
+			Matriz pontoInicial = ponto3DparaMatriz( ponto2DParaHomogeneo( reta->obterCoordenadaInicial() ) );
+			Matriz pontoFinal = ponto3DparaMatriz( ponto2DParaHomogeneo( reta->obterCoordenadaInicial() ) );
+			pontoInicial = pontoInicial * operacao;
+			pontoFinal = pontoFinal * operacao;
+			Ponto3D inicial = matrizParaPonto3D( pontoInicial );
+			Ponto3D final = matrizParaPonto3D( pontoFinal );
+			return new Reta( obj->nome, set2DPoint( inicial.x, inicial.y ), set2DPoint( final.x, final.y ) );
+			break;
+
+		}
+		case Objeto::wireframe: {
+			Wireframe * wireframe = dynamic_cast<Wireframe *>( obj );
+			//translada o ponto de referencia para o origem
+			Matriz translacaoOrigem = gerarMatrizTranslacao( set2DPoint( - pontoReferencia.x, -pontoReferencia.y ) );
+			//rotaciona o ponto
+			Matriz rotacao = gerarMatrizRotacao( graus );
+			//translada pra posicao original
+			Matriz transacaoVolta = gerarMatrizTranslacao( pontoReferencia );
+			//Gera a matriz de operacao;
+			Matriz operacao = translacaoOrigem * rotacao;
+			operacao = operacao * transacaoVolta;
+			//Aplica a operacao a todos os pontos
+			std::vector<Ponto2D> pontos = wireframe->obterPontos();
+			std::vector<Ponto2D> pontosTranformados( pontos.size() );
+			for( Ponto2D ponto : pontos ) {
+				Matriz matPonto = ponto3DparaMatriz( ponto2DParaHomogeneo( ponto ) );
+				matPonto = matPonto * operacao;
+				Ponto3D pontoTransformadoHomogeneo = matrizParaPonto3D( matPonto );
+				Ponto2D pontoTranformado = set2DPoint( pontoTransformadoHomogeneo.x, pontoTransformadoHomogeneo.y );
+				pontosTranformados.push_back( pontoTranformado );
+
+			}
+			return new Wireframe( obj->nome, pontosTranformados );
+			break;
+
+		}
+	}
 }
+
 //-----------------------------------------------
 Objeto Tranformadas::transladar( Objeto * obj, Ponto2D direcao ) {
 
