@@ -147,7 +147,7 @@ Objeto * Tranformadas::rotacionar( Objeto * obj, double graus, Ponto2D pontoRefe
 			operacao = operacao * transacaoVolta;
 			//Aplica a operacao aos dois pontos
 			Matriz pontoInicial = ponto3DparaMatriz( ponto2DParaHomogeneo( reta->obterCoordenadaInicial() ) );
-			Matriz pontoFinal = ponto3DparaMatriz( ponto2DParaHomogeneo( reta->obterCoordenadaInicial() ) );
+			Matriz pontoFinal = ponto3DparaMatriz( ponto2DParaHomogeneo( reta->obterCoordenadaFinal() ) );
 			pontoInicial = pontoInicial * operacao;
 			pontoFinal = pontoFinal * operacao;
 			Ponto3D inicial = matrizParaPonto3D( pontoInicial );
