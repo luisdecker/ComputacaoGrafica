@@ -8,7 +8,7 @@
 
 class Tranformadas {
 public:
-	static Objeto transladar( Objeto * obj, Ponto2D direcao );
+	Objeto * transladar( Objeto * obj, Ponto2D direcao );
 	Objeto * rotacionar( Objeto * obj, double graus, Ponto2D pontoReferencia );
 	Objeto * redimensionar( Objeto * obj, Ponto2D escala );
 private:
