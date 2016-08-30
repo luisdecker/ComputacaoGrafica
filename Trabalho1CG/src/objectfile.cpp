@@ -34,7 +34,7 @@ void ObjectFile::inserirObjeto( Objeto * objeto ) {
 	if( contemObjeto( objeto->nome ) ) {
 		return;
 	}
-	objectFile->push_back( objeto );
+	objectFile->insert( objectFile->end(), objeto );
 	notify();
 }
 //-----------------------------------------------
