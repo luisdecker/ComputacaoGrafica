@@ -37,9 +37,10 @@ public:
 	Matriz transpor();
 	int numLinhas() {return linhas;}
 	int numColunas() {return colunas;}
+	void print();
 private:
 	int linhas, colunas;
-	double ** data;
+	double * data;
 	Matriz multiplicar( Matriz outra );
 	Matriz somar( Matriz outra );
 	Matriz subtrair( Matriz outra );

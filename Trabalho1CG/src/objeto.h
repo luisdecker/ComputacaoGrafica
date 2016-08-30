@@ -43,7 +43,7 @@ public:
 	//-------------------------------------------
 	virtual ~Objeto() {}; //Destrutor
 
-	Ponto2D obterCentro() {return set2DPoint( 0, 0 );};
+	Ponto2D obterCentro() {return set2DPoint( 0, 0 );}
 private:
 
 };

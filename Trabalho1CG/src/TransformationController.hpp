@@ -4,6 +4,7 @@
 #include <string>
 #include "objectfile.h"
 #include "transformadas.hpp"
+#include <iostream>
 
 using namespace std;
 

@@ -65,7 +65,7 @@ Objeto * Tranformadas::redimensionar( Objeto * obj, Ponto2D escala ) {
 			operacao = operacao * translacaoRetorno;
 			//Converte os pontos da reta
 			Matriz pontoInicial = ponto3DparaMatriz( ponto2DParaHomogeneo( reta->obterCoordenadaInicial() ) );
-			Matriz pontoFinal = ponto3DparaMatriz( ponto2DParaHomogeneo( reta->obterCoordenadaInicial() ) );
+			Matriz pontoFinal = ponto3DparaMatriz( ponto2DParaHomogeneo( reta->obterCoordenadaFinal() ) );
 			//Aplica a tranformada nos pontos
 			pontoInicial = pontoInicial * operacao;
 			pontoFinal = pontoFinal * operacao;
@@ -102,6 +102,7 @@ Objeto * Tranformadas::redimensionar( Objeto * obj, Ponto2D escala ) {
 				pontosTranformados.push_back( pontoTranformado );
 
 			}
+			pontosTranformados.erase( pontosTranformados.begin() );
 			return new Wireframe( obj->nome, pontosTranformados );
 			break;
 		}
@@ -109,6 +110,7 @@ Objeto * Tranformadas::redimensionar( Objeto * obj, Ponto2D escala ) {
 }
 //-----------------------------------------------
 Objeto * Tranformadas::rotacionar( Objeto * obj, double graus, Ponto2D pontoReferencia ) {
+	graus = graus / 57.2957795131	;
 	switch( obj->tipoObjeto ) {
 		case Objeto::ponto: {
 			Ponto * ponto = dynamic_cast<Ponto *>( obj );
@@ -177,7 +179,9 @@ Objeto * Tranformadas::rotacionar( Objeto * obj, double graus, Ponto2D pontoRefe
 				Ponto2D pontoTranformado = set2DPoint( pontoTransformadoHomogeneo.x, pontoTransformadoHomogeneo.y );
 				pontosTranformados.push_back( pontoTranformado );
 
+
 			}
+			pontosTranformados.erase( pontosTranformados.begin() );
 			return new Wireframe( obj->nome, pontosTranformados );
 			break;
 
@@ -237,6 +241,7 @@ Objeto * Tranformadas::transladar( Objeto * obj, Ponto2D direcao ) {
 				pontosTranformados.push_back( pontoTranformado );
 
 			}
+			pontosTranformados.erase( pontosTranformados.begin() );
 			return new Wireframe( obj->nome, pontosTranformados );
 			break;
 		}
@@ -245,18 +250,16 @@ Objeto * Tranformadas::transladar( Objeto * obj, Ponto2D direcao ) {
 //-----------------------------------------------
 Matriz Tranformadas::gerarMatrizTranslacao( Ponto2D direcao ) {
 	Matriz translacao( 3, 3 );
-	translacao.at( 1, 1 ) = 1.;
-	translacao.at( 2, 2 ) = 1.;
-	translacao.at( 3, 3 ) = 1.;
-	translacao.at( 1, 2 ) = 0;
-	translacao.at( 1, 3 ) = 0;
-	translacao.at( 2, 1 ) = 0; translacao.at( 2, 3 ) = 0;
-	translacao.at( 3, 1 ) = direcao.x;
-	translacao.at( 3, 2 ) = direcao.y;
-	translacao.at( 3, 3 ) = 1.;
+	translacao.at( 1, 1 ) = 1.;	   translacao.at( 1, 2 ) = 0;         translacao.at( 1, 3 ) = 0;
+
+	translacao.at( 2, 1 ) = 0;	   translacao.at( 2, 2 ) = 1.;        translacao.at( 2, 3 ) = 0;
+
+	translacao.at( 3, 1 ) = direcao.x; translacao.at( 3, 2 ) = direcao.y; translacao.at( 3, 3 ) = 1.;
+
+
 	return translacao;
 }
-//-----------------------------------------------
+//-----------------------------------------------	
 Matriz Tranformadas::gerarMatrizRedimensionamento( double escalaX, double escalaY ) {
 	Matriz redimensao( 3, 3 );
 	redimensao.at( 1, 1 ) = escalaX;
@@ -273,15 +276,14 @@ Matriz Tranformadas::gerarMatrizRedimensionamento( double escalaX, double escala
 //-----------------------------------------------
 Matriz Tranformadas::gerarMatrizRotacao( double graus ) {
 	Matriz rotacao( 3, 3 );
-	rotacao.at( 1, 1 ) = cos( graus );
-	rotacao.at( 2, 2 ) = cos( graus );
-	rotacao.at( 3, 3 ) = 1.;
-	rotacao.at( 1, 2 ) = -sin( graus );
-	rotacao.at( 1, 3 ) = 0;
-	rotacao.at( 2, 1 ) = sin( graus );
-	rotacao.at( 2, 3 ) = 0;
-	rotacao.at( 3, 1 ) = 0;
-	rotacao.at( 3, 2 ) = 0;
+	rotacao.at( 1, 1 ) = cos( graus );  rotacao.at( 1, 2 ) = -sin( graus );   rotacao.at( 1, 3 ) = 0;
+	rotacao.at( 2, 1 ) = sin( graus );  rotacao.at( 2, 2 ) = cos( graus );    rotacao.at( 2, 3 ) = 0;
+	rotacao.at( 3, 1 ) = 0;             rotacao.at( 3, 2 ) = 0;		  rotacao.at( 3, 3 ) = 1.;
+
+
+
+
+
 	return rotacao;
 
 }
