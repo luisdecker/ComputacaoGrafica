@@ -23,6 +23,7 @@
 //Global Includes
 #include <list>
 #include <vector>
+#include <iostream>
 //Local Includes
 #include "objeto.h"
 #include "Subject.hpp"

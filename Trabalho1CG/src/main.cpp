@@ -23,7 +23,7 @@ int main( int argc, char * argv[] ) {
 	ObjectFile * of = new ObjectFile();
 
 	//Cria o objeto a partir do XLM do GLADE
-	Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file( "../glade/window_main.glade" );
+	Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file( "window_main.glade" );
 
 	builder->get_widget_derived( "window_main", mainWindow );
 	builder->get_widget_derived( "diag_incl_obj", includeObjDiag );

@@ -54,9 +54,10 @@ void TransformationDialog::aplicarTransformacao(std::string objName) {
 
     switch( tabNum ) {
 
-    //case 0: ponto
+    //case 0: translacao
     case 0: {
 
+	std::cout << "[TransformationDialog] aplicando " << "translacao"<< " a " <<objName<<"\n";
         if( x_transl->get_text().size() > 0 && y_transl->get_text().size() > 0 ) {
 
             double x, y;
@@ -74,9 +75,10 @@ void TransformationDialog::aplicarTransformacao(std::string objName) {
         break;
     }
 
-    //case 1: reta
+    //case 1: escalonamento
     case 1: {
 
+	std::cout << "[TransformationDialog] aplicando " <<"escalonamento" << " a " <<objName<<"\n";
         if( x_escal->get_text().size() > 0 && y_escal->get_text().size() > 0) {
 
             double x, y;
@@ -93,9 +95,10 @@ void TransformationDialog::aplicarTransformacao(std::string objName) {
 
         break;
     }
-
+    //Case 2: rotacao
     case 2: {
 
+	std::cout << "[TransformationDialog] aplicando " <<"rotacao" << " a " <<objName<<"\n";
         double angulo;
 
         if( entry_angulo->get_text().size() > 0) {

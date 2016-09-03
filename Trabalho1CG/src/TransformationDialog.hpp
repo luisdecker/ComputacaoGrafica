@@ -8,7 +8,9 @@
 #include <string>
 #include <gtkmm/builder.h>
 #include <gtkmm/radiobutton.h>
+#include <iostream>
 #include "TransformationController.hpp"
+
 
 using namespace std;
 

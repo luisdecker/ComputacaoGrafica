@@ -22,6 +22,9 @@
 #include "MainWindowController.hpp"
 #include <gtkmm/treemodel.h>
 #include "TransformationDialog.hpp"
+#include <cassert>
+#include <iostream>
+
 
 class MainWindow : public Gtk::Window, public Observer {
 

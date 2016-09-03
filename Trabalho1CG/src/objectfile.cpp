@@ -34,7 +34,11 @@ void ObjectFile::inserirObjeto( Objeto * objeto ) {
 	if( contemObjeto( objeto->nome ) ) {
 		return;
 	}
-	objectFile->insert( objectFile->end(), objeto );
+	std::cout  << "[ObjectFile] adicionando novo objeto " << objeto->nome << " [" <<objeto<<"] " << objectFile->size()<<"+1\n";
+	
+
+
+	objectFile->push_back( objeto );
 	notify();
 }
 //-----------------------------------------------
@@ -44,13 +48,14 @@ Objeto * ObjectFile::obterObjetoNome( std::string nome ) {
 			return  objectFile->at( iterator );
 		}
 	}
+	std::cout <<"[ObjectFile]Não encontrou o objeto " << nome << "\n";
 	return nullptr;
 }
 //-----------------------------------------------
 void ObjectFile::atualizarObjeto( Objeto * objeto ) {
 	for( int iterator = 0; iterator < objectFile->size(); iterator++ ) {
 		if( objectFile->at( iterator )->nome == objeto->nome ) {
-			objectFile->erase( objectFile->begin() + ( iterator - 1 ) );
+			objectFile->erase( objectFile->begin() + ( iterator ) );
 			objectFile->push_back( objeto );
 		}
 	}
@@ -64,7 +69,7 @@ std::vector< Objeto * > ObjectFile::obterObjetos() {
 void ObjectFile::retirarObjeto( Objeto * objeto ) {
 	for( int iterator = 0; iterator < objectFile->size(); iterator++ ) {
 		if( objectFile->at( iterator )->nome == objeto->nome ) {
-			objectFile->erase( objectFile->begin() + ( iterator - 1 ) );
+			objectFile->erase( objectFile->begin() + ( iterator ) );
 		}
 	}
 }

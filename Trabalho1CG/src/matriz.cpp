@@ -18,7 +18,7 @@ double & Matriz::at( int linha, int coluna ) {
 	assert( coluna <= this->colunas );
 	linha -= 1;
 	coluna -= 1;
-	std::cout << "[Matriz] acessando dado " << linha * this->colunas + coluna << std::endl;
+//	std::cout << "[Matriz] acessando dado " << linha * this->colunas + coluna << std::endl;
 	return data[linha * this->colunas + coluna];
 }
 //-----------------------------------------------
