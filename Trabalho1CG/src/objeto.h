@@ -29,7 +29,9 @@
 #include <vector>
 //Local Includes
 #include "tipos.hpp"
+//#include "window.h"
 
+class Window2D;
 class Objeto {
 public:
 	enum tipo {ponto, reta, wireframe}; //Enumerador com os tipos de objeto
@@ -44,6 +46,8 @@ public:
 	virtual ~Objeto() {}; //Destrutor
 
 	Ponto2D obterCentro() {return set2DPoint( 0, 0 );}
+
+	//virtual void atualizarCoordenadaSCN( Window2D * window );
 private:
 
 };
@@ -60,13 +64,20 @@ public:
 	//-------------------------------------------
 
 	Ponto( std::string nome, Ponto2D coordenada );  //Contrutor parametrizado
+
 	//-------------------------------------------
 	Ponto2D obterCoordenada(); //Retorna a coordenada do ponto.
 	//-------------------------------------------
+	void atualizarCoordenadaSCN( Ponto2D coordenada );
+	//-------------------------------------------
+
 	Ponto2D obterCentro();
 private:
 	//-------------------------------------------
 	Ponto2D coordenada; //coordenada do ponto;
+
+	Ponto2D coordenadaSCN;//Coordenada no SCN;
+
 };
 //-------------------------------------------------------------------------------------------------
 

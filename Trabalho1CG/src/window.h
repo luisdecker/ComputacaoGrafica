@@ -22,50 +22,66 @@
 #define WINDOW_H
 #include "tipos.hpp"
 #include "Subject.hpp"
+#include "matriz.hpp"
+#include "math.h"
+#include "transformadas.hpp"
 
 class Window2D : public Subject {
 public:
-    Window2D() { //Construtor padrão
-        ie = set2DPoint( 0, 0 );
-        sd = set2DPoint( 1, 1 );
+	Window2D() { //Construtor padrão
+		ie = set2DPoint( 0, 0 );
+		sd = set2DPoint( 1, 1 );
 
-    }
-    //-----------------------------------------------
-    Window2D( Ponto2D inferiorEsquerdo, Ponto2D superiorDireito );
-    //-----------------------------------------------
-    int obterXMinimo();//Retorna o x mínimo da window.
-    //-----------------------------------------------
-    int obterXMaximo();//Retorna o x máximo da window.
-    //-----------------------------------------------
-    int obterYMinimo();//Retorna o y minimo da window.
-    //-----------------------------------------------
-    int obterYMaximo();//Retorna o y máximo da window.
-    //-----------------------------------------------
-    void defineXMinimo(int xMin);//Define o x mínimo da window.
-    //-----------------------------------------------
-    void defineXMaximo(int xMax);//Define o x máximo da window.
-    //-----------------------------------------------
-    void defineYMinimo(int yMin);//Define o y minimo da window.
-    //-----------------------------------------------
-    void defineYMaximo(int yMax);//Define o y máximo da window.
-    //-----------------------------------------------
+	}
+	//-----------------------------------------------
+	/*Uma window sempre é iniciada paralela ao mundo*/
+	Window2D( Ponto2D inferiorEsquerdo, Ponto2D superiorDireito );
+	//-----------------------------------------------
+	int obterXMinimo();//Retorna o x mínimo da window.
+	//-----------------------------------------------
+	int obterXMaximo();//Retorna o x máximo da window.
+	//-----------------------------------------------
+	int obterYMinimo();//Retorna o y minimo da window.
+	//-----------------------------------------------
+	int obterYMaximo();//Retorna o y máximo da window.
+	//-----------------------------------------------
+	void defineXMinimo( int xMin ); //Define o x mínimo da window.
+	//-----------------------------------------------
+	void defineXMaximo( int xMax ); //Define o x máximo da window.
+	//-----------------------------------------------
+	void defineYMinimo( int yMin ); //Define o y minimo da window.
+	//-----------------------------------------------
+	void defineYMaximo( int yMax ); //Define o y máximo da window.
+	//-----------------------------------------------
 
-    void moverParaEsquerda(int numUnidades);
-    void moverParaDireita(int numUnidades);
-    void moverParaCima(int numUnidades);
-    void moverParaBaixo(int numUnidades);
-    void zoomIn(int numUnidades);
-    void zoomOut(int numUnidades);
+	void moverParaEsquerda( int numUnidades );
+	void moverParaDireita( int numUnidades );
+	void moverParaCima( int numUnidades );
+	void moverParaBaixo( int numUnidades );
+	void zoomIn( int numUnidades );
+	void zoomOut( int numUnidades );
+	void rotacionar( double graus );
+	Ponto2D obterCentro();
+	Matriz obterTransformacaoSCN();
 
-    Ponto2D inferiorEsquerdo() {
-        return ie;
-    }
-    Ponto2D superiorDireito() {
-        return sd;
-    }
+	Ponto2D inferiorEsquerdo() {
+		return ie;
+	}
+	Ponto2D superiorDireito() {
+		return sd;
+	}
+
+
 private:
-    Ponto2D ie;//Ponto inferior Esquerdo.
-    Ponto2D sd;//Ponto superior Direito.
+
+	void criarMatrizSCN();
+	Ponto2D ie;//Ponto inferior Esquerdo.
+	Ponto2D sd;//Ponto superior Direito.
+	Ponto2D id;//Ponto inferior Direito.
+	Ponto2D se;//Ponto superior Esquerdo.
+	Matriz MatrizSCN;
+	double anguloMundo;
+
 };
 
 #endif // WINDOW_H
