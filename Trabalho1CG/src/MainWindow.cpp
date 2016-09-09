@@ -102,6 +102,7 @@ void MainWindow::setObjectFile( ObjectFile * obf ) {
 
 	this->of = obf;
 	controller->setObjectFile( obf );
+	obf->atualizaWindow(window);
 
 	of->subscribe( this );
 
@@ -154,7 +155,7 @@ void MainWindow::on_btn_transf_activate() {
 
 
 void MainWindow::on_btn_include_clicked() {
-
+	includeObjDiag->setWindow( window );
 	includeObjDiag->executar();
 
 }

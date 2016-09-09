@@ -29,9 +29,11 @@
 #include <vector>
 //Local Includes
 #include "tipos.hpp"
-//#include "window.h"
+//#include "window.h" //Circular
+#include "matriz.hpp"
+#include "transformadas.hpp"
 
-class Window2D;
+class Tranformadas;
 class Objeto {
 public:
 	enum tipo {ponto, reta, wireframe}; //Enumerador com os tipos de objeto
@@ -47,7 +49,7 @@ public:
 
 	Ponto2D obterCentro() {return set2DPoint( 0, 0 );}
 
-	//virtual void atualizarCoordenadaSCN( Window2D * window );
+	virtual void atualizarCoordenadaSCN( Matriz transformacao ) =0;
 private:
 
 };
@@ -70,8 +72,9 @@ public:
 	//-------------------------------------------
 	void atualizarCoordenadaSCN( Ponto2D coordenada );
 	//-------------------------------------------
-
 	Ponto2D obterCentro();
+	//-------------------------------------------
+	virtual void atualizarCoordenadaSCN( Matriz transformacao );
 private:
 	//-------------------------------------------
 	Ponto2D coordenada; //coordenada do ponto;
@@ -99,9 +102,11 @@ public:
 	Ponto2D obterCoordenadaFinal();//Retorna o ponto final da reta.
 	//-------------------------------------------
 	Ponto2D obterCentro();
+	//-------------------------------------------
+	virtual void atualizarCoordenadaSCN( Matriz transformacao );
 private:
-	Ponto2D pontoInicial;
-	Ponto2D pontoFinal;
+	Ponto2D pontoInicial, pontoInicialSCN;
+	Ponto2D pontoFinal, pontoFinalSCN;
 
 };
 //-------------------------------------------------------------------------------------------------
@@ -124,8 +129,11 @@ public:
 	void adicionarPonto( Ponto2D ponto ); //Adiciona um ponto a lista.
 	//-------------------------------------------
 	Ponto2D obterCentro();
+	//-------------------------------------------
+	virtual void atualizarCoordenadaSCN( Matriz transformacao );
 private:
 	std::vector<Ponto2D> pontos;//Vetor de pontos ordenados. O poligono é ligado seguinto a ordem desta lista.
+	std::vector<Ponto2D> pontosSCN;
 };
 
 

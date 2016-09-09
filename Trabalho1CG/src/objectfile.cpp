@@ -31,28 +31,33 @@ bool ObjectFile::contemObjeto( std::string nome ) {
 }
 //-----------------------------------------------
 void ObjectFile::inserirObjeto( Objeto * objeto ) {
+
+	atualizaSCN( objeto );
+
 	if( contemObjeto( objeto->nome ) ) {
 		return;
 	}
-	std::cout  << "[ObjectFile] adicionando novo objeto " << objeto->nome << " [" <<objeto<<"] " << objectFile->size()<<"+1\n";
-	
-
+	std::cout  << "[ObjectFile] adicionando novo objeto " << objeto->nome << " [" << objeto << "] " << objectFile->size() << "+1\n";
 
 	objectFile->push_back( objeto );
 	notify();
 }
 //-----------------------------------------------
 Objeto * ObjectFile::obterObjetoNome( std::string nome ) {
+
+
 	for( int iterator = 0; iterator < objectFile->size(); iterator++ ) {
 		if( objectFile->at( iterator )->nome == nome ) {
+			atualizaSCN( objectFile->at( iterator ) );
 			return  objectFile->at( iterator );
 		}
 	}
-	std::cout <<"[ObjectFile]Não encontrou o objeto " << nome << "\n";
+	std::cout << "[ObjectFile]Não encontrou o objeto " << nome << "\n";
 	return nullptr;
 }
 //-----------------------------------------------
 void ObjectFile::atualizarObjeto( Objeto * objeto ) {
+	atualizaSCN( objeto );
 	for( int iterator = 0; iterator < objectFile->size(); iterator++ ) {
 		if( objectFile->at( iterator )->nome == objeto->nome ) {
 			objectFile->erase( objectFile->begin() + ( iterator ) );
@@ -67,12 +72,26 @@ std::vector< Objeto * > ObjectFile::obterObjetos() {
 }
 //-----------------------------------------------
 void ObjectFile::retirarObjeto( Objeto * objeto ) {
+	atualizaSCN( objeto );
 	for( int iterator = 0; iterator < objectFile->size(); iterator++ ) {
 		if( objectFile->at( iterator )->nome == objeto->nome ) {
 			objectFile->erase( objectFile->begin() + ( iterator ) );
 		}
 	}
 }
+//----------------------------------------------
+void ObjectFile::atualizaSCN( Objeto * obj ) {
+	if( !( window == nullptr ) ) {
+		obj->atualizarCoordenadaSCN( window->obterTransformacaoSCN() );
+
+	}
+}
+//----------------------------------------------
+void ObjectFile::atualizaWindow( Window2D * window ) {
+	this->window = window;
+}
+
+//----------------------------------------------
 
 
 

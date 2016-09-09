@@ -19,6 +19,7 @@
  */
 
 #include "objeto.h"
+#include "transformadas.hpp"// Isso é pra deixar minha IDE feliz. Não muda nada.
 
 
 //-----------------------------------------------
@@ -78,7 +79,41 @@ Ponto2D Wireframe::obterCentro() {
 	double mediaY = somaY / pontos.size();
 	return set2DPoint( mediaX, mediaY );
 }
+//-----------------------------------------------
+void Ponto::atualizarCoordenadaSCN( Matriz transformacao ) {
+	Matriz matrizCoordenada = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( coordenada ) );
+	matrizCoordenada = matrizCoordenada * transformacao;
+	Ponto3D coordenadaHomogenea = Tranformadas::matrizParaPonto3D( matrizCoordenada );
+	this->coordenadaSCN = set2DPoint( coordenadaHomogenea.x, coordenadaHomogenea.y );
 
+}
+//-----------------------------------------------
+void Reta::atualizarCoordenadaSCN( Matriz transformacao ) {
+	Matriz matrizCoordenadaInicial = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( obterCoordenadaInicial() ) );
+	Matriz matrizCoordenadaFinal = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( obterCoordenadaFinal() ) );
+	matrizCoordenadaInicial = matrizCoordenadaInicial * transformacao;
+	matrizCoordenadaFinal = matrizCoordenadaFinal * transformacao;
+	Ponto3D coordenadaHomogeneaInicial = Tranformadas::matrizParaPonto3D( matrizCoordenadaInicial );
+	Ponto3D coordenadaHomogeneaFinal = Tranformadas::matrizParaPonto3D( matrizCoordenadaFinal );
+	this->pontoInicialSCN = set2DPoint( coordenadaHomogeneaInicial.x, coordenadaHomogeneaInicial.y );
+	this->pontoFinalSCN = set2DPoint( coordenadaHomogeneaFinal.x, coordenadaHomogeneaFinal.y );
+
+}
+
+//-----------------------------------------------
+void Wireframe::atualizarCoordenadaSCN( Matriz transformacao ) {
+	std::vector<Ponto2D> coordenadasSCN( obterPontos().size() );
+	for( Ponto2D coordenada : obterPontos() ) {
+		Matriz matrizCoordenada = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( coordenada ) );
+		matrizCoordenada = matrizCoordenada * transformacao;
+		Ponto3D coordenadaHomogenea = Tranformadas::matrizParaPonto3D( matrizCoordenada );
+		Ponto2D coordenadaSCN = set2DPoint( coordenadaHomogenea.x, coordenadaHomogenea.y );
+		coordenadasSCN.push_back( coordenadaSCN );
+	}
+	this->pontosSCN = coordenadasSCN;
+}
+
+//-----------------------------------------------
 
 
 

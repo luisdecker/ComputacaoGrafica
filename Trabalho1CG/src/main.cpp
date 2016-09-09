@@ -30,6 +30,7 @@ int main( int argc, char * argv[] ) {
 	builder->get_widget_derived( "drawingarea", drawingArea );
 	builder->get_widget_derived( "transformationDialog", transformationDialog );
 
+
 	mainWindow->setIncludeObjectDialog( includeObjDiag );
 	mainWindow->setDrawingArea( drawingArea );
 	mainWindow->setTransformationDialog( transformationDialog );

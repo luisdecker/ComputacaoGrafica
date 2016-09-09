@@ -97,7 +97,7 @@ void Window2D::zoomOut( int numUnidades ) {
 }
 //-----------------------------------------------
 void Window2D::criarMatrizSCN() {
-	Ponto2D centro = obterCentro();
+	Ponto2D centro = this->obterCentro();
 	Matriz translacaoOrigem = Tranformadas::gerarMatrizTranslacao( set2DPoint( -centro.x, -centro.y ) );
 	Matriz rotacao = Tranformadas::gerarMatrizRotacao( -anguloMundo );
 	Matriz operacao = translacaoOrigem * rotacao;
@@ -105,38 +105,43 @@ void Window2D::criarMatrizSCN() {
 	double altura = sqrt( pow( ie.x - se.x, 2 ) + pow( ( ie.y - se.y ), 2 ) );
 	double proporcaoX = 1 / largura;
 	double proporcaoY = 1 / altura;
-	Tranformadas::gerarMatrizRedimensionamento( proporcaoX, proporcaoY );
+	Matriz redimensao = Tranformadas::gerarMatrizRedimensionamento( proporcaoX, proporcaoY );
+	operacao = operacao * redimensao;
 	this->MatrizSCN = operacao;
 
 }
 //-----------------------------------------------
 Ponto2D Window2D::obterCentro() {
-	double maiorX, maiorY, menorX, menorY;
+	double maiorX;
+	double maiorY;
+	double menorX;
+	double menorY;
 
-	maiorX = ie.x;
-	maiorX = ( sd.x > maiorX ? sd.x : maiorX );
-	maiorX = ( se.x > maiorX ? se.x : maiorX );
-	maiorX = ( id.x > maiorX ? id.x : maiorX );
+	maiorX = this->ie.x;
+	maiorX = ( this->sd.x > maiorX ? this->sd.x : maiorX );
+	maiorX = ( this->se.x > maiorX ? this->se.x : maiorX );
+	maiorX = ( this->id.x > maiorX ? this->id.x : maiorX );
 
-	maiorY = ie.y;
-	maiorY = ( sd.y > maiorY ? sd.y : maiorY );
-	maiorY = ( se.y > maiorY ? se.y : maiorY );
-	maiorY = ( id.y > maiorY ? id.y : maiorY );
+	maiorY = this->ie.y;
+	maiorY = ( this->sd.y > maiorY ? this->sd.y : maiorY );
+	maiorY = ( this->se.y > maiorY ? this->se.y : maiorY );
+	maiorY = ( this->id.y > maiorY ? this->id.y : maiorY );
 
-	menorX = ie.x;
-	menorX = ( sd.x < menorX ? sd.x : menorX );
-	menorX = ( se.x < menorX ? se.x : menorX );
-	menorX = ( id.x < menorX ? id.x : menorX );
+	menorX = this->ie.x;
+	menorX = ( this->sd.x < menorX ? this->sd.x : menorX );
+	menorX = ( this->se.x < menorX ? this->se.x : menorX );
+	menorX = ( this->id.x < menorX ? this->id.x : menorX );
 
-	menorY = ie.y;
-	menorY = ( sd.y < menorY ? sd.y : menorY );
-	menorY = ( se.y < menorY ? se.y : menorY );
-	menorY = ( id.y < menorY ? id.y : menorY );
+	menorY = this->ie.y;
+	menorY = ( this->sd.y < menorY ? this->sd.y : menorY );
+	menorY = ( this->se.y < menorY ? this->se.y : menorY );
+	menorY = ( this->id.y < menorY ? this->id.y : menorY );
 
 	return set2DPoint( ( maiorX + menorX ) / 2, ( maiorY + menorY ) / 2 );
 }
 //-----------------------------------------------
 Matriz Window2D::obterTransformacaoSCN() {
+	criarMatrizSCN();
 	return MatrizSCN;
 }
 

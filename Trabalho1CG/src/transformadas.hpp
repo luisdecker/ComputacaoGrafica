@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TRANSFORMADAS_H
+#define TRANSFORMADAS_H
 
 #include "objeto.h"
 #include "tipos.hpp"
@@ -6,7 +7,7 @@
 #include <cassert>
 #include <math.h>
 #include <iostream>
-
+class Objeto;
 class Tranformadas {
 public:
 	static Objeto * transladar( Objeto * obj, Ponto2D direcao );
@@ -22,3 +23,4 @@ public:
 	static Matriz gerarMatrizRedimensionamento( double escalaX, double escalaY );
 
 };
+#endif
