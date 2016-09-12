@@ -49,7 +49,7 @@ public:
 
 	Ponto2D obterCentro() {return set2DPoint( 0, 0 );}
 
-	virtual void atualizarCoordenadaSCN( Matriz transformacao ) =0;
+	virtual void atualizarCoordenadaSCN( Matriz transformacao ) = 0;
 private:
 
 };
@@ -70,11 +70,13 @@ public:
 	//-------------------------------------------
 	Ponto2D obterCoordenada(); //Retorna a coordenada do ponto.
 	//-------------------------------------------
-	void atualizarCoordenadaSCN( Ponto2D coordenada );
+	//void atualizarCoordenadaSCN( Ponto2D coordenada );
 	//-------------------------------------------
 	Ponto2D obterCentro();
 	//-------------------------------------------
 	virtual void atualizarCoordenadaSCN( Matriz transformacao );
+	//-------------------------------------------
+	Ponto2D obterCoordenadaSCN();//Retorna a coordenada do ponto em SCN
 private:
 	//-------------------------------------------
 	Ponto2D coordenada; //coordenada do ponto;
@@ -99,7 +101,11 @@ public:
 	//-------------------------------------------
 	Ponto2D obterCoordenadaInicial();//Retorna o ponto inicial da reta.
 	//-------------------------------------------
+	Ponto2D obterCoordenadaInicialSCN();
+	//-------------------------------------------
 	Ponto2D obterCoordenadaFinal();//Retorna o ponto final da reta.
+	//-------------------------------------------
+	Ponto2D obterCoordenadaFinalSCN();
 	//-------------------------------------------
 	Ponto2D obterCentro();
 	//-------------------------------------------
@@ -125,6 +131,8 @@ public:
 	Wireframe( std::string nome, std::vector<Ponto2D> pontos ); //Contrutor parametrizado
 	//-------------------------------------------
 	std::vector<Ponto2D> obterPontos();//Retorna um vetor com os pontos do poligono.
+	//-------------------------------------------
+	std::vector<Ponto2D> obterPontosSCN();//Retorna um vetor com os pontos SCN do poligono.
 	//-------------------------------------------
 	void adicionarPonto( Ponto2D ponto ); //Adiciona um ponto a lista.
 	//-------------------------------------------

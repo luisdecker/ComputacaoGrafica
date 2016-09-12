@@ -43,27 +43,101 @@ void Window2D::defineYMinimo( int yMin ) {
 //-----------------------------------------------
 
 void Window2D::moverParaEsquerda( int numUnidades ) {
+	Ponto2D vetorMovimento = set2DPoint( -numUnidades, 0);
+	Ponto3D vetorMovimentoHomogeneo = Tranformadas::ponto2DParaHomogeneo( vetorMovimento );
+	Matriz matVetor = Tranformadas::ponto3DparaMatriz( vetorMovimentoHomogeneo );
+	Matriz rotacao = Tranformadas::gerarMatrizRotacao( anguloMundo );
+	matVetor = matVetor * rotacao;
+	vetorMovimentoHomogeneo = Tranformadas::matrizParaPonto3D( matVetor );
+	Matriz operacao = Tranformadas::gerarMatrizTranslacao( set2DPoint( vetorMovimentoHomogeneo.x, vetorMovimentoHomogeneo.y ) );
 
-	ie.x -= numUnidades;
-	sd.x -= numUnidades;
+	Matriz matIE = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( ie ) );
+	Matriz matID = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( id ) );
+	Matriz matSE = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( se ) );
+	Matriz matSD = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( sd ) );
 
+	matIE = matIE * operacao;
+	matID = matID * operacao;
+	matSE = matSE * operacao;
+	matSD = matSD * operacao;
+
+	Ponto3D novoIE = Tranformadas::matrizParaPonto3D( matIE );
+	Ponto3D novoID = Tranformadas::matrizParaPonto3D( matID );
+	Ponto3D novoSE = Tranformadas::matrizParaPonto3D( matSE );
+	Ponto3D novoSD = Tranformadas::matrizParaPonto3D( matSD );
+
+	this->ie = set2DPoint( novoIE.x, novoIE.y );
+	this->id = set2DPoint( novoID.x, novoID.y );
+	this->se = set2DPoint( novoSE.x, novoSE.y );
+	this->sd = set2DPoint( novoSD.x, novoSD.y );
+	this->criarMatrizSCN();
 	notify();
 
 }
 //-----------------------------------------------
 void Window2D::moverParaDireita( int numUnidades ) {
+	Ponto2D vetorMovimento = set2DPoint( numUnidades , 0 );
+	Ponto3D vetorMovimentoHomogeneo = Tranformadas::ponto2DParaHomogeneo( vetorMovimento );
+	Matriz matVetor = Tranformadas::ponto3DparaMatriz( vetorMovimentoHomogeneo );
+	Matriz rotacao = Tranformadas::gerarMatrizRotacao( anguloMundo );
+	matVetor = matVetor * rotacao;
+	vetorMovimentoHomogeneo = Tranformadas::matrizParaPonto3D( matVetor );
+	Matriz operacao = Tranformadas::gerarMatrizTranslacao( set2DPoint( vetorMovimentoHomogeneo.x, vetorMovimentoHomogeneo.y ) );
 
-	ie.x += numUnidades;
-	sd.x += numUnidades;
+	Matriz matIE = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( ie ) );
+	Matriz matID = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( id ) );
+	Matriz matSE = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( se ) );
+	Matriz matSD = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( sd ) );
+
+	matIE = matIE * operacao;
+	matID = matID * operacao;
+	matSE = matSE * operacao;
+	matSD = matSD * operacao;
+
+	Ponto3D novoIE = Tranformadas::matrizParaPonto3D( matIE );
+	Ponto3D novoID = Tranformadas::matrizParaPonto3D( matID );
+	Ponto3D novoSE = Tranformadas::matrizParaPonto3D( matSE );
+	Ponto3D novoSD = Tranformadas::matrizParaPonto3D( matSD );
+
+	this->ie = set2DPoint( novoIE.x, novoIE.y );
+	this->id = set2DPoint( novoID.x, novoID.y );
+	this->se = set2DPoint( novoSE.x, novoSE.y );
+	this->sd = set2DPoint( novoSD.x, novoSD.y );
+	this->criarMatrizSCN();
 
 	notify();
 
 }
 //-----------------------------------------------
 void Window2D::moverParaCima( int numUnidades ) {
+	Ponto2D vetorMovimento = set2DPoint( 0, numUnidades );
+	Ponto3D vetorMovimentoHomogeneo = Tranformadas::ponto2DParaHomogeneo( vetorMovimento );
+	Matriz matVetor = Tranformadas::ponto3DparaMatriz( vetorMovimentoHomogeneo );
+	Matriz rotacao = Tranformadas::gerarMatrizRotacao( anguloMundo );
+	matVetor = matVetor * rotacao;
+	vetorMovimentoHomogeneo = Tranformadas::matrizParaPonto3D( matVetor );
+	Matriz operacao = Tranformadas::gerarMatrizTranslacao( set2DPoint( vetorMovimentoHomogeneo.x, vetorMovimentoHomogeneo.y ) );
 
-	ie.y += numUnidades;
-	sd.y += numUnidades;
+	Matriz matIE = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( ie ) );
+	Matriz matID = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( id ) );
+	Matriz matSE = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( se ) );
+	Matriz matSD = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( sd ) );
+
+	matIE = matIE * operacao;
+	matID = matID * operacao;
+	matSE = matSE * operacao;
+	matSD = matSD * operacao;
+
+	Ponto3D novoIE = Tranformadas::matrizParaPonto3D( matIE );
+	Ponto3D novoID = Tranformadas::matrizParaPonto3D( matID );
+	Ponto3D novoSE = Tranformadas::matrizParaPonto3D( matSE );
+	Ponto3D novoSD = Tranformadas::matrizParaPonto3D( matSD );
+
+	this->ie = set2DPoint( novoIE.x, novoIE.y );
+	this->id = set2DPoint( novoID.x, novoID.y );
+	this->se = set2DPoint( novoSE.x, novoSE.y );
+	this->sd = set2DPoint( novoSD.x, novoSD.y );
+	this->criarMatrizSCN();
 
 	notify();
 
@@ -71,8 +145,34 @@ void Window2D::moverParaCima( int numUnidades ) {
 //-----------------------------------------------
 void Window2D::moverParaBaixo( int numUnidades ) {
 
-	ie.y -= numUnidades;
-	sd.y -= numUnidades;
+	Ponto2D vetorMovimento = set2DPoint( 0, -numUnidades );
+	Ponto3D vetorMovimentoHomogeneo = Tranformadas::ponto2DParaHomogeneo( vetorMovimento );
+	Matriz matVetor = Tranformadas::ponto3DparaMatriz( vetorMovimentoHomogeneo );
+	Matriz rotacao = Tranformadas::gerarMatrizRotacao( anguloMundo );
+	matVetor = matVetor * rotacao;
+	vetorMovimentoHomogeneo = Tranformadas::matrizParaPonto3D( matVetor );
+	Matriz operacao = Tranformadas::gerarMatrizTranslacao(set2DPoint( vetorMovimentoHomogeneo.x, vetorMovimentoHomogeneo.y ));
+
+	Matriz matIE = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( ie ) );
+	Matriz matID = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( id ) );
+	Matriz matSE = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( se ) );
+	Matriz matSD = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( sd ) );
+
+	matIE = matIE * operacao;
+	matID = matID * operacao;
+	matSE = matSE * operacao;
+	matSD = matSD * operacao;
+
+	Ponto3D novoIE = Tranformadas::matrizParaPonto3D( matIE );
+	Ponto3D novoID = Tranformadas::matrizParaPonto3D( matID );
+	Ponto3D novoSE = Tranformadas::matrizParaPonto3D( matSE );
+	Ponto3D novoSD = Tranformadas::matrizParaPonto3D( matSD );
+
+	this->ie = set2DPoint( novoIE.x, novoIE.y );
+	this->id = set2DPoint( novoID.x, novoID.y );
+	this->se = set2DPoint( novoSE.x, novoSE.y );
+	this->sd = set2DPoint( novoSD.x, novoSD.y );
+	this->criarMatrizSCN();
 
 	notify();
 
@@ -144,5 +244,6 @@ Matriz Window2D::obterTransformacaoSCN() {
 	criarMatrizSCN();
 	return MatrizSCN;
 }
+
 
 

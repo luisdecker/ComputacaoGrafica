@@ -92,6 +92,12 @@ void ObjectFile::atualizaWindow( Window2D * window ) {
 }
 
 //----------------------------------------------
+void ObjectFile::atualizaSCNTodosObjetos() {
+	for( Objeto * obj : *objectFile ) {
+		obj->atualizarCoordenadaSCN( window->obterTransformacaoSCN() );
+
+	}
+}
 
 
 

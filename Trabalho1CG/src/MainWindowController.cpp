@@ -7,7 +7,7 @@ void MainWindowController::setObjectFile( ObjectFile * obf ) {
 
 void MainWindowController::setWindow( Window2D * window ) {
 	this->window = window;
-	
+
 }
 
 int MainWindowController::obtemTamanhoObjectFile() {
@@ -21,29 +21,40 @@ Objeto * MainWindowController::obtemUltimoObjInserido() {
 void MainWindowController::windowRight() {
 
 	this->window->moverParaDireita( ZOOM );
+	this->obf->atualizaSCNTodosObjetos();
 }
 
 void MainWindowController::windowLeft() {
 
 	this->window->moverParaEsquerda( ZOOM );
+	this->obf->atualizaSCNTodosObjetos();
+
 }
 
 void MainWindowController::windowUp() {
 
 	this->window->moverParaCima( ZOOM );
+	this->obf->atualizaSCNTodosObjetos();
+
 }
 
 void MainWindowController::windowDown() {
 
 	this->window->moverParaBaixo( ZOOM );
+	this->obf->atualizaSCNTodosObjetos();
+
 }
 
 void MainWindowController::windowZoomIn() {
 
 	this->window->zoomIn( ZOOM );
+	this->obf->atualizaSCNTodosObjetos();
+
 }
 
 void MainWindowController::windowZoomOut() {
 
 	this->window->zoomOut( ZOOM );
+	this->obf->atualizaSCNTodosObjetos();
+
 }

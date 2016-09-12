@@ -41,8 +41,9 @@ bool DrawingArea::on_draw( const Cairo::RefPtr<Cairo::Context> & cr ) {
 			case Objeto::ponto: {
 
 				Ponto * ponto = dynamic_cast<Ponto *>( objeto );
-				Ponto2D coordenada = ponto->obterCoordenada();
-				coordenada = viewPort->tranformarCoordenadas( *mainWindow, coordenada );
+				Ponto2D coordenada = ponto->obterCoordenadaSCN();
+				
+				coordenada = viewPort->tranformarCoordenadasSCN( *mainWindow, coordenada );
 				std::cout << "[DrawingArea]Vai desenhar um ponto em (" << coordenada.x << " , " << coordenada.y << ")\n";
 				cr->arc( coordenada.x, coordenada.y, 1., 0., 2 * M_PI );
 				cr->stroke();

@@ -31,6 +31,10 @@ Ponto2D Ponto::obterCoordenada() {
 	return  set2DPoint( this->coordenada.x, this->coordenada.y );
 }
 //-----------------------------------------------
+Ponto2D Ponto::obterCoordenadaSCN() {
+	return coordenadaSCN;
+}
+//-----------------------------------------------
 Reta::Reta( std::string nome, Ponto2D pontoInicial, Ponto2D pontoFinal ) {
 	this->pontoInicial = pontoInicial, this->pontoFinal = pontoFinal, this->nome = nome, this->tipoObjeto = Objeto::reta;
 }
@@ -38,10 +42,17 @@ Reta::Reta( std::string nome, Ponto2D pontoInicial, Ponto2D pontoFinal ) {
 Ponto2D Reta::obterCoordenadaInicial() {
 	return set2DPoint( this->pontoInicial.x, this->pontoInicial.y );
 }
-
+//-----------------------------------------------
+Ponto2D Reta::obterCoordenadaInicialSCN() {
+	return pontoInicialSCN;
+}
 //-----------------------------------------------
 Ponto2D Reta::obterCoordenadaFinal() {
 	return set2DPoint( this->pontoFinal.x, this->pontoFinal.y );
+}
+//-----------------------------------------------
+Ponto2D Reta::obterCoordenadaFinalSCN() {
+	return pontoFinalSCN;
 }
 //-------------------------------------------
 Wireframe::Wireframe( std::string nome, std::vector< Ponto2D > pontos ) {
@@ -52,7 +63,10 @@ std::vector< Ponto2D > Wireframe::obterPontos() {
 	return std::vector<Ponto2D>( this->pontos );
 }
 //-----------------------------------------------
-
+std::vector< Ponto2D > Wireframe::obterPontosSCN() {
+return std::vector<Ponto2D>(this->obterPontosSCN());
+}
+//-----------------------------------------------
 void Wireframe::adicionarPonto( Ponto2D ponto ) {
 	this->pontos.push_back( ponto );
 }
