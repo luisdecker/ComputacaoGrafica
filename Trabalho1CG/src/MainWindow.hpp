@@ -42,6 +42,8 @@ protected:
     Gtk::Button * btnDown;
     Gtk::Button * btnLeft;
     Gtk::Button * btnRight;
+    Gtk::Button * btnHorario;
+    Gtk::Button * btnAntiHorario;
     Glib::RefPtr<Gtk::TreeSelection> refTreeSelection;
 
     ObjectFile * of;
@@ -75,6 +77,9 @@ public:
     void on_btn_right_clicked();
     void on_selection_obj_changed();
     void on_btn_transf_activate();
+    void on_btn_horario_clicked();
+    void on_btn_ahorario_clicked();
+    
 
     void update();
 

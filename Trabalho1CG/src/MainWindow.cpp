@@ -18,7 +18,8 @@ MainWindow::MainWindow( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builde
 	builder->get_widget( "btn_left", btnLeft );
 	builder->get_widget( "btn_right", btnRight );
 	builder->get_widget( "list_obj", m_TreeView );
-
+	builder->get_widget( "btn_horario", btnHorario );
+	builder->get_widget( "btn_ahorario", btnAntiHorario );
 	btnTransf->set_sensitive( false );
 
 	refTreeSelection = m_TreeView->get_selection();
@@ -42,6 +43,8 @@ MainWindow::MainWindow( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builde
 	btnRight->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_right_clicked ) );
 	refTreeSelection->signal_changed().connect( sigc::mem_fun( *this, &MainWindow::on_selection_obj_changed ) );
 	btnTransf->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_transf_activate ) );
+	btnHorario->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_horario_clicked ) );
+	btnAntiHorario->signal_clicked().connect( sigc::mem_fun( *this, &MainWindow::on_btn_ahorario_clicked ) );
 }
 
 void MainWindow::update() {
@@ -102,7 +105,7 @@ void MainWindow::setObjectFile( ObjectFile * obf ) {
 
 	this->of = obf;
 	controller->setObjectFile( obf );
-	obf->atualizaWindow(window);
+	obf->atualizaWindow( window );
 
 	of->subscribe( this );
 
@@ -189,15 +192,12 @@ void MainWindow::on_btn_out_clicked() {
 
 	controller->windowZoomOut();
 }
-
-
-
-
-
-
-
-
-
+void MainWindow::on_btn_ahorario_clicked() {
+	controller->windowRodaAntiHorario();
+}
+void MainWindow::on_btn_horario_clicked() {
+	controller->windowRodaHorario();
+}
 
 
 

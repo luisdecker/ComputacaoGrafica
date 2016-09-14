@@ -5,6 +5,7 @@
 #include "window.h"
 
 #define ZOOM 1
+#define ANGULO 15
 
 class MainWindowController {
 
@@ -23,7 +24,8 @@ public:
     void windowLeft();
     void windowUp();
     void windowDown();
-
+    void windowRodaHorario();
+    void windowRodaAntiHorario();
 };
 
 #endif

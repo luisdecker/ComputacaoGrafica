@@ -43,7 +43,7 @@ void Window2D::defineYMinimo( int yMin ) {
 //-----------------------------------------------
 
 void Window2D::moverParaEsquerda( int numUnidades ) {
-	Ponto2D vetorMovimento = set2DPoint( -numUnidades, 0);
+	Ponto2D vetorMovimento = set2DPoint( -numUnidades, 0 );
 	Ponto3D vetorMovimentoHomogeneo = Tranformadas::ponto2DParaHomogeneo( vetorMovimento );
 	Matriz matVetor = Tranformadas::ponto3DparaMatriz( vetorMovimentoHomogeneo );
 	Matriz rotacao = Tranformadas::gerarMatrizRotacao( anguloMundo );
@@ -151,7 +151,7 @@ void Window2D::moverParaBaixo( int numUnidades ) {
 	Matriz rotacao = Tranformadas::gerarMatrizRotacao( anguloMundo );
 	matVetor = matVetor * rotacao;
 	vetorMovimentoHomogeneo = Tranformadas::matrizParaPonto3D( matVetor );
-	Matriz operacao = Tranformadas::gerarMatrizTranslacao(set2DPoint( vetorMovimentoHomogeneo.x, vetorMovimentoHomogeneo.y ));
+	Matriz operacao = Tranformadas::gerarMatrizTranslacao( set2DPoint( vetorMovimentoHomogeneo.x, vetorMovimentoHomogeneo.y ) );
 
 	Matriz matIE = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( ie ) );
 	Matriz matID = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( id ) );
@@ -179,19 +179,63 @@ void Window2D::moverParaBaixo( int numUnidades ) {
 }
 //-----------------------------------------------
 void Window2D::zoomIn( int numUnidades ) {
+	Ponto2D centro = obterCentro();
+	Matriz translacaoOrigem = Tranformadas::gerarMatrizTranslacao( set2DPoint( -centro.x, -centro.y ) );
+	Matriz redimensao = Tranformadas::gerarMatrizRedimensionamento( 1 / ( 1 + ( numUnidades / 100. ) ), 1 / ( 1 + ( numUnidades / 100. ) ) );
+	Matriz translacaoVolta = Tranformadas::gerarMatrizTranslacao( set2DPoint( centro.x, centro.y ) );
+	Matriz operacao = translacaoOrigem * redimensao * translacaoVolta;
 
-	ie.x += numUnidades, ie.y += numUnidades;
-	sd.x -= numUnidades, sd.y -= numUnidades;
+	Matriz matIE = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( ie ) );
+	Matriz matID = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( id ) );
+	Matriz matSE = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( se ) );
+	Matriz matSD = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( sd ) );
 
+	matIE = matIE * operacao;
+	matID = matID * operacao;
+	matSE = matSE * operacao;
+	matSD = matSD * operacao;
+
+	Ponto3D novoIE = Tranformadas::matrizParaPonto3D( matIE );
+	Ponto3D novoID = Tranformadas::matrizParaPonto3D( matID );
+	Ponto3D novoSE = Tranformadas::matrizParaPonto3D( matSE );
+	Ponto3D novoSD = Tranformadas::matrizParaPonto3D( matSD );
+
+	this->ie = set2DPoint( novoIE.x, novoIE.y );
+	this->id = set2DPoint( novoID.x, novoID.y );
+	this->se = set2DPoint( novoSE.x, novoSE.y );
+	this->sd = set2DPoint( novoSD.x, novoSD.y );
+	this->criarMatrizSCN();
 	notify();
 
 }
 //-----------------------------------------------
 void Window2D::zoomOut( int numUnidades ) {
+	Ponto2D centro = obterCentro();
+	Matriz translacaoOrigem = Tranformadas::gerarMatrizTranslacao( set2DPoint( -centro.x, -centro.y ) );
+	Matriz redimensao = Tranformadas::gerarMatrizRedimensionamento( ( 1 + ( numUnidades / 100. ) ), ( 1 + ( numUnidades / 100. ) ) );
+	Matriz translacaoVolta = Tranformadas::gerarMatrizTranslacao( set2DPoint( centro.x, centro.y ) );
+	Matriz operacao = translacaoOrigem * redimensao * translacaoVolta;
 
-	ie.x -= numUnidades, ie.y -= numUnidades;
-	sd.x += numUnidades, sd.y += numUnidades;
+	Matriz matIE = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( ie ) );
+	Matriz matID = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( id ) );
+	Matriz matSE = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( se ) );
+	Matriz matSD = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( sd ) );
 
+	matIE = matIE * operacao;
+	matID = matID * operacao;
+	matSE = matSE * operacao;
+	matSD = matSD * operacao;
+
+	Ponto3D novoIE = Tranformadas::matrizParaPonto3D( matIE );
+	Ponto3D novoID = Tranformadas::matrizParaPonto3D( matID );
+	Ponto3D novoSE = Tranformadas::matrizParaPonto3D( matSE );
+	Ponto3D novoSD = Tranformadas::matrizParaPonto3D( matSD );
+
+	this->ie = set2DPoint( novoIE.x, novoIE.y );
+	this->id = set2DPoint( novoID.x, novoID.y );
+	this->se = set2DPoint( novoSE.x, novoSE.y );
+	this->sd = set2DPoint( novoSD.x, novoSD.y );
+	this->criarMatrizSCN();
 	notify();
 
 }
@@ -199,7 +243,7 @@ void Window2D::zoomOut( int numUnidades ) {
 void Window2D::criarMatrizSCN() {
 	Ponto2D centro = this->obterCentro();
 	Matriz translacaoOrigem = Tranformadas::gerarMatrizTranslacao( set2DPoint( -centro.x, -centro.y ) );
-	Matriz rotacao = Tranformadas::gerarMatrizRotacao( -anguloMundo );
+	Matriz rotacao = Tranformadas::gerarMatrizRotacao( anguloMundo );
 	Matriz operacao = translacaoOrigem * rotacao;
 	double largura = sqrt( pow( ie.x - id.x, 2 ) + pow( ( ie.y - id.y ), 2 ) );
 	double altura = sqrt( pow( ie.x - se.x, 2 ) + pow( ( ie.y - se.y ), 2 ) );
@@ -244,6 +288,14 @@ Matriz Window2D::obterTransformacaoSCN() {
 	criarMatrizSCN();
 	return MatrizSCN;
 }
+//-----------------------------------------------
+void Window2D::rotacionar( double graus ) {
+	this->anguloMundo += graus;
+	this->criarMatrizSCN();
+	std::cout << "[Window] angulo em " << anguloMundo << "\n";
+	notify();
+}
+
 
 
 

@@ -259,25 +259,22 @@ Matriz Tranformadas::gerarMatrizTranslacao( Ponto2D direcao ) {
 
 	return translacao;
 }
-//-----------------------------------------------	
+//-----------------------------------------------
 Matriz Tranformadas::gerarMatrizRedimensionamento( double escalaX, double escalaY ) {
 	Matriz redimensao( 3, 3 );
 	redimensao.at( 1, 1 ) = escalaX;	redimensao.at( 1, 2 ) = 0;		redimensao.at( 1, 3 ) = 0;
-	redimensao.at( 2, 1 ) = 0;		redimensao.at( 2, 2 ) = escalaY;	redimensao.at( 2, 3 ) = 0;	
+	redimensao.at( 2, 1 ) = 0;		redimensao.at( 2, 2 ) = escalaY;	redimensao.at( 2, 3 ) = 0;
 	redimensao.at( 3, 1 ) = 0;		redimensao.at( 3, 2 ) = 0;		redimensao.at( 3, 3 ) = 1.;
-	
+
 	return redimensao;
 }
 //-----------------------------------------------
 Matriz Tranformadas::gerarMatrizRotacao( double graus ) {
+	graus = -graus;
 	Matriz rotacao( 3, 3 );
 	rotacao.at( 1, 1 ) = cos( graus );  rotacao.at( 1, 2 ) = -sin( graus );   rotacao.at( 1, 3 ) = 0;
 	rotacao.at( 2, 1 ) = sin( graus );  rotacao.at( 2, 2 ) = cos( graus );    rotacao.at( 2, 3 ) = 0;
 	rotacao.at( 3, 1 ) = 0;             rotacao.at( 3, 2 ) = 0;		  rotacao.at( 3, 3 ) = 1.;
-
-
-
-
 
 	return rotacao;
 
