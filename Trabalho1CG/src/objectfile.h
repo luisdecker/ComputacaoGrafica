@@ -32,36 +32,36 @@
 class ObjectFile : public Subject {
 public:
 
-	ObjectFile() {
-		objectFile = new std::vector<Objeto *>;
-	}//Construtor Padrão
+    ObjectFile() {
+        objectFile = new std::vector<Objeto *>;
+    }//Construtor Padrão
 //-----------------------------------------------
-	~ObjectFile() {
-		delete objectFile;
-	}
+    ~ObjectFile() {
+        delete objectFile;
+    }
 
-	//-----------------------------------------------
-	void inserirObjeto( Objeto * objeto );  //Insere um objeto no fim do ObjectFile.
-	//-----------------------------------------------
-	std::vector<Objeto *> obterObjetos();  //Recupera os objetos do ObjectFile.
-	//-----------------------------------------------
-	void retirarObjeto( Objeto * objeto );  //Retira o dado objeto do ObjectFile.
-	//-----------------------------------------------
-	Objeto * obterObjetoNome( std::string nome );  //Obtém um objeto a partir do seu nome.
-	//-----------------------------------------------
-	void atualizarObjeto( Objeto * objeto ); //Modifica o objeto no ObjectFile.
-	//-----------------------------------------------
-	bool contemObjeto( std::string nome ); //Verifica se o objet com dado nome está na ObjectFile.
-	//-----------------------------------------------
-	void atualizaWindow( Window2D * window );
-	//-----------------------------------------------
-	void atualizaSCNTodosObjetos();//Atualiza o SCN de cada um dos objetos
+    //-----------------------------------------------
+    void inserirObjeto( Objeto * objeto );  //Insere um objeto no fim do ObjectFile.
+    //-----------------------------------------------
+    std::vector<Objeto *> obterObjetos();  //Recupera os objetos do ObjectFile.
+    //-----------------------------------------------
+    void retirarObjeto( Objeto * objeto );  //Retira o dado objeto do ObjectFile.
+    //-----------------------------------------------
+    Objeto * obterObjetoNome( std::string nome );  //Obtém um objeto a partir do seu nome.
+    //-----------------------------------------------
+    void atualizarObjeto( Objeto * objeto ); //Modifica o objeto no ObjectFile.
+    //-----------------------------------------------
+    bool contemObjeto( std::string nome ); //Verifica se o objet com dado nome está na ObjectFile.
+    //-----------------------------------------------
+    void atualizaWindow( Window2D * window );
+    //-----------------------------------------------
+    void atualizaSCNTodosObjetos();//Atualiza o SCN de cada um dos objetos
 private:
 
 
-	Window2D * window;
-	std::vector<Objeto *> * objectFile;
-	void atualizaSCN( Objeto * obj );
+    Window2D * window;
+    std::vector<Objeto *> * objectFile;
+    void atualizaSCN( Objeto * obj );
 };
 
 #endif // OBJECTFILE_H

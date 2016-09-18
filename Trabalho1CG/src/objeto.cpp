@@ -24,118 +24,134 @@
 
 //-----------------------------------------------
 Ponto::Ponto( std::string nome, Ponto2D coordenada ) {
-	this->coordenada = coordenada, this->nome = nome, this->tipoObjeto = Objeto::ponto;
+    this->coordenada = coordenada, this->nome = nome, this->tipoObjeto = Objeto::ponto;
 }
 //-----------------------------------------------
 Ponto2D Ponto::obterCoordenada() {
-	return  set2DPoint( this->coordenada.x, this->coordenada.y );
+    return  set2DPoint( this->coordenada.x, this->coordenada.y );
 }
 //-----------------------------------------------
 Ponto2D Ponto::obterCoordenadaSCN() {
-	return coordenadaSCN;
+    return coordenadaSCN;
 }
 //-----------------------------------------------
 Reta::Reta( std::string nome, Ponto2D pontoInicial, Ponto2D pontoFinal ) {
-	this->pontoInicial = pontoInicial, this->pontoFinal = pontoFinal, this->nome = nome, this->tipoObjeto = Objeto::reta;
+    this->pontoInicial = pontoInicial, this->pontoFinal = pontoFinal, this->nome = nome, this->tipoObjeto = Objeto::reta;
 }
 //-----------------------------------------------
 Ponto2D Reta::obterCoordenadaInicial() {
-	return set2DPoint( this->pontoInicial.x, this->pontoInicial.y );
+    return set2DPoint( this->pontoInicial.x, this->pontoInicial.y );
 }
 //-----------------------------------------------
 Ponto2D Reta::obterCoordenadaInicialSCN() {
-	return pontoInicialSCN;
+    return pontoInicialSCN;
 }
 //-----------------------------------------------
 Ponto2D Reta::obterCoordenadaFinal() {
-	return set2DPoint( this->pontoFinal.x, this->pontoFinal.y );
+    return set2DPoint( this->pontoFinal.x, this->pontoFinal.y );
 }
 //-----------------------------------------------
 Ponto2D Reta::obterCoordenadaFinalSCN() {
-	return pontoFinalSCN;
+    return pontoFinalSCN;
 }
 //-------------------------------------------
 Wireframe::Wireframe( std::string nome, std::vector< Ponto2D > pontos ) {
-	this->pontos = pontos, this->nome = nome, this->tipoObjeto = Objeto::wireframe;
+    this->pontos = pontos, this->nome = nome, this->tipoObjeto = Objeto::wireframe;
 }
 //-----------------------------------------------
 std::vector< Ponto2D > Wireframe::obterPontos() {
-	return std::vector<Ponto2D>( this->pontos );
+    return std::vector<Ponto2D>( this->pontos );
 }
 //-----------------------------------------------
 std::vector< Ponto2D > Wireframe::obterPontosSCN() {
-	return std::vector<Ponto2D>( this->pontosSCN );
+    return std::vector<Ponto2D>( this->pontosSCN );
 }
 //-----------------------------------------------
 void Wireframe::adicionarPonto( Ponto2D ponto ) {
-	this->pontos.push_back( ponto );
+    this->pontos.push_back( ponto );
+}
+//-----------------------------------------------
+void Wireframe::setPreenchido(bool preenchido) {
+    this->preenchido = preenchido;
+}
+//-----------------------------------------------
+bool Wireframe::ehPreenchido() {
+    return this->preenchido;
+}
+//-----------------------------------------------
+void Wireframe::setTodosPontosInclusos(bool todosPontosInclusos) {
+    this->todosPontosInclusos = todosPontosInclusos;
+}
+//-----------------------------------------------
+bool Wireframe::possuiTodosPontosInclusos() {
+    return this->todosPontosInclusos;
 }
 //-----------------------------------------------
 Ponto2D Ponto::obterCentro() {
-	return coordenada;
+    return coordenada;
 }
 //-----------------------------------------------
 Ponto2D Reta::obterCentro() {
-	double mediaX = ( this->pontoInicial.x + this->pontoFinal.x ) / 2;
-	double mediaY = ( this->pontoInicial.y + this->pontoFinal.y ) / 2;
-	return set2DPoint( mediaX, mediaY );
+    double mediaX = ( this->pontoInicial.x + this->pontoFinal.x ) / 2;
+    double mediaY = ( this->pontoInicial.y + this->pontoFinal.y ) / 2;
+    return set2DPoint( mediaX, mediaY );
 
 }
 //-----------------------------------------------
 Ponto2D Wireframe::obterCentro() {
-	double somaX;
-	double somaY;
-	for( Ponto2D ponto : this->obterPontos() ) {
-		somaX += ponto.x;
-		somaY += ponto.y;
-	}
-	double mediaX = somaX / pontos.size();
-	double mediaY = somaY / pontos.size();
-	return set2DPoint( mediaX, mediaY );
+    double somaX;
+    double somaY;
+    for( Ponto2D ponto : this->obterPontos() ) {
+        somaX += ponto.x;
+        somaY += ponto.y;
+    }
+    double mediaX = somaX / pontos.size();
+    double mediaY = somaY / pontos.size();
+    return set2DPoint( mediaX, mediaY );
 }
 //-----------------------------------------------
 void Ponto::atualizarCoordenadaSCN( Matriz transformacao ) {
-	Matriz matrizCoordenada = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( coordenada ) );
-	matrizCoordenada = matrizCoordenada * transformacao;
-	Ponto3D coordenadaHomogenea = Tranformadas::matrizParaPonto3D( matrizCoordenada );
-	this->coordenadaSCN = set2DPoint( coordenadaHomogenea.x, coordenadaHomogenea.y );
+    Matriz matrizCoordenada = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( coordenada ) );
+    matrizCoordenada = matrizCoordenada * transformacao;
+    Ponto3D coordenadaHomogenea = Tranformadas::matrizParaPonto3D( matrizCoordenada );
+    this->coordenadaSCN = set2DPoint( coordenadaHomogenea.x, coordenadaHomogenea.y );
 
 }
 //-----------------------------------------------
 void Reta::atualizarCoordenadaSCN( Matriz transformacao ) {
-	Matriz matrizCoordenadaInicial = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( obterCoordenadaInicial() ) );
-	Matriz matrizCoordenadaFinal = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( obterCoordenadaFinal() ) );
-	matrizCoordenadaInicial = matrizCoordenadaInicial * transformacao;
-	matrizCoordenadaFinal = matrizCoordenadaFinal * transformacao;
-	Ponto3D coordenadaHomogeneaInicial = Tranformadas::matrizParaPonto3D( matrizCoordenadaInicial );
-	Ponto3D coordenadaHomogeneaFinal = Tranformadas::matrizParaPonto3D( matrizCoordenadaFinal );
-	this->pontoInicialSCN = set2DPoint( coordenadaHomogeneaInicial.x, coordenadaHomogeneaInicial.y );
-	this->pontoFinalSCN = set2DPoint( coordenadaHomogeneaFinal.x, coordenadaHomogeneaFinal.y );
+    Matriz matrizCoordenadaInicial = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( obterCoordenadaInicial() ) );
+    Matriz matrizCoordenadaFinal = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( obterCoordenadaFinal() ) );
+    matrizCoordenadaInicial = matrizCoordenadaInicial * transformacao;
+    matrizCoordenadaFinal = matrizCoordenadaFinal * transformacao;
+    Ponto3D coordenadaHomogeneaInicial = Tranformadas::matrizParaPonto3D( matrizCoordenadaInicial );
+    Ponto3D coordenadaHomogeneaFinal = Tranformadas::matrizParaPonto3D( matrizCoordenadaFinal );
+    this->pontoInicialSCN = set2DPoint( coordenadaHomogeneaInicial.x, coordenadaHomogeneaInicial.y );
+    this->pontoFinalSCN = set2DPoint( coordenadaHomogeneaFinal.x, coordenadaHomogeneaFinal.y );
 
 }
 
 //-----------------------------------------------
 void Wireframe::atualizarCoordenadaSCN( Matriz transformacao ) {
-	std::vector<Ponto2D> coordenadasSCN;
-	for( Ponto2D coordenada : obterPontos() ) {
-		Matriz matrizCoordenada = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( coordenada ) );
-		matrizCoordenada = matrizCoordenada * transformacao;
-		Ponto3D coordenadaHomogenea = Tranformadas::matrizParaPonto3D( matrizCoordenada );
-		Ponto2D coordenadaSCN = set2DPoint( coordenadaHomogenea.x, coordenadaHomogenea.y );
-		coordenadasSCN.push_back( coordenadaSCN );
-	}
-	this->pontosSCN = coordenadasSCN;
+    std::vector<Ponto2D> coordenadasSCN;
+    for( Ponto2D coordenada : obterPontos() ) {
+        Matriz matrizCoordenada = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( coordenada ) );
+        matrizCoordenada = matrizCoordenada * transformacao;
+        Ponto3D coordenadaHomogenea = Tranformadas::matrizParaPonto3D( matrizCoordenada );
+        Ponto2D coordenadaSCN = set2DPoint( coordenadaHomogenea.x, coordenadaHomogenea.y );
+        coordenadasSCN.push_back( coordenadaSCN );
+    }
+    this->pontosSCN = coordenadasSCN;
 }
 
 //-----------------------------------------------
 void Ponto::atualizarCoordenadaExibicao( Objeto * objeto ) {
-	Ponto * ponto = dynamic_cast<Ponto *>( objeto );
-	this->coordenadaExibicao = ponto->coordenada;
+    Ponto * ponto = dynamic_cast<Ponto *>( objeto );
+    this->coordenadaExibicao = ponto->coordenada;
 
 }
 //-------------------------------------------
 void Reta::atualizarCoordenadaExibicao( Objeto * objeto ) {
-	Reta * reta = dynamic_cast<Reta *>( objeto );
+    Reta * reta = dynamic_cast<Reta *>( objeto );
 
 }
 //-------------------------------------------

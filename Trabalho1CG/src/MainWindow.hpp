@@ -30,58 +30,58 @@ class MainWindow : public Gtk::Window, public Observer {
 
 protected:
 
-	Glib::RefPtr<Gtk::Builder> builder;
-	IncludeObjectDialog * includeObjDiag;
-	DrawingArea * drawingArea;
-	TransformationDialog * transformationDialog;
-	Gtk::Button * btnInclude;
-	Gtk::Button * btnTransf;
-	Gtk::Button * btnIn;
-	Gtk::Button * btnOut;
-	Gtk::Button * btnUp;
-	Gtk::Button * btnDown;
-	Gtk::Button * btnLeft;
-	Gtk::Button * btnRight;
-	Gtk::Button * btnHorario;
-	Gtk::Button * btnAntiHorario;
-	Glib::RefPtr<Gtk::TreeSelection> refTreeSelection;
+    Glib::RefPtr<Gtk::Builder> builder;
+    IncludeObjectDialog * includeObjDiag;
+    DrawingArea * drawingArea;
+    TransformationDialog * transformationDialog;
+    Gtk::Button * btnInclude;
+    Gtk::Button * btnTransf;
+    Gtk::Button * btnIn;
+    Gtk::Button * btnOut;
+    Gtk::Button * btnUp;
+    Gtk::Button * btnDown;
+    Gtk::Button * btnLeft;
+    Gtk::Button * btnRight;
+    Gtk::Button * btnHorario;
+    Gtk::Button * btnAntiHorario;
+    Glib::RefPtr<Gtk::TreeSelection> refTreeSelection;
 
-	ObjectFile * of;
-	Cairo::RefPtr<Cairo::Context> cr;
-	ModelColumns * m_Columns;
-	Gtk::TreeView * m_TreeView;
-	Glib::RefPtr<Gtk::ListStore>  m_refTreeModel;
+    ObjectFile * of;
+    Cairo::RefPtr<Cairo::Context> cr;
+    ModelColumns * m_Columns;
+    Gtk::TreeView * m_TreeView;
+    Glib::RefPtr<Gtk::ListStore>  m_refTreeModel;
 
-	Window2D * window;
+    Window2D * window;
 
-	int nroObjetos;
+    int nroObjetos;
 
-	MainWindowController * controller;
+    MainWindowController * controller;
 
 public:
 
-	MainWindow( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builder> & refGlade );
+    MainWindow( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builder> & refGlade );
 
-	void setObjectFile( ObjectFile * of );
-	void setWindow( Window2D * window );
-	void setDrawingArea( DrawingArea * drawingArea );
-	void setTransformationDialog( TransformationDialog * transformationDialog );
-	void setIncludeObjectDialog( IncludeObjectDialog * includeObjDiag );
+    void setObjectFile( ObjectFile * of );
+    void setWindow( Window2D * window );
+    void setDrawingArea( DrawingArea * drawingArea );
+    void setTransformationDialog( TransformationDialog * transformationDialog );
+    void setIncludeObjectDialog( IncludeObjectDialog * includeObjDiag );
 
-	void on_btn_include_clicked();
-	void on_btn_in_clicked();
-	void on_btn_out_clicked();
-	void on_btn_up_clicked();
-	void on_btn_down_clicked();
-	void on_btn_left_clicked();
-	void on_btn_right_clicked();
-	void on_selection_obj_changed();
-	void on_btn_transf_activate();
-	void on_btn_horario_clicked();
-	void on_btn_ahorario_clicked();
+    void on_btn_include_clicked();
+    void on_btn_in_clicked();
+    void on_btn_out_clicked();
+    void on_btn_up_clicked();
+    void on_btn_down_clicked();
+    void on_btn_left_clicked();
+    void on_btn_right_clicked();
+    void on_selection_obj_changed();
+    void on_btn_transf_activate();
+    void on_btn_horario_clicked();
+    void on_btn_ahorario_clicked();
 
 
-	void update();
+    void update();
 
 };
 #endif // MAINWINDOW_H

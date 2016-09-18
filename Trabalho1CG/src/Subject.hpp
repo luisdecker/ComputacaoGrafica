@@ -6,13 +6,13 @@
 
 class Subject {
 
-	std::set<Observer *> observers;
+    std::set<Observer *> observers;
 
 public:
-	void subscribe( Observer * ob );
-	void unsubscribe( Observer * ob );
+    void subscribe( Observer * ob );
+    void unsubscribe( Observer * ob );
 protected:
-	void notify();
+    void notify();
 };
 
 #endif

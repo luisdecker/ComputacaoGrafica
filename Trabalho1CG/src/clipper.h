@@ -6,16 +6,16 @@
 
 class Clipper {
 public:
-	Clipper( Window2D * janela );
-	~Clipper();
-	Objeto * operator()( Objeto * obj );
+    Clipper( Window2D * janela );
+    ~Clipper();
+    Objeto * operator()( Objeto * obj );
 
 private:
-	Ponto * clipPonto( Ponto * ponto );
-	Reta * clipReta( Reta * reta );
-	Wireframe * clipPoligono( Wireframe * wireframe );
-	Objeto * clip( Objeto * objeto );
-	Window2D * janela;
+    Ponto * clipPonto( Ponto * ponto );
+    Reta * clipReta( Reta * reta );
+    Wireframe * clipPoligono( Wireframe * wireframe );
+    Objeto * clip( Objeto * objeto );
+    Window2D * janela;
 };
 
 #endif // CLIPPER_H
