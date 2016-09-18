@@ -8,7 +8,7 @@ Matriz::Matriz( int linhas, int colunas ) {
 	this->data = newMat;
 	this->linhas = linhas;
 	this->colunas = colunas;
-	std::cout << "[Matriz]Criou uma matriz tamanho " << this->linhas << "x" << colunas << std::endl;
+	std::cout;// << "[Matriz]Criou uma matriz tamanho " << this->linhas << "x" << colunas << std::endl;
 }
 //-----------------------------------------------
 double & Matriz::at( int linha, int coluna ) {
@@ -18,12 +18,12 @@ double & Matriz::at( int linha, int coluna ) {
 	assert( coluna <= this->colunas );
 	linha -= 1;
 	coluna -= 1;
-//	std::cout << "[Matriz] acessando dado " << linha * this->colunas + coluna << std::endl;
+//	std::cout;// << "[Matriz] acessando dado " << linha * this->colunas + coluna << std::endl;
 	return data[linha * this->colunas + coluna];
 }
 //-----------------------------------------------
 Matriz Matriz::multiplicar( Matriz outra )  {
-	std::cout << "[Matriz]Vai multiplicar matrizes " << this->linhas << "x" << this->colunas << " e " << outra.linhas << "x" << outra.colunas << std::endl;
+	std::cout;// << "[Matriz]Vai multiplicar matrizes " << this->linhas << "x" << this->colunas << " e " << outra.linhas << "x" << outra.colunas << std::endl;
 	assert( this->colunas == outra.linhas );
 	Matriz resposta( this->linhas, outra.colunas );
 
@@ -38,7 +38,7 @@ Matriz Matriz::multiplicar( Matriz outra )  {
 		}
 	}
 
-	std::cout << "[Matriz]Multiplicou!" << std::endl;
+	std::cout;// << "[Matriz]Multiplicou!" << std::endl;
 	return resposta;
 }
 //-----------------------------------------------

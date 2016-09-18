@@ -41,10 +41,6 @@ Reta * Clipper::clipReta( Reta * reta ) {
 
 }
 //-----------------------------------------------
-Reta * Clipper::clipReta( Reta * reta ) {
-
-}
-//-----------------------------------------------
 Objeto * Clipper::operator()( Objeto * obj ) {
 	return clip( obj );
 }

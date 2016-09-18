@@ -64,7 +64,7 @@ std::vector< Ponto2D > Wireframe::obterPontos() {
 }
 //-----------------------------------------------
 std::vector< Ponto2D > Wireframe::obterPontosSCN() {
-return std::vector<Ponto2D>(this->obterPontosSCN());
+	return std::vector<Ponto2D>( this->pontosSCN );
 }
 //-----------------------------------------------
 void Wireframe::adicionarPonto( Ponto2D ponto ) {
@@ -116,7 +116,7 @@ void Reta::atualizarCoordenadaSCN( Matriz transformacao ) {
 
 //-----------------------------------------------
 void Wireframe::atualizarCoordenadaSCN( Matriz transformacao ) {
-	std::vector<Ponto2D> coordenadasSCN( obterPontos().size() );
+	std::vector<Ponto2D> coordenadasSCN;
 	for( Ponto2D coordenada : obterPontos() ) {
 		Matriz matrizCoordenada = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( coordenada ) );
 		matrizCoordenada = matrizCoordenada * transformacao;
@@ -128,6 +128,21 @@ void Wireframe::atualizarCoordenadaSCN( Matriz transformacao ) {
 }
 
 //-----------------------------------------------
+void Ponto::atualizarCoordenadaExibicao( Objeto * objeto ) {
+	Ponto * ponto = dynamic_cast<Ponto *>( objeto );
+	this->coordenadaExibicao = ponto->coordenada;
+
+}
+//-------------------------------------------
+void Reta::atualizarCoordenadaExibicao( Objeto * objeto ) {
+	Reta * reta = dynamic_cast<Reta *>( objeto );
+
+}
+//-------------------------------------------
+void Wireframe::atualizarCoordenadaExibicao( Objeto * objeto ) {
+
+}
+//-------------------------------------------
 
 
 

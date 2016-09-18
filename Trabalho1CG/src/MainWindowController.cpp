@@ -61,13 +61,13 @@ void MainWindowController::windowZoomOut() {
 
 void MainWindowController::windowRodaAntiHorario() {
 	this->window->rotacionar( -ANGULO / 57.2957795131 );
-	this->obf->atualizaWindow(window);
+	this->obf->atualizaWindow( window );
 	this->obf->atualizaSCNTodosObjetos();
-  
+
 }
 void MainWindowController::windowRodaHorario() {
 	this->window->rotacionar( ANGULO / 57.2957795131 );
-	this->obf->atualizaWindow(window);
+	this->obf->atualizaWindow( window );
 	this->obf->atualizaSCNTodosObjetos();
-  
+
 }

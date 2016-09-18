@@ -50,6 +50,8 @@ public:
 	Ponto2D obterCentro() {return set2DPoint( 0, 0 );}
 
 	virtual void atualizarCoordenadaSCN( Matriz transformacao ) = 0;
+
+	virtual void atualizarCoordenadaExibicao( Objeto * objeto ) = 0;
 private:
 
 };
@@ -77,12 +79,15 @@ public:
 	virtual void atualizarCoordenadaSCN( Matriz transformacao );
 	//-------------------------------------------
 	Ponto2D obterCoordenadaSCN();//Retorna a coordenada do ponto em SCN
-private:
 	//-------------------------------------------
-	Ponto2D coordenada; //coordenada do ponto;
+	virtual void atualizarCoordenadaExibicao( Objeto * objeto );
+private:
 
+	Ponto2D coordenada; //coordenada do ponto no mundo;
+	//-------------------------------------------
 	Ponto2D coordenadaSCN;//Coordenada no SCN;
-
+	//-------------------------------------------
+	Ponto2D coordenadaExibicao;//Coordenada no mundo apos clip
 };
 //-------------------------------------------------------------------------------------------------
 
@@ -110,9 +115,14 @@ public:
 	Ponto2D obterCentro();
 	//-------------------------------------------
 	virtual void atualizarCoordenadaSCN( Matriz transformacao );
+	//-------------------------------------------
+	virtual void atualizarCoordenadaExibicao( Objeto * objeto );
 private:
 	Ponto2D pontoInicial, pontoInicialSCN;
+	//-------------------------------------------
 	Ponto2D pontoFinal, pontoFinalSCN;
+	//-------------------------------------------
+	Ponto2D pontoInicialExibicao, pontoFinalExibicao;
 
 };
 //-------------------------------------------------------------------------------------------------
@@ -123,7 +133,9 @@ public:
 	//Construtor padrão
 	Wireframe( std::string nome ) {
 		this->pontos.clear();
-		this->pontos.push_back( set2DPoint( 0, 0 ) );
+		this->pontosSCN.clear();
+		this->pontosExibicao.clear();
+		//this->pontos.push_back( set2DPoint( 0, 0 ) );
 		this->nome = nome;
 		this->tipoObjeto = Objeto::wireframe;
 	}
@@ -139,9 +151,12 @@ public:
 	Ponto2D obterCentro();
 	//-------------------------------------------
 	virtual void atualizarCoordenadaSCN( Matriz transformacao );
+	//-------------------------------------------
+	virtual void atualizarCoordenadaExibicao( Objeto * objeto );
 private:
 	std::vector<Ponto2D> pontos;//Vetor de pontos ordenados. O poligono é ligado seguinto a ordem desta lista.
-	std::vector<Ponto2D> pontosSCN;
+	std::vector<Ponto2D> pontosSCN;//Pontos na SCN.
+	std::vector<Ponto2D> pontosExibicao;//Pontos apos clip.
 };
 
 

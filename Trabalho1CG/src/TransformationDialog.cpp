@@ -1,146 +1,146 @@
 #include "TransformationDialog.hpp"
 
 TransformationDialog::TransformationDialog( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builder> & refGlade ) :
-    Gtk::Dialog( cobject ), builder( refGlade ) {
+	Gtk::Dialog( cobject ), builder( refGlade ) {
 
-    controller = new TransformationController();
+	controller = new TransformationController();
 
-    builder->get_widget("tabs_transf",tabs);
-    builder->get_widget("x_transl",x_transl);
-    builder->get_widget("y_transl",y_transl);
-    builder->get_widget("x_escal",x_escal);
-    builder->get_widget("y_escal",y_escal);
-    builder->get_widget("x_rot",x_rot);
-    builder->get_widget("y_rot",y_rot);
-    builder->get_widget("rd_mundo",rd_mundo);
-    builder->get_widget("rd_obj",rd_obj);
-    builder->get_widget("rd_pto",rd_pto);
-    builder->get_widget("entry_angulo",entry_angulo);
-
-}
-
-void TransformationDialog::executar(std::string nomeObj) {
-
-    int result = run();
-
-    switch( result ) {
-    case Gtk::RESPONSE_OK: {
-
-        aplicarTransformacao(nomeObj);
-        close();
-
-    }
-    break;
-
-    case Gtk::RESPONSE_CANCEL: {
-
-        close();
-    }
-
-    break;
-    }
-}
-
-void TransformationDialog::setObjectFile(ObjectFile * obf) {
-
-    this->obf = obf;
-    controller->setObjectFile(obf);
+	builder->get_widget( "tabs_transf", tabs );
+	builder->get_widget( "x_transl", x_transl );
+	builder->get_widget( "y_transl", y_transl );
+	builder->get_widget( "x_escal", x_escal );
+	builder->get_widget( "y_escal", y_escal );
+	builder->get_widget( "x_rot", x_rot );
+	builder->get_widget( "y_rot", y_rot );
+	builder->get_widget( "rd_mundo", rd_mundo );
+	builder->get_widget( "rd_obj", rd_obj );
+	builder->get_widget( "rd_pto", rd_pto );
+	builder->get_widget( "entry_angulo", entry_angulo );
 
 }
 
-void TransformationDialog::aplicarTransformacao(std::string objName) {
+void TransformationDialog::executar( std::string nomeObj ) {
 
-    int tabNum = tabs->get_current_page();
+	int result = run();
 
-    switch( tabNum ) {
+	switch( result ) {
+		case Gtk::RESPONSE_OK: {
 
-    //case 0: translacao
-    case 0: {
+			aplicarTransformacao( nomeObj );
+			close();
 
-	std::cout << "[TransformationDialog] aplicando " << "translacao"<< " a " <<objName<<"\n";
-        if( x_transl->get_text().size() > 0 && y_transl->get_text().size() > 0 ) {
+		}
+		break;
 
-            double x, y;
+		case Gtk::RESPONSE_CANCEL: {
 
-            x = stod( x_transl->get_text() );
-            y = stod( y_transl->get_text() );
+			close();
+		}
 
-            controller->aplicarTranslacao(objName,x,y);
+		break;
+	}
+}
 
-        }
+void TransformationDialog::setObjectFile( ObjectFile * obf ) {
 
-        x_transl->set_text("");
-        y_transl->set_text("");
+	this->obf = obf;
+	controller->setObjectFile( obf );
 
-        break;
-    }
+}
 
-    //case 1: escalonamento
-    case 1: {
+void TransformationDialog::aplicarTransformacao( std::string objName ) {
 
-	std::cout << "[TransformationDialog] aplicando " <<"escalonamento" << " a " <<objName<<"\n";
-        if( x_escal->get_text().size() > 0 && y_escal->get_text().size() > 0) {
+	int tabNum = tabs->get_current_page();
 
-            double x, y;
+	switch( tabNum ) {
 
-            x = stod( x_escal->get_text() );
-            y = stod( y_escal->get_text() );
+		//case 0: translacao
+		case 0: {
 
-            controller->aplicarEscalonamento(objName,x,y);
+			std::cout << "[TransformationDialog] aplicando " << "translacao" << " a " << objName << "\n";
+			if( x_transl->get_text().size() > 0 && y_transl->get_text().size() > 0 ) {
 
-        }
+				double x, y;
 
-        x_escal->set_text("");
-        y_escal->set_text("");
+				x = stod( x_transl->get_text() );
+				y = stod( y_transl->get_text() );
 
-        break;
-    }
-    //Case 2: rotacao
-    case 2: {
+				controller->aplicarTranslacao( objName, x, y );
 
-	std::cout << "[TransformationDialog] aplicando " <<"rotacao" << " a " <<objName<<"\n";
-        double angulo;
+			}
 
-        if( entry_angulo->get_text().size() > 0) {
+			x_transl->set_text( "" );
+			y_transl->set_text( "" );
 
-            angulo = stod( entry_angulo->get_text() );
+			break;
+		}
 
-            if(rd_mundo->get_active()) {
+		//case 1: escalonamento
+		case 1: {
 
-                controller->aplicarRotacaoCentroMundo(objName, angulo);
+			std::cout << "[TransformationDialog] aplicando " << "escalonamento" << " a " << objName << "\n";
+			if( x_escal->get_text().size() > 0 && y_escal->get_text().size() > 0 ) {
 
+				double x, y;
 
-            } else if(rd_obj->get_active()) {
+				x = stod( x_escal->get_text() );
+				y = stod( y_escal->get_text() );
 
-                controller->aplicarRotacaoCentroObjeto(objName, angulo);
+				controller->aplicarEscalonamento( objName, x, y );
 
-            } else {
+			}
 
-                if( x_rot->get_text().size() > 0 && y_rot->get_text().size() > 0) {
+			x_escal->set_text( "" );
+			y_escal->set_text( "" );
 
-                    double x,y;
+			break;
+		}
+		//Case 2: rotacao
+		case 2: {
 
-                    x = stod( x_rot->get_text() );
-                    y = stod( y_rot->get_text() );
+			std::cout << "[TransformationDialog] aplicando " << "rotacao" << " a " << objName << "\n";
+			double angulo;
 
-                    controller->aplicarRotacaoPontoArbitrario(objName, angulo, x, y);
+			if( entry_angulo->get_text().size() > 0 ) {
 
-                }
+				angulo = stod( entry_angulo->get_text() );
 
-                x_rot->set_text("");
-                y_rot->set_text("");
+				if( rd_mundo->get_active() ) {
 
-
-            }
-
-        }
-
-        entry_angulo->set_text("");
-
-        break;
-
-    }
+					controller->aplicarRotacaoCentroMundo( objName, angulo );
 
 
-    }
+				} else if( rd_obj->get_active() ) {
+
+					controller->aplicarRotacaoCentroObjeto( objName, angulo );
+
+				} else {
+
+					if( x_rot->get_text().size() > 0 && y_rot->get_text().size() > 0 ) {
+
+						double x, y;
+
+						x = stod( x_rot->get_text() );
+						y = stod( y_rot->get_text() );
+
+						controller->aplicarRotacaoPontoArbitrario( objName, angulo, x, y );
+
+					}
+
+					x_rot->set_text( "" );
+					y_rot->set_text( "" );
+
+
+				}
+
+			}
+
+			entry_angulo->set_text( "" );
+
+			break;
+
+		}
+
+
+	}
 }

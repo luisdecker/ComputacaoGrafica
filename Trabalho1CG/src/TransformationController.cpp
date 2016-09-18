@@ -38,7 +38,7 @@ void TransformationController::aplicarRotacaoCentroObjeto( string nomeObj, doubl
 	Ponto2D centro ;
 	switch( obj->tipoObjeto ) {
 		case Objeto::ponto: {
-			
+
 			Ponto * ponto = dynamic_cast<Ponto *>( obj );
 			std::cout << "[TransformationController] Ponto rodando em volta de si mesmo\n";
 			centro = ponto->obterCoordenada();

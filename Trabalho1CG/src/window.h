@@ -29,13 +29,13 @@
 class Window2D : public Subject {
 public:
 	Window2D() { //Construtor padrão
-	Ponto2D inferiorEsquerdo = set2DPoint(0,0);
-	Ponto2D superiorDireito = set2DPoint(1,1);
-	this->ie = inferiorEsquerdo;
-	this->sd = superiorDireito;
-	this->id = set2DPoint( superiorDireito.x, inferiorEsquerdo.y );
-	this->se = set2DPoint( ie.x, sd.y );
-	this->anguloMundo  = 0;
+		Ponto2D inferiorEsquerdo = set2DPoint( 0, 0 );
+		Ponto2D superiorDireito = set2DPoint( 1, 1 );
+		this->ie = inferiorEsquerdo;
+		this->sd = superiorDireito;
+		this->id = set2DPoint( superiorDireito.x, inferiorEsquerdo.y );
+		this->se = set2DPoint( ie.x, sd.y );
+		this->anguloMundo  = 0;
 	}
 	//-----------------------------------------------
 	/*Uma window sempre é iniciada paralela ao mundo*/

@@ -13,8 +13,8 @@ public:
 private:
 	Ponto * clipPonto( Ponto * ponto );
 	Reta * clipReta( Reta * reta );
-	Wireframe * clipPoligono(Wireframe * wireframe);
-	Objeto * clip(Objeto * objeto);
+	Wireframe * clipPoligono( Wireframe * wireframe );
+	Objeto * clip( Objeto * objeto );
 	Window2D * janela;
 };
 
