@@ -13,6 +13,7 @@
 #ifdef TESTES_MODELO
 #include "objeto.h"
 #include "cohensutherland.h"
+#include "liangbarsky.h"
 #endif
 
 
@@ -55,11 +56,19 @@ int main( int argc, char * argv[] ) {
 	/*TESTES DO MODELO*/
 #ifdef TESTES_MODELO
 	std::cout << "=======================================================\n";
-	Reta retaTeste( "reta", set2DPoint( -100, 250  ), set2DPoint( 600, 400 ) );
-	CohenSutherland clipper( window );
-	Reta * resultado = dynamic_cast<Reta *>( clipper.clip( &retaTeste ) );
-	std::cout << "Ponto inicial: (" << resultado->obterCoordenadaInicial().x << " , " << resultado->obterCoordenadaInicial().y << ")\n";
-	std::cout << "Ponto final: (" << resultado->obterCoordenadaFinal().x << " , " << resultado->obterCoordenadaFinal().y << ")\n";
+	Reta retaTeste( "reta", set2DPoint( -100, 250 ), set2DPoint( 600, 250 ) );
+
+//	CohenSutherland clipper( window );
+	//Window2D novaWindow(set2DPoint(70,60), set2DPoint(230,150));
+	LiangBarsky clipper( window );
+	Objeto * clipada = clipper.clip( &retaTeste );
+	if( !(clipada == nullptr) ) {
+		Reta * resultado = dynamic_cast<Reta *>( clipada );
+		std::cout << "Ponto inicial: (" << resultado->obterCoordenadaInicial().x << " , " << resultado->obterCoordenadaInicial().y << ")\n";
+		std::cout << "Ponto final: (" << resultado->obterCoordenadaFinal().x << " , " << resultado->obterCoordenadaFinal().y << ")\n";
+	}else {
+		std::cout << "NULA\n";
+	}
 	std::cout << "=======================================================\n";
 	return 0;
 #endif
