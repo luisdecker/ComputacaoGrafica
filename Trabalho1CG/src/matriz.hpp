@@ -27,38 +27,38 @@
 
 class Matriz {
 public:
-    Matriz() {
-        std::cout << "Criou uma matriz padrão, não sei como\n";
-    }
-    Matriz( int linhas, int colunas );
-    double & at( int linha, int coluna );
-    Matriz operator * ( const Matriz outra ) {
-        return multiplicar( outra );
-    }
-    Matriz operator + ( const Matriz outra ) {
-        return somar( outra );
-    }
-    Matriz operator - ( const Matriz outra ) {
-        return subtrair( outra );
-    }
-    bool  operator == ( const Matriz outra ) {
-        return igual( outra );
-    }
-    Matriz transpor();
-    int numLinhas() {
-        return linhas;
-    }
-    int numColunas() {
-        return colunas;
-    }
-    void print();
+	Matriz() {
+		std::cout << "Criou uma matriz padrão, não sei como\n";
+	}
+	Matriz( int linhas, int colunas );
+	double & at( int linha, int coluna );
+	Matriz operator * ( const Matriz outra ) {
+		return multiplicar( outra );
+	}
+	Matriz operator + ( const Matriz outra ) {
+		return somar( outra );
+	}
+	Matriz operator - ( const Matriz outra ) {
+		return subtrair( outra );
+	}
+	bool  operator == ( const Matriz outra ) {
+		return igual( outra );
+	}
+	Matriz transpor();
+	int numLinhas() {
+		return linhas;
+	}
+	int numColunas() {
+		return colunas;
+	}
+	void print();
 private:
-    int linhas, colunas;
-    double * data;
-    Matriz multiplicar( Matriz outra );
-    Matriz somar( Matriz outra );
-    Matriz subtrair( Matriz outra );
-    bool igual( Matriz outra );
+	int linhas, colunas;
+	double * data;
+	Matriz multiplicar( Matriz outra );
+	Matriz somar( Matriz outra );
+	Matriz subtrair( Matriz outra );
+	bool igual( Matriz outra );
 
 };
 

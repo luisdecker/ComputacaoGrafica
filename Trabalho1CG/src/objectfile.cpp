@@ -21,82 +21,82 @@
 #include "objectfile.h"
 //-----------------------------------------------
 bool ObjectFile::contemObjeto( std::string nome ) {
-    for( Objeto * obj : *objectFile ) {
-        if( obj->nome == nome ) {
+	for( Objeto * obj : *objectFile ) {
+		if( obj->nome == nome ) {
 
-            return true;
-        }
-    }
-    return false;
+			return true;
+		}
+	}
+	return false;
 }
 //-----------------------------------------------
 void ObjectFile::inserirObjeto( Objeto * objeto ) {
 
-    atualizaSCN( objeto );
+	atualizaSCN( objeto );
 
-    if( contemObjeto( objeto->nome ) ) {
-        return;
-    }
-    std::cout  << "[ObjectFile] adicionando novo objeto " << objeto->nome << " [" << objeto << "] " << objectFile->size() << "+1\n";
+	if( contemObjeto( objeto->nome ) ) {
+		return;
+	}
+	std::cout  << "[ObjectFile] adicionando novo objeto " << objeto->nome << " [" << objeto << "] " << objectFile->size() << "+1\n";
 
-    objectFile->push_back( objeto );
-    notify();
+	objectFile->push_back( objeto );
+	notify();
 }
 //-----------------------------------------------
 Objeto * ObjectFile::obterObjetoNome( std::string nome ) {
 
 
-    for( int iterator = 0; iterator < objectFile->size(); iterator++ ) {
-        if( objectFile->at( iterator )->nome == nome ) {
-            atualizaSCN( objectFile->at( iterator ) );
-            return  objectFile->at( iterator );
-        }
-    }
-    std::cout << "[ObjectFile]Não encontrou o objeto " << nome << "\n";
-    return nullptr;
+	for( int iterator = 0; iterator < objectFile->size(); iterator++ ) {
+		if( objectFile->at( iterator )->nome == nome ) {
+			atualizaSCN( objectFile->at( iterator ) );
+			return  objectFile->at( iterator );
+		}
+	}
+	std::cout << "[ObjectFile]Não encontrou o objeto " << nome << "\n";
+	return nullptr;
 }
 //-----------------------------------------------
 void ObjectFile::atualizarObjeto( Objeto * objeto ) {
-    atualizaSCN( objeto );
-    for( int iterator = 0; iterator < objectFile->size(); iterator++ ) {
-        if( objectFile->at( iterator )->nome == objeto->nome ) {
-            objectFile->erase( objectFile->begin() + ( iterator ) );
-            objectFile->push_back( objeto );
-        }
-    }
-    notify();
+	atualizaSCN( objeto );
+	for( int iterator = 0; iterator < objectFile->size(); iterator++ ) {
+		if( objectFile->at( iterator )->nome == objeto->nome ) {
+			objectFile->erase( objectFile->begin() + ( iterator ) );
+			objectFile->push_back( objeto );
+		}
+	}
+	notify();
 }
 //-----------------------------------------------
 std::vector< Objeto * > ObjectFile::obterObjetos() {
-    return std::vector<Objeto *>( *objectFile );
+	return std::vector<Objeto *>( *objectFile );
 }
 //-----------------------------------------------
 void ObjectFile::retirarObjeto( Objeto * objeto ) {
-    atualizaSCN( objeto );
-    for( int iterator = 0; iterator < objectFile->size(); iterator++ ) {
-        if( objectFile->at( iterator )->nome == objeto->nome ) {
-            objectFile->erase( objectFile->begin() + ( iterator ) );
-        }
-    }
+	atualizaSCN( objeto );
+	for( int iterator = 0; iterator < objectFile->size(); iterator++ ) {
+		if( objectFile->at( iterator )->nome == objeto->nome ) {
+			objectFile->erase( objectFile->begin() + ( iterator ) );
+		}
+	}
 }
 //----------------------------------------------
 void ObjectFile::atualizaSCN( Objeto * obj ) {
-    if( !( window == nullptr ) ) {
-        obj->atualizarCoordenadaSCN( window->obterTransformacaoSCN() );
+	if( !( window == nullptr ) ) {
+		obj->atualizarCoordenadaSCN( window->obterTransformacaoSCN() );
 
-    }
+	}
 }
 //----------------------------------------------
 void ObjectFile::atualizaWindow( Window2D * window ) {
-    this->window = window;
+	this->window = window;
 }
 
 //----------------------------------------------
 void ObjectFile::atualizaSCNTodosObjetos() {
-    for( Objeto * obj : *objectFile ) {
-        obj->atualizarCoordenadaSCN( window->obterTransformacaoSCN() );
+	for( Objeto * obj : *objectFile ) {
+		obj->atualizarCoordenadaSCN( window->obterTransformacaoSCN() );
 
-    }
+	}
 }
 
 
