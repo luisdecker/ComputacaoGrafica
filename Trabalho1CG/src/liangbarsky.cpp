@@ -10,7 +10,10 @@ Objeto * LiangBarsky::clip( Objeto * objeto ) {
 		return nullptr;
 	}
 	Reta * retaOrg = dynamic_cast<Reta *>( objeto );
-
+	//Rotaciona a reta para trabalharmos em coordenadas da window
+	Reta * reta = dynamic_cast<Reta *>( Tranformadas::rotacionar( retaOrg, janela->obterRotacao(), janela->obterCentro() ) );
+	retaOrg = reta;
+	
 	double t0 = 0.;
 	double t1 = 1.;
 	double xDelta = retaOrg->obterCoordenadaFinal().x - retaOrg->obterCoordenadaInicial().x;
@@ -36,7 +39,7 @@ Objeto * LiangBarsky::clip( Objeto * objeto ) {
 			}
 			case 3: {
 				p = yDelta;
-				q =  ( janela->obterYMaximo() - retaOrg->obterCoordenadaInicial().y );
+				q = ( janela->obterYMaximo() - retaOrg->obterCoordenadaInicial().y );
 				break;
 			}
 		}//switch caso

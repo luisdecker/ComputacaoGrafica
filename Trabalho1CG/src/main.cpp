@@ -8,7 +8,7 @@
 #include "objectfile.h"
 
 #include <iostream>
-#define TESTES_MODELO
+//#define TESTES_MODELO
 
 #ifdef TESTES_MODELO
 #include "objeto.h"
