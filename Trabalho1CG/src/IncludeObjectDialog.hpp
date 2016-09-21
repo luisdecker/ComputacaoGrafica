@@ -15,34 +15,34 @@
 
 class IncludeObjectDialog : public Gtk::Dialog {
 
-    void incluirObjeto();
+	void incluirObjeto();
 
-    IncludeObjectController * controller;
+	IncludeObjectController * controller;
 
 protected:
-    Glib::RefPtr<Gtk::Builder> builder;
-    Gtk::Notebook * tabs;
-    Gtk::Entry * in_name_obj;
-    Gtk::Entry * x_point;
-    Gtk::Entry * y_point;
-    Gtk::Entry * x0_str_line;
-    Gtk::Entry * y0_str_line;
-    Gtk::Entry * x1_str_line;
-    Gtk::Entry * y1_str_line;
-    ObjectFile * lastOf;
-    Gtk::Button * btn_add_point_wire;
-    Gtk::Entry * x_wire;
-    Gtk::Entry * y_wire;
-    Gtk::RadioButton * rd_arame;
-    Gtk::RadioButton * rd_preench;
+	Glib::RefPtr<Gtk::Builder> builder;
+	Gtk::Notebook * tabs;
+	Gtk::Entry * in_name_obj;
+	Gtk::Entry * x_point;
+	Gtk::Entry * y_point;
+	Gtk::Entry * x0_str_line;
+	Gtk::Entry * y0_str_line;
+	Gtk::Entry * x1_str_line;
+	Gtk::Entry * y1_str_line;
+	ObjectFile * lastOf;
+	Gtk::Button * btn_add_point_wire;
+	Gtk::Entry * x_wire;
+	Gtk::Entry * y_wire;
+	Gtk::RadioButton * rd_arame;
+	Gtk::RadioButton * rd_preench;
 
 public:
 
-    IncludeObjectDialog( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builder> & refGlade );
-    void executar();
-    void on_btn_add_point_wire_clicked();
-    void setObjectFile( ObjectFile * obf );
-    void setWindow( Window2D * window );
+	IncludeObjectDialog( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builder> & refGlade );
+	void executar();
+	void on_btn_add_point_wire_clicked();
+	void setObjectFile( ObjectFile * obf );
+	void setWindow( Window2D * window );
 
 
 };

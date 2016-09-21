@@ -27,26 +27,27 @@ struct Ponto2D {
 
     double x, y;
     bool visitado = false, interseccao=false, entrada = false;
+
 };
 struct Ponto3D {
-    double x, y, z;
+	double x, y, z;
 };
 
 
 
 static Ponto2D set2DPoint( double x, double y ) {
-    Ponto2D retorno;
-    retorno.x = x;
-    retorno.y = y;
-    return retorno;
+	Ponto2D retorno;
+	retorno.x = x;
+	retorno.y = y;
+	return retorno;
 }
 
 static Ponto3D set3DPoint( double x, double y, double z ) {
-    Ponto3D retorno;
-    retorno.x = x;
-    retorno.y = y;
-    retorno.z = z;
-    return retorno;
+	Ponto3D retorno;
+	retorno.x = x;
+	retorno.y = y;
+	retorno.z = z;
+	return retorno;
 }
 
 
