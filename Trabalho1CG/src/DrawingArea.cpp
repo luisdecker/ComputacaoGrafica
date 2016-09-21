@@ -29,16 +29,32 @@ void DrawingArea::update() {
 
 bool DrawingArea::on_draw( const Cairo::RefPtr<Cairo::Context> & cr ) {
 	Gtk::Allocation allocation = get_allocation();
-	const int width = allocation.get_width();
-	const int height = allocation.get_height();
+	const int width = allocation.get_width() - 10;
+	const int height = allocation.get_height() - 10;
 
 
 	std::cout << "[DrawingArea]ViewPort de tamanho  " << width << "," << height << std::endl;
 	std::cout << "[DrawingArea]Window de tamanho  " << mainWindow->obterXMaximo() - mainWindow->obterXMinimo() << "," << mainWindow->obterYMaximo() - mainWindow->obterYMinimo()  << std::endl;
 
-	this->viewPort = new ViewPort( set2DPoint( 0, 0 ), set2DPoint( width, height ) );
+	//Aqui desenha os boundaries da viewport
+	cr->move_to( 10, 10 );
+	cr->line_to( 10, height );
+	cr->move_to( 10, height );
+	cr->line_to( width, height );
+	cr->move_to( width, height );
+	cr->line_to( width, 10 );
+	cr->move_to( width, 10 );
+	cr->line_to( 10, 10 );
+	cr->stroke();
+
+
+	this->viewPort = new ViewPort( set2DPoint( 10, 10 ), set2DPoint( width, height ) );
+
+	CohenSutherland clipper( mainWindow );
+
 	std::cout << "[DrawingArea]Vai desenhar " << mainOf->obterObjetos().size() << " objetos" << std::endl;
 	for( Objeto * objeto : mainOf->obterObjetos() ) {
+		if( !objeto->desenhar ) continue;
 		switch( objeto->tipoObjeto ) {
 			case Objeto::ponto: {
 
@@ -53,7 +69,9 @@ bool DrawingArea::on_draw( const Cairo::RefPtr<Cairo::Context> & cr ) {
 				break;
 			}
 			case Objeto::reta: {
+
 				Reta * reta = dynamic_cast<Reta *>( objeto );
+
 				Ponto2D inicial = reta->obterCoordenadaInicialSCN();
 				inicial = viewPort->tranformarCoordenadasSCN( *mainWindow, inicial );
 				Ponto2D final = reta->obterCoordenadaFinalSCN();

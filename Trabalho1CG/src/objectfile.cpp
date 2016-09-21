@@ -93,9 +93,38 @@ void ObjectFile::atualizaWindow( Window2D * window ) {
 
 //----------------------------------------------
 void ObjectFile::atualizaSCNTodosObjetos() {
+	cliparObjetos();
 	for( Objeto * obj : *objectFile ) {
 		obj->atualizarCoordenadaSCN( window->obterTransformacaoSCN() );
 
+	}
+}
+//-----------------------------------------------
+void ObjectFile::cliparObjetos() {
+	for( Objeto * obj : *objectFile ) {
+		switch( obj->tipoObjeto ) {
+			case Objeto::ponto: {
+				Ponto * ponto = dynamic_cast <Ponto *>( obj );
+				ClipPonto cliper( window );
+				Ponto * pontoClipado = dynamic_cast<Ponto*>(cliper.clip( ponto ));
+				ponto->atualizarCoordenadaExibicao( pontoClipado );
+				break;
+			}
+			case Objeto::reta: {
+				Reta * reta = dynamic_cast<Reta *>( obj );
+				Reta * retaClipada;
+				if( algoritmoClip ) {
+					CohenSutherland cliper( window );
+					retaClipada = dynamic_cast<Reta *>(cliper.clip( reta ));
+				} else {
+					LiangBarsky cliper( window );
+					retaClipada = dynamic_cast<Reta *>(cliper.clip( reta ));
+				}
+				reta->atualizarCoordenadaExibicao( retaClipada );
+				break;
+			}
+			case Objeto::wireframe: {break;};
+		}
 	}
 }
 

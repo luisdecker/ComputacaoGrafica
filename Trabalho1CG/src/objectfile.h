@@ -28,6 +28,9 @@
 #include "objeto.h"
 #include "Subject.hpp"
 #include "window.h"
+#include "liangbarsky.h"
+#include "cohensutherland.h"
+#include "clipponto.h"
 
 class ObjectFile : public Subject {
 public:
@@ -56,12 +59,17 @@ public:
 	void atualizaWindow( Window2D * window );
 	//-----------------------------------------------
 	void atualizaSCNTodosObjetos();//Atualiza o SCN de cada um dos objetos
+	//-----------------------------------------------
+	void setarLiamBarsky(){algoritmoClip = false;}//Seta o algoritmo de clipagem pra Liam Barsky
+	//-----------------------------------------------
+	void setarCohenSutherland(){algoritmoClip = true;}//Seta o algoritmo de clipagem pra Cohen Suthreland
 private:
 
-
+	void cliparObjetos();
 	Window2D * window;
 	std::vector<Objeto *> * objectFile;
 	void atualizaSCN( Objeto * obj );
+	bool algoritmoClip = false;
 };
 
 #endif // OBJECTFILE_H

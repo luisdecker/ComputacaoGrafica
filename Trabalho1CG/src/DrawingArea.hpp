@@ -8,6 +8,7 @@
 #include "viewport.h"
 #include <gtkmm/builder.h>
 #include "Observer.hpp"
+#include "cohensutherland.h"
 
 class DrawingArea : public Gtk::DrawingArea, public Observer {
 public:

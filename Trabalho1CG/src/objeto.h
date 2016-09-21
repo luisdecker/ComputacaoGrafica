@@ -54,6 +54,8 @@ public:
 	virtual void atualizarCoordenadaSCN( Matriz transformacao ) = 0;
 
 	virtual void atualizarCoordenadaExibicao( Objeto * objeto ) = 0;
+
+	bool desenhar;
 private:
 
 };
@@ -66,6 +68,7 @@ public:
 		coordenada = set2DPoint( 0, 0 );
 		tipoObjeto = Objeto::ponto;
 		this->nome = nome;
+		desenhar = true;
 	};
 	//-------------------------------------------
 
@@ -102,6 +105,7 @@ public:
 		pontoFinal = set2DPoint( 0, 0 );
 		tipoObjeto = Objeto::reta;
 		this->nome = nome;
+		desenhar = true;
 	}
 	//-------------------------------------------
 	Reta( std::string nome, Ponto2D pontoInicial, Ponto2D pontoFinal );  //Contrutor parametrizado
@@ -142,6 +146,7 @@ public:
 		this->tipoObjeto = Objeto::wireframe;
 		this->preenchido = false;
 		this->todosPontosInclusos = false;
+		desenhar = true;
 	}
 	//-------------------------------------------
 	Wireframe( std::string nome, std::vector<Ponto2D> pontos ); //Contrutor parametrizado
