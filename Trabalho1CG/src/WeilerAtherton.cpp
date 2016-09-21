@@ -49,8 +49,8 @@ Ponto2D * WeilerAtherton::calculaInterseccaoEntreRetas(Ponto2D a, Ponto2D b, Pon
 }
 
 
-// Given three colinear points p, q, r, the function checks if
-// point q lies on line segment 'pr'
+//dados três pontos p, q, r, a função verifica se q está sobre o segmento pr.
+
 bool  WeilerAtherton::onSegment(Ponto2D p, Ponto2D q, Ponto2D r){
     if (q.x <= std::max(p.x, r.x) && q.x >= std::min(p.x, r.x) &&
         q.y <= std::max(p.y, r.y) && q.y >= std::min(p.y, r.y))
@@ -59,53 +59,50 @@ bool  WeilerAtherton::onSegment(Ponto2D p, Ponto2D q, Ponto2D r){
     return false;
 }
  
-// To find orientation of ordered triplet (p, q, r).
-// The function returns following values
-// 0 --> p, q and r are colinear
-// 1 --> Clockwise
-// 2 --> Counterclockwise
+// Encontra a orientação para uma tripla de pontos (p, q, r).
+// A função retorna os seguintes valores:
+// 0 --> p, q and r são colineares
+// 1 --> sentido horário
+// 2 --> sentido anti-horário
 int  WeilerAtherton::orientation(Ponto2D p, Ponto2D q, Ponto2D r){
-    // See http://www.geeksforgeeks.org/orientation-3-ordered-points/
-    // for details of below formula.
+    
     int val = (q.y - p.y) * (r.x - q.x) -
               (q.x - p.x) * (r.y - q.y);
  
-    if (val == 0) return 0;  // colinear
+    if (val == 0) return 0;  
  
-    return (val > 0)? 1: 2; // clock or counterclock wise
+    return (val > 0)? 1: 2; 
 }
  
-// The main function that returns true if line segment 'p1q1'
-// and 'p2q2' intersect.
+//determina interseccção entre duas retas, especificadas por suas coordenadas cartesianas
+//explicação em detalhes no livro de algoritmos do cormen.
 bool  WeilerAtherton::doIntersect(Ponto2D p1, Ponto2D q1, Ponto2D p2, Ponto2D q2){
-    // Find the four orientations needed for general and
-    // special cases
+    
     int o1 = orientation(p1, q1, p2);
     int o2 = orientation(p1, q1, q2);
     int o3 = orientation(p2, q2, p1);
     int o4 = orientation(p2, q2, q1);
  
-    // General case
+    
     if (o1 != o2 && o3 != o4)
         return true;
  
-    // Special Cases
-    // p1, q1 and p2 are colinear and p2 lies on segment p1q1
+    
     if (o1 == 0 && onSegment(p1, p2, q1)) return true;
  
-    // p1, q1 and p2 are colinear and q2 lies on segment p1q1
+    
     if (o2 == 0 && onSegment(p1, q2, q1)) return true;
  
-    // p2, q2 and p1 are colinear and p1 lies on segment p2q2
+    
     if (o3 == 0 && onSegment(p2, p1, q2)) return true;
  
-     // p2, q2 and q1 are colinear and q1 lies on segment p2q2
+     
     if (o4 == 0 && onSegment(p2, q1, q2)) return true;
  
-    return false; // Doesn't fall in any of the above cases
+    return false; 
 }
  
-void WeilerAtherton::clip(Wireframe * obj){
+std::vector<Wireframe*> WeilerAtherton::clip(Wireframe * obj){
 
 	std::vector<Ponto2D*> inClipPoints,inSubjectPoints;
 	
@@ -284,15 +281,9 @@ void WeilerAtherton::clip(Wireframe * obj){
 
 	        		Ponto2D *auxPoint = *iterSubj;
 	        		auxPoint->visitado = true;
-
-	        		std::cout <<"imprimindo ponto dos subjects...\n";
-	        		std::cout<<"x: " <<auxPoint->x << " y: "<<auxPoint->y <<" entrada:"<<auxPoint->entrada<< " intersec: " <<auxPoint->interseccao <<"\n\n";
-
 	        		wf->adicionarPonto(*auxPoint);
 	        		
 	        		if(auxPoint->interseccao){
-	        			
-	        			// objRecortado = true;
 
 	        			std::vector<Ponto2D*>::iterator iterClip = procuraPonto(clipPoints,*auxPoint);
 
@@ -305,9 +296,6 @@ void WeilerAtherton::clip(Wireframe * obj){
 	        			}
 	        			Ponto2D *auxPoint2 = *iterClip;
 	        			auxPoint2->visitado = true;
-
-	        			std::cout <<"imprimindo ponto dos clippoints...\n";
-	        			std::cout<<"x: " <<auxPoint2->x << " y: "<<auxPoint2->y <<" entrada:"<<auxPoint2->entrada<< " intersec: " <<auxPoint2->interseccao <<"\n\n";   			
 
 	        			if(*iterClip == primeiro){
 	        				objRecortado = true;
@@ -329,43 +317,7 @@ void WeilerAtherton::clip(Wireframe * obj){
 	        }
 
 
-
-	        std::vector<Ponto2D*>::iterator itSubject;
-	        std::vector<Ponto2D*>::iterator itClip;
-
-	        std::cout << "Imprimindo pontos do wireframe\n";
-
-	        for(itSubject = subjectPoints.begin(); itSubject < subjectPoints.end(); itSubject++){
-	        	Ponto2D ponto = **itSubject;
-	        	std::cout<<"x: " <<ponto.x << " y: "<<ponto.y <<" entrada:"<<ponto.entrada<< " intersec: " <<ponto.interseccao <<"\n";
-	        }
-
-
-	        std::cout << "\n\nImprimindo pontos da window\n";
-
-	        for(itClip = clipPoints.begin(); itClip < clipPoints.end(); itClip++){
-	        	Ponto2D ponto = **itClip;
-	        	std::cout<<"x: " <<ponto.x << " y: "<<ponto.y <<" entrada:"<<ponto.entrada<< " intersec: " <<ponto.interseccao<<"\n";
-	        }
-
-	        std::cout <<"\n\n";
-
-	        for(int i = 0; i < objs.size();i++){
-
-	        	Wireframe *wf = objs[i];
-
-	        	std::vector<Ponto2D> pontos = wf->obterPontos();
-
-	        	for(int j = 0; j < pontos.size();j++){     		
-	        		std::cout<<"x: " <<pontos[j].x << " y: "<<pontos[j].y <<"\n";
-
-	        	}
-
-	        	std::cout <<"\n\n";
-
-
-	        }
-
+	        return objs;
 }
 
 std::vector<Ponto2D*>::iterator WeilerAtherton::procuraPonto(std::vector<Ponto2D*> &lista, Ponto2D pontoBusca){

@@ -11,7 +11,7 @@ class WeilerAtherton{
 
 public:
 	WeilerAtherton(Window2D * window);
-	void clip(Wireframe *wire);
+	std::vector<Wireframe*> clip(Wireframe *wire);
 
 	private:
 		Window2D *window;
