@@ -74,6 +74,12 @@ public:
     Ponto2D superiorDireito() {
         return sd;
     }
+    Ponto2D superiorEsquerdo(){
+        return se;
+    }
+    Ponto2D inferiorDireito(){
+        return id;
+    }
 
 
 private:
