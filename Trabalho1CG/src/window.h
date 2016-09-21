@@ -68,12 +68,18 @@ public:
 	Ponto2D obterCentro();
 	Matriz obterTransformacaoSCN();
 
-	Ponto2D inferiorEsquerdo() {
-		return ie;
-	}
-	Ponto2D superiorDireito() {
-		return sd;
-	}
+    Ponto2D inferiorEsquerdo() {
+        return ie;
+    }
+    Ponto2D superiorDireito() {
+        return sd;
+    }
+    Ponto2D superiorEsquerdo(){
+        return se;
+    }
+    Ponto2D inferiorDireito(){
+        return id;
+    }
 
 	double obterRotacao() {return anguloMundo;}
 

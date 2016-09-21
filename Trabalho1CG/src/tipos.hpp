@@ -25,7 +25,9 @@
 
 struct Ponto2D {
 
-	double x, y;
+    double x, y;
+    bool visitado = false, interseccao=false, entrada = false;
+
 };
 struct Ponto3D {
 	double x, y, z;
