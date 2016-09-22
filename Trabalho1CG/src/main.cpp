@@ -56,11 +56,11 @@ int main( int argc, char * argv[] ) {
 	/*TESTES DO MODELO*/
 #ifdef TESTES_MODELO
 	std::cout << "=======================================================\n";
-	Reta retaTeste( "reta", set2DPoint( -100, 250 ), set2DPoint( 600, 250 ) );
-
-//	CohenSutherland clipper( window );
-	//Window2D novaWindow(set2DPoint(70,60), set2DPoint(230,150));
-	LiangBarsky clipper( window );
+	Reta retaTeste( "reta", set2DPoint( 250, 250 ), set2DPoint(250, 600 ) );
+	Window2D novaWindow(set2DPoint(0,0), set2DPoint(500,500));
+	novaWindow.rotacionar(90);
+	CohenSutherland clipper(& novaWindow );
+	//LiangBarsky clipper( window );
 	Objeto * clipada = clipper.clip( &retaTeste );
 	if( !(clipada == nullptr) ) {
 		Reta * resultado = dynamic_cast<Reta *>( clipada );

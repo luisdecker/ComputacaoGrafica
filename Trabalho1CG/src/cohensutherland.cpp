@@ -12,7 +12,7 @@ Objeto * CohenSutherland::clip( Objeto * objeto ) {
 	Reta * retaorg = dynamic_cast<Reta *>( objeto );
 
 	//Rotaciona a reta para trabalharmos em coordenadas da window
-	Reta * reta = dynamic_cast<Reta *>( Tranformadas::rotacionar( retaorg, janela->obterRotacao(), janela->obterCentro() ) );
+	Reta * reta = dynamic_cast<Reta *>( Tranformadas::rotacionar( retaorg, -( janela->obterRotacao() ) , janela->obterCentro() ) );
 	binCode codigoInicio = checkCode( reta->obterCoordenadaInicial() );
 	binCode codigoFim = checkCode( reta->obterCoordenadaFinal() );
 	binCode codigoAnalise = codigoInicio & codigoFim;
@@ -26,7 +26,7 @@ Objeto * CohenSutherland::clip( Objeto * objeto ) {
 		}
 	} else { //codigos diferentes
 		if( codigoAnalise == zero ) {//and dos codigos = 0 -> possivel desenho
-			double coeficienteAngular = obterCoeficienteAngular( reta );
+			double coeficienteAngular = obterCoeficienteAngular( reta );//coeficiente angular da reta
 			bool desenhar = true; //Se alguem decidir que desenhar e false, entao nao desenha! (Ponto nao tem interseccao com ninguem que deveria ter)
 			Ponto2D novoPonto1;
 			Ponto2D novoPonto2;
@@ -136,19 +136,19 @@ Objeto * CohenSutherland::clip( Objeto * objeto ) {
 					switch( codigoFim.obterDirecaoCodigo() ) {
 						case CohenSutherland::norte: {// possivelmente vai trombar com o topo
 
-							novoPonto2 = interseccaoTopo( reta->obterCoordenadaInicial(), coeficienteAngular );
+							novoPonto2 = interseccaoTopo( reta->obterCoordenadaFinal(), coeficienteAngular );
 							desenhar = pontoNaWindow( novoPonto2 );
 
 							break;
 						}
 						case CohenSutherland::nordeste: {
-							Ponto2D tentativa = interseccaoTopo( reta->obterCoordenadaInicial(), coeficienteAngular );
+							Ponto2D tentativa = interseccaoTopo( reta->obterCoordenadaFinal(), coeficienteAngular );
 							if( pontoNaWindow( tentativa ) ) {
 								desenhar = true;
 								novoPonto2 = tentativa;
 								break;
 							}
-							tentativa = interseccaoDireita( reta->obterCoordenadaInicial(), coeficienteAngular );
+							tentativa = interseccaoDireita( reta->obterCoordenadaFinal(), coeficienteAngular );
 							if( pontoNaWindow( tentativa ) ) {
 								desenhar = true;
 								novoPonto2 = tentativa;
@@ -158,18 +158,18 @@ Objeto * CohenSutherland::clip( Objeto * objeto ) {
 							break;
 						}
 						case CohenSutherland::leste: {
-							novoPonto2 = interseccaoDireita( reta->obterCoordenadaInicial(), coeficienteAngular );
+							novoPonto2 = interseccaoDireita( reta->obterCoordenadaFinal(), coeficienteAngular );
 							desenhar = pontoNaWindow( novoPonto2 );
 							break;
 						}
 						case CohenSutherland::sudeste: {
-							Ponto2D tentativa = interseccaoFundo( reta->obterCoordenadaInicial(), coeficienteAngular );
+							Ponto2D tentativa = interseccaoFundo( reta->obterCoordenadaFinal(), coeficienteAngular );
 							if( pontoNaWindow( tentativa ) ) {
 								desenhar = true;
 								novoPonto2 = tentativa;
 								break;
 							}
-							tentativa = interseccaoDireita( reta->obterCoordenadaInicial(), coeficienteAngular );
+							tentativa = interseccaoDireita( reta->obterCoordenadaFinal(), coeficienteAngular );
 							if( pontoNaWindow( tentativa ) ) {
 								desenhar = true;
 								novoPonto2 = tentativa;
@@ -179,19 +179,19 @@ Objeto * CohenSutherland::clip( Objeto * objeto ) {
 							break;
 						}
 						case CohenSutherland::sul: {
-							novoPonto2 = interseccaoFundo( reta->obterCoordenadaInicial(), coeficienteAngular );
+							novoPonto2 = interseccaoFundo( reta->obterCoordenadaFinal(), coeficienteAngular );
 							desenhar = pontoNaWindow( novoPonto2 );
 							break;
 
 						}
 						case CohenSutherland::sudoeste: {
-							Ponto2D tentativa = interseccaoFundo( reta->obterCoordenadaInicial(), coeficienteAngular );
+							Ponto2D tentativa = interseccaoFundo( reta->obterCoordenadaFinal(), coeficienteAngular );
 							if( pontoNaWindow( tentativa ) ) {
 								desenhar = true;
 								novoPonto2 = tentativa;
 								break;
 							}
-							tentativa = interseccaoEsquerda( reta->obterCoordenadaInicial(), coeficienteAngular );
+							tentativa = interseccaoEsquerda( reta->obterCoordenadaFinal(), coeficienteAngular );
 							if( pontoNaWindow( tentativa ) ) {
 								desenhar = true;
 								novoPonto2 = tentativa;
@@ -201,18 +201,18 @@ Objeto * CohenSutherland::clip( Objeto * objeto ) {
 							break;
 						}
 						case CohenSutherland::oeste: {
-							novoPonto2 = interseccaoEsquerda( reta->obterCoordenadaInicial(), coeficienteAngular );
+							novoPonto2 = interseccaoEsquerda( reta->obterCoordenadaFinal(), coeficienteAngular );
 							desenhar = pontoNaWindow( novoPonto2 );
 							break;
 						}
 						case CohenSutherland::noroeste: {
-							Ponto2D tentativa = interseccaoTopo( reta->obterCoordenadaInicial(), coeficienteAngular );
+							Ponto2D tentativa = interseccaoTopo( reta->obterCoordenadaFinal(), coeficienteAngular );
 							if( pontoNaWindow( tentativa ) ) {
 								desenhar = true;
 								novoPonto2 = tentativa;
 								break;
 							}
-							tentativa = interseccaoEsquerda( reta->obterCoordenadaInicial(), coeficienteAngular );
+							tentativa = interseccaoEsquerda( reta->obterCoordenadaFinal(), coeficienteAngular );
 							if( pontoNaWindow( tentativa ) ) {
 								desenhar = true;
 								novoPonto2 = tentativa;
@@ -222,12 +222,13 @@ Objeto * CohenSutherland::clip( Objeto * objeto ) {
 							break;
 						}
 						case CohenSutherland::centro: {//Ta dentro, deixa la!
-							novoPonto2 = reta->obterCoordenadaInicial();
+							novoPonto2 = reta->obterCoordenadaFinal();
 							desenhar = true;
 							break;
 						}
 					}//Switch codigo 2
 					Reta * novaReta = new Reta( objeto->nome, novoPonto1, novoPonto2 );
+					novaReta =  dynamic_cast<Reta *>( Tranformadas::rotacionar( novaReta, janela->obterRotacao(), janela->obterCentro() ) );
 					return novaReta;
 				}/*Desenhar?*/else {
 					//O primeiro ponto nao interceptou a window nem ta dentro. Nao desenha!!!
@@ -254,22 +255,24 @@ Objeto * CohenSutherland::clip( Objeto * objeto ) {
 				//Tratamento ponto 2
 				switch( codigoFim.obterDirecaoCodigo() ) {
 					case CohenSutherland::leste: {
-						novoPonto2 = set2DPoint( janela->obterXMaximo(), reta->obterCoordenadaInicial().y );
+						novoPonto2 = set2DPoint( janela->obterXMaximo(), reta->obterCoordenadaFinal().y );
 						desenhar = true;
 						break;
 					}
 					case CohenSutherland::oeste: {
-						novoPonto2 = set2DPoint( janela->obterXMinimo(), reta->obterCoordenadaInicial().y );
+						novoPonto2 = set2DPoint( janela->obterXMinimo(), reta->obterCoordenadaFinal().y );
 						desenhar = true;
 						break;
 					}
 					case CohenSutherland::centro: {//Ponto ja ta dentro, deixa assim mesmo
-						novoPonto2 = set2DPoint( reta->obterCoordenadaInicial().x, reta->obterCoordenadaInicial().y );
+						novoPonto2 = set2DPoint( reta->obterCoordenadaFinal().x, reta->obterCoordenadaFinal().y );
 						desenhar = true;
 						break;
 					}
 				}//switch ponto 2
-				return new Reta( objeto->nome, novoPonto1, novoPonto2 );
+				Reta * novaReta =  new Reta( objeto->nome, novoPonto1, novoPonto2 );
+				novaReta = dynamic_cast<Reta *>( Tranformadas::rotacionar( novaReta, janela->obterRotacao(), janela->obterCentro() ) );
+				return novaReta;
 			}
 		} else {//and dos codigos != 0 -> nao desenha
 			return nullptr;

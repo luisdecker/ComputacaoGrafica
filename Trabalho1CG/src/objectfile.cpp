@@ -37,7 +37,7 @@ void ObjectFile::inserirObjeto( Objeto * objeto ) {
 	if( contemObjeto( objeto->nome ) ) {
 		return;
 	}
-	std::cout  << "[ObjectFile] adicionando novo objeto " << objeto->nome << " [" << objeto << "] " << objectFile->size() << "+1\n";
+	std::cout  << "[ObjectFile][" << __LINE__<<"] adicionando novo objeto " << objeto->nome << " [" << objeto << "] " << objectFile->size() << "+1\n";
 
 	objectFile->push_back( objeto );
 	notify();
@@ -52,7 +52,7 @@ Objeto * ObjectFile::obterObjetoNome( std::string nome ) {
 			return  objectFile->at( iterator );
 		}
 	}
-	std::cout << "[ObjectFile]Não encontrou o objeto " << nome << "\n";
+	std::cout << "[ObjectFile][" << __LINE__<<"]Não encontrou o objeto " << nome << "\n";
 	return nullptr;
 }
 //-----------------------------------------------
@@ -81,6 +81,7 @@ void ObjectFile::retirarObjeto( Objeto * objeto ) {
 }
 //----------------------------------------------
 void ObjectFile::atualizaSCN( Objeto * obj ) {
+	
 	if( !( window == nullptr ) ) {
 		obj->atualizarCoordenadaSCN( window->obterTransformacaoSCN() );
 
@@ -89,6 +90,7 @@ void ObjectFile::atualizaSCN( Objeto * obj ) {
 //----------------------------------------------
 void ObjectFile::atualizaWindow( Window2D * window ) {
 	this->window = window;
+	atualizaSCNTodosObjetos();
 }
 
 //----------------------------------------------
@@ -106,20 +108,24 @@ void ObjectFile::cliparObjetos() {
 			case Objeto::ponto: {
 				Ponto * ponto = dynamic_cast <Ponto *>( obj );
 				ClipPonto cliper( window );
-				Ponto * pontoClipado = dynamic_cast<Ponto*>(cliper.clip( ponto ));
+				Ponto * pontoClipado = dynamic_cast<Ponto *>( cliper.clip( ponto ) );
 				ponto->atualizarCoordenadaExibicao( pontoClipado );
 				break;
 			}
 			case Objeto::reta: {
 				Reta * reta = dynamic_cast<Reta *>( obj );
+				std::cout << "[ObjectFile][" << __LINE__<<"] clipar uma reta (" << reta->obterCoordenadaInicial().x << " , " << reta->obterCoordenadaInicial().y
+						  << ")  -->  (" << reta->obterCoordenadaFinal().x << " , " << reta->obterCoordenadaFinal().y << ")\n";
 				Reta * retaClipada;
 				if( algoritmoClip ) {
 					CohenSutherland cliper( window );
-					retaClipada = dynamic_cast<Reta *>(cliper.clip( reta ));
+					retaClipada = dynamic_cast<Reta *>( cliper.clip( reta ) );
 				} else {
 					LiangBarsky cliper( window );
-					retaClipada = dynamic_cast<Reta *>(cliper.clip( reta ));
+					retaClipada = dynamic_cast<Reta *>( cliper.clip( reta ) );
 				}
+			//	std::cout << "[ObjectFile][" << __LINE__<<"] clipou uma reta (" << retaClipada->obterCoordenadaInicial().x << " , " << retaClipada->obterCoordenadaInicial().y
+			//			  << ")  -->  (" << retaClipada->obterCoordenadaFinal().x << " , " << retaClipada->obterCoordenadaFinal().y << ")\n";
 				reta->atualizarCoordenadaExibicao( retaClipada );
 				break;
 			}

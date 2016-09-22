@@ -36,7 +36,7 @@ Ponto2D Ponto::obterCoordenadaSCN() {
 }
 //-----------------------------------------------
 Reta::Reta( std::string nome, Ponto2D pontoInicial, Ponto2D pontoFinal ) {
-	this->pontoInicial = pontoInicial, this->pontoFinal = pontoFinal, this->nome = nome, this->tipoObjeto = Objeto::reta;desenhar = true;
+	this->pontoInicial = pontoInicial, this->pontoFinal = pontoFinal, this->nome = nome, this->tipoObjeto = Objeto::reta; desenhar = true;
 }
 //-----------------------------------------------
 Ponto2D Reta::obterCoordenadaInicial() {
@@ -56,7 +56,7 @@ Ponto2D Reta::obterCoordenadaFinalSCN() {
 }
 //-------------------------------------------
 Wireframe::Wireframe( std::string nome, std::vector< Ponto2D > pontos ) {
-	this->pontos = pontos, this->nome = nome, this->tipoObjeto = Objeto::wireframe;desenhar = true;
+	this->pontos = pontos, this->nome = nome, this->tipoObjeto = Objeto::wireframe; desenhar = true;
 }
 //-----------------------------------------------
 std::vector< Ponto2D > Wireframe::obterPontos() {
@@ -179,7 +179,13 @@ void Reta::atualizarCoordenadaExibicao( Objeto * objeto ) {
 	Reta * reta = dynamic_cast<Reta *>( objeto );
 	this->pontoInicialExibicao = reta->obterCoordenadaInicial();
 	this->pontoFinalExibicao = reta->obterCoordenadaFinal();
-	desenhar = true;
+
+	std::cout << "[Reta][" << __LINE__ << "] Atualizou coordenada de exibicao: (" << this->pontoInicial.x << " , " << this->pontoInicial.y
+			  << ") -> (" << this->pontoFinal.x << " , " << this->pontoFinal.y << ")\nPara ("
+			  << this->pontoInicialExibicao.x << " , " << this->pontoInicialExibicao.y
+			  << ") -> (" << this->pontoFinalExibicao.x << " , " << this->pontoFinalExibicao.y << ")"<<std::endl;
+
+			  desenhar = true;
 }
 //-------------------------------------------
 void Wireframe::atualizarCoordenadaExibicao( Objeto * objeto ) {

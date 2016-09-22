@@ -147,7 +147,9 @@ void Window2D::moverParaBaixo( int numUnidades ) {
 
 	Ponto2D vetorMovimento = set2DPoint( 0, -numUnidades );
 	Ponto3D vetorMovimentoHomogeneo = Tranformadas::ponto2DParaHomogeneo( vetorMovimento );
+	//Matriz do vetor de movimento
 	Matriz matVetor = Tranformadas::ponto3DparaMatriz( vetorMovimentoHomogeneo );
+
 	Matriz rotacao = Tranformadas::gerarMatrizRotacao( anguloMundo );
 	matVetor = matVetor * rotacao;
 	vetorMovimentoHomogeneo = Tranformadas::matrizParaPonto3D( matVetor );
@@ -243,7 +245,7 @@ void Window2D::zoomOut( int numUnidades ) {
 void Window2D::criarMatrizSCN() {
 	Ponto2D centro = this->obterCentro();
 	Matriz translacaoOrigem = Tranformadas::gerarMatrizTranslacao( set2DPoint( -centro.x, -centro.y ) );
-	Matriz rotacao = Tranformadas::gerarMatrizRotacao( anguloMundo );
+	Matriz rotacao = Tranformadas::gerarMatrizRotacao( -anguloMundo );
 	Matriz operacao = translacaoOrigem * rotacao;
 	double largura = sqrt( pow( ie.x - id.x, 2 ) + pow( ( ie.y - id.y ), 2 ) );
 	double altura = sqrt( pow( ie.x - se.x, 2 ) + pow( ( ie.y - se.y ), 2 ) );
@@ -295,6 +297,7 @@ void Window2D::rotacionar( double graus ) {
 	std::cout << "[Window] angulo em " << anguloMundo << "\n";
 	notify();
 }
+
 
 
 

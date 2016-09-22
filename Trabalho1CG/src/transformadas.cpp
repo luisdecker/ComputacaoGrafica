@@ -36,7 +36,7 @@ Matriz Tranformadas::ponto3DparaMatriz( Ponto3D ponto ) {
 	novaMat.at( 1, 1 ) = ponto.x;
 	novaMat.at( 1, 2 ) = ponto.y;
 	novaMat.at( 1, 3 ) = ponto.z;
-	std::cout << "[Transformadas]Converteu ponto 3D - " << novaMat.numLinhas() << "x" << novaMat.numColunas() << std::endl;
+	//std::cout << "[Transformadas]Converteu ponto 3D - " << novaMat.numLinhas() << "x" << novaMat.numColunas() << std::endl;
 	return novaMat;
 
 }
@@ -110,7 +110,7 @@ Objeto * Tranformadas::redimensionar( Objeto * obj, Ponto2D escala ) {
 }
 //-----------------------------------------------
 Objeto * Tranformadas::rotacionar( Objeto * obj, double graus, Ponto2D pontoReferencia ) {
-	graus = graus / 57.2957795131	;
+	
 	switch( obj->tipoObjeto ) {
 		case Objeto::ponto: {
 			Ponto * ponto = dynamic_cast<Ponto *>( obj );
@@ -211,8 +211,8 @@ Objeto * Tranformadas::transladar( Objeto * obj, Ponto2D direcao ) {
 			Matriz pontoInicial( 1, 3 );
 			pontoInicial = ponto3DparaMatriz( ponto2DParaHomogeneo( reta->obterCoordenadaInicial() ) );
 			Matriz pontoFinal = ponto3DparaMatriz( ponto2DParaHomogeneo( reta->obterCoordenadaFinal() ) );
-			std::cout << "[Transformadas]Ponto inicial tem " << pontoInicial.numLinhas() << "x" << pontoInicial.numColunas() << std::endl;
-			std::cout << "[Transformadas]Ponto final tem " << pontoFinal.numLinhas() << "x" << pontoFinal.numColunas() << std::endl;
+			//std::cout << "[Transformadas]Ponto inicial tem " << pontoInicial.numLinhas() << "x" << pontoInicial.numColunas() << std::endl;
+			//std::cout << "[Transformadas]Ponto final tem " << pontoFinal.numLinhas() << "x" << pontoFinal.numColunas() << std::endl;
 			//Aplica a tranformada nos pontos
 
 			Matriz pontoInicialTranformado = pontoInicial * operacao;
@@ -282,7 +282,12 @@ Matriz Tranformadas::gerarMatrizRedimensionamento( double escalaX, double escala
 }
 //-----------------------------------------------
 Matriz Tranformadas::gerarMatrizRotacao( double graus ) {
+//	std::cout <<  "[Tranformadas] Gerando matriz de rotacao para " << graus <<" \n";
+	graus = graus * (M_PI / 180);
 	graus = -graus;
+	
+//	std::cout <<  "[Tranformadas] Gerando matriz de rotacao para " << graus <<" \n";
+	
 	Matriz rotacao( 3, 3 );
 	rotacao.at( 1, 1 ) = cos( graus );
 	rotacao.at( 1, 2 ) = -sin( graus );

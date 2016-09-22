@@ -28,7 +28,7 @@
 class Matriz {
 public:
 	Matriz() {
-		std::cout << "Criou uma matriz padrão, não sei como\n";
+	//	std::cout << "Criou uma matriz padrão, não sei como\n";
 	}
 	Matriz( int linhas, int colunas );
 	double & at( int linha, int coluna );

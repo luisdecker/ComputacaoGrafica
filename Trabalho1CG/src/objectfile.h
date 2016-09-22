@@ -69,7 +69,7 @@ private:
 	Window2D * window;
 	std::vector<Objeto *> * objectFile;
 	void atualizaSCN( Objeto * obj );
-	bool algoritmoClip = false;
+	bool algoritmoClip = true;
 };
 
 #endif // OBJECTFILE_H

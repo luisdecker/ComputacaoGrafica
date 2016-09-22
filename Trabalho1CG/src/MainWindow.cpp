@@ -52,6 +52,8 @@ void MainWindow::update() {
 
 	assert( !( of == nullptr ) ); //Verifica se não é null pointer
 	m_refTreeModel->clear();
+	of->atualizaSCNTodosObjetos();
+	
 	for( Objeto * obj : of->obterObjetos() ) {
 
 		Gtk::TreeModel::Row row = *( m_refTreeModel->append() );

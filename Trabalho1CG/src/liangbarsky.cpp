@@ -11,7 +11,7 @@ Objeto * LiangBarsky::clip( Objeto * objeto ) {
 	}
 	Reta * retaOrg = dynamic_cast<Reta *>( objeto );
 	//Rotaciona a reta para trabalharmos em coordenadas da window
-	Reta * reta = dynamic_cast<Reta *>( Tranformadas::rotacionar( retaOrg, janela->obterRotacao(), janela->obterCentro() ) );
+	Reta * reta = dynamic_cast<Reta *>( Tranformadas::rotacionar( retaOrg, janela->obterRotacao()*57.2957795131, janela->obterCentro() ) );
 	retaOrg = reta;
 	
 	double t0 = 0.;
