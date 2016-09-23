@@ -1,5 +1,6 @@
 #include "matriz.hpp"
 //-----------------------------------------------
+//Constroi uma matriz linhas x colunas
 Matriz::Matriz( int linhas, int colunas ) {
 	assert( linhas >= 1 );
 	assert( colunas >= 1 );
@@ -10,6 +11,19 @@ Matriz::Matriz( int linhas, int colunas ) {
 	this->colunas = colunas;
 	std::cout;// << "[Matriz]Criou uma matriz tamanho " << this->linhas << "x" << colunas << std::endl;
 }
+//-----------------------------------------------
+//Constroi uma matriz a partir de um ponto 3D;
+Matriz::Matriz( Ponto3D ponto ) {
+	this->linhas = 1;
+	this->colunas = 3;
+
+	double * newMat = new double [3];
+	newMat[0] = ponto.x;
+	newMat[1] = ponto.y;
+	newMat[2] = ponto.z;
+	this-> data = newMat;
+}
+
 //-----------------------------------------------
 double & Matriz::at( int linha, int coluna ) {
 	assert( linha > 0 );

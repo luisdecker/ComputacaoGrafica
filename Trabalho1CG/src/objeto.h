@@ -68,7 +68,7 @@ public:
 		coordenada = set2DPoint( 0, 0 );
 		tipoObjeto = Objeto::ponto;
 		this->nome = nome;
-		desenhar = true;
+		desenhar = false;
 	};
 	//-------------------------------------------
 
@@ -105,7 +105,7 @@ public:
 		pontoFinal = set2DPoint( 0, 0 );
 		tipoObjeto = Objeto::reta;
 		this->nome = nome;
-		desenhar = true;
+		desenhar = false;
 	}
 	//-------------------------------------------
 	Reta( std::string nome, Ponto2D pontoInicial, Ponto2D pontoFinal );  //Contrutor parametrizado
@@ -146,14 +146,14 @@ public:
 		this->tipoObjeto = Objeto::wireframe;
 		this->preenchido = false;
 		this->todosPontosInclusos = false;
-		desenhar = true;
+		desenhar = false;
 	}
 	//-------------------------------------------
 	Wireframe( std::string nome, std::vector<Ponto2D> pontos ); //Contrutor parametrizado
 	//-------------------------------------------
 	std::vector<Ponto2D> obterPontos();//Retorna um vetor com os pontos do poligono.
 	//-------------------------------------------
-	std::vector<Ponto2D> obterPontosSCN();//Retorna um vetor com os pontos SCN do poligono.
+	std::vector<std::vector< Ponto2D>> obterPontosSCN();//Retorna um vetor com os pontos SCN do poligono.
 	//-------------------------------------------
 	void adicionarPonto( Ponto2D ponto ); //Adiciona um ponto a lista.
 	//-------------------------------------------
@@ -162,6 +162,8 @@ public:
 	virtual void atualizarCoordenadaSCN( Matriz transformacao );
 	//-------------------------------------------
 	virtual void atualizarCoordenadaExibicao( Objeto * objeto );
+	//-------------------------------------------
+	void atualizarCoordenadaExibicao( std::vector<Wireframe *> subObjetos );
 	//-------------------------------------------
 	void setPreenchido( bool preenchido );
 	//-------------------------------------------
@@ -174,8 +176,8 @@ private:
 	bool preenchido;
 	bool todosPontosInclusos;
 	std::vector<Ponto2D> pontos;//Vetor de pontos ordenados. O poligono é ligado seguinto a ordem desta lista.
-	std::vector<Ponto2D> pontosSCN;//Pontos na SCN.
-	std::vector<Ponto2D> pontosExibicao;//Pontos apos clip.
+	std::vector<std::vector<Ponto2D>> pontosSCN;//Pontos na SCN.
+	std::vector<Wireframe *> pontosExibicao;//Pontos apos clip.
 };
 
 

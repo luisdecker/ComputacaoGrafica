@@ -8,7 +8,7 @@
 #include "objectfile.h"
 
 #include <iostream>
-//#define TESTES_MODELO
+#define TESTES_MODELO
 
 #ifdef TESTES_MODELO
 #include "objeto.h"
@@ -56,19 +56,15 @@ int main( int argc, char * argv[] ) {
 	/*TESTES DO MODELO*/
 #ifdef TESTES_MODELO
 	std::cout << "=======================================================\n";
-	Reta retaTeste( "reta", set2DPoint( 250, 250 ), set2DPoint(250, 600 ) );
-	Window2D novaWindow(set2DPoint(0,0), set2DPoint(500,500));
-	novaWindow.rotacionar(90);
-	CohenSutherland clipper(& novaWindow );
-	//LiangBarsky clipper( window );
-	Objeto * clipada = clipper.clip( &retaTeste );
-	if( !(clipada == nullptr) ) {
-		Reta * resultado = dynamic_cast<Reta *>( clipada );
-		std::cout << "Ponto inicial: (" << resultado->obterCoordenadaInicial().x << " , " << resultado->obterCoordenadaInicial().y << ")\n";
-		std::cout << "Ponto final: (" << resultado->obterCoordenadaFinal().x << " , " << resultado->obterCoordenadaFinal().y << ")\n";
-	}else {
-		std::cout << "NULA\n";
-	}
+
+	Wireframe * wireframe = new Wireframe("alce");
+	wireframe->adicionarPonto(set2DPoint(100,100));
+	wireframe->adicionarPonto(set2DPoint(-100,100));
+	wireframe->adicionarPonto(set2DPoint(0,0));
+	
+	WeilerAtherton cliper(window);
+	std::vector<Wireframe*> frames = cliper.clip(wireframe);
+	
 	std::cout << "=======================================================\n";
 	return 0;
 #endif

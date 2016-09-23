@@ -24,7 +24,7 @@
 #include "TransformationDialog.hpp"
 #include <cassert>
 #include <iostream>
-
+#include <gtkmm/radiobutton.h>
 
 class MainWindow : public Gtk::Window, public Observer {
 
@@ -45,7 +45,11 @@ protected:
 	Gtk::Button * btnHorario;
 	Gtk::Button * btnAntiHorario;
 	Glib::RefPtr<Gtk::TreeSelection> refTreeSelection;
-
+	Gtk::RadioButton* radioCohen;
+	Gtk::RadioButton* radioLiam;
+	
+	
+	
 	ObjectFile * of;
 	Cairo::RefPtr<Cairo::Context> cr;
 	ModelColumns * m_Columns;

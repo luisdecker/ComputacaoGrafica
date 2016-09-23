@@ -31,6 +31,7 @@
 #include "liangbarsky.h"
 #include "cohensutherland.h"
 #include "clipponto.h"
+#include "WeilerAtherton.hpp"
 
 class ObjectFile : public Subject {
 public:
@@ -69,7 +70,7 @@ private:
 	Window2D * window;
 	std::vector<Objeto *> * objectFile;
 	void atualizaSCN( Objeto * obj );
-	bool algoritmoClip = true;
+	bool algoritmoClip = false;
 };
 
 #endif // OBJECTFILE_H

@@ -77,7 +77,7 @@ bool DrawingArea::on_draw( const Cairo::RefPtr<Cairo::Context> & cr ) {
 				inicial = viewPort->tranformarCoordenadasSCN( *mainWindow, inicial );
 				Ponto2D final = reta->obterCoordenadaFinalSCN();
 				final = viewPort->tranformarCoordenadasSCN( *mainWindow, final );
-			//	std::cout << "[DrawingArea]Vai desenhar uma reta de " << inicial.x << "," << inicial.y
+				//	std::cout << "[DrawingArea]Vai desenhar uma reta de " << inicial.x << "," << inicial.y
 				//		  << " até " << final.x << "," << final.y << std::endl;
 				cr->move_to( inicial.x + deslocamento, inicial.y + deslocamento );
 				cr->line_to( final.x + deslocamento, final.y + deslocamento );
@@ -91,16 +91,15 @@ bool DrawingArea::on_draw( const Cairo::RefPtr<Cairo::Context> & cr ) {
 				Wireframe * wf = dynamic_cast<Wireframe *>( objeto );
 
 				if( wf->possuiTodosPontosInclusos() ) {
-					std::vector<Ponto2D> pontosWF = wf->obterPontosSCN();
-					std::cout << "[DrawingArea] Wireframe com tamanho " << pontosWF.size() << "\n";
-					//pontosWF.erase( pontosWF.begin() );
-					if( pontosWF.size() > 2 ) {
+
+					std::vector< std::vector<Ponto2D> > todosPontosSCN = wf->obterPontosSCN();
+					for( std::vector<Ponto2D> pontosWF : todosPontosSCN ) {
+
 						Ponto2D inicial = viewPort->tranformarCoordenadasSCN( *mainWindow, pontosWF.front() );
 						cr->move_to( inicial.x + deslocamento, inicial.y + deslocamento );
 
 						for( Ponto2D ponto : pontosWF ) {
 							ponto = viewPort->tranformarCoordenadasSCN( *mainWindow, ponto );
-							std::cout << "[DrawingArea]Vai desenhar um ponto do poligono em (" << ponto.x << " , " << ponto.y << ")\n";
 							cr->line_to( ponto.x + deslocamento, ponto.y + deslocamento );
 						}
 
@@ -112,9 +111,9 @@ bool DrawingArea::on_draw( const Cairo::RefPtr<Cairo::Context> & cr ) {
 
 						cr->stroke();
 
+
 					}
 				}
-
 				break;
 
 			}

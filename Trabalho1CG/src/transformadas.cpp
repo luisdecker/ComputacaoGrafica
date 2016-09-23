@@ -171,7 +171,7 @@ Objeto * Tranformadas::rotacionar( Objeto * obj, double graus, Ponto2D pontoRefe
 			operacao = operacao * transacaoVolta;
 			//Aplica a operacao a todos os pontos
 			std::vector<Ponto2D> pontos = wireframe->obterPontos();
-			std::vector<Ponto2D> pontosTranformados( pontos.size() );
+			std::vector<Ponto2D> pontosTranformados;
 			for( Ponto2D ponto : pontos ) {
 				Matriz matPonto = ponto3DparaMatriz( ponto2DParaHomogeneo( ponto ) );
 				matPonto = matPonto * operacao;
@@ -181,7 +181,6 @@ Objeto * Tranformadas::rotacionar( Objeto * obj, double graus, Ponto2D pontoRefe
 
 
 			}
-			pontosTranformados.erase( pontosTranformados.begin() );
 			return new Wireframe( obj->nome, pontosTranformados );
 			break;
 

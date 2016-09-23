@@ -37,7 +37,7 @@ void ObjectFile::inserirObjeto( Objeto * objeto ) {
 	if( contemObjeto( objeto->nome ) ) {
 		return;
 	}
-	std::cout  << "[ObjectFile][" << __LINE__<<"] adicionando novo objeto " << objeto->nome << " [" << objeto << "] " << objectFile->size() << "+1\n";
+	std::cout  << "[ObjectFile][" << __LINE__ << "] adicionando novo objeto " << objeto->nome << " [" << objeto << "] " << objectFile->size() << "+1\n";
 
 	objectFile->push_back( objeto );
 	notify();
@@ -52,18 +52,19 @@ Objeto * ObjectFile::obterObjetoNome( std::string nome ) {
 			return  objectFile->at( iterator );
 		}
 	}
-	std::cout << "[ObjectFile][" << __LINE__<<"]Não encontrou o objeto " << nome << "\n";
+	std::cout << "[ObjectFile][" << __LINE__ << "]Não encontrou o objeto " << nome << "\n";
 	return nullptr;
 }
 //-----------------------------------------------
 void ObjectFile::atualizarObjeto( Objeto * objeto ) {
-	atualizaSCN( objeto );
+	//atualizaSCN( objeto );
 	for( int iterator = 0; iterator < objectFile->size(); iterator++ ) {
 		if( objectFile->at( iterator )->nome == objeto->nome ) {
 			objectFile->erase( objectFile->begin() + ( iterator ) );
 			objectFile->push_back( objeto );
 		}
 	}
+	atualizaSCNTodosObjetos();
 	notify();
 }
 //-----------------------------------------------
@@ -72,7 +73,7 @@ std::vector< Objeto * > ObjectFile::obterObjetos() {
 }
 //-----------------------------------------------
 void ObjectFile::retirarObjeto( Objeto * objeto ) {
-	atualizaSCN( objeto );
+	//atualizaSCN( objeto );
 	for( int iterator = 0; iterator < objectFile->size(); iterator++ ) {
 		if( objectFile->at( iterator )->nome == objeto->nome ) {
 			objectFile->erase( objectFile->begin() + ( iterator ) );
@@ -81,7 +82,7 @@ void ObjectFile::retirarObjeto( Objeto * objeto ) {
 }
 //----------------------------------------------
 void ObjectFile::atualizaSCN( Objeto * obj ) {
-	
+
 	if( !( window == nullptr ) ) {
 		obj->atualizarCoordenadaSCN( window->obterTransformacaoSCN() );
 
@@ -114,7 +115,7 @@ void ObjectFile::cliparObjetos() {
 			}
 			case Objeto::reta: {
 				Reta * reta = dynamic_cast<Reta *>( obj );
-				std::cout << "[ObjectFile][" << __LINE__<<"] clipar uma reta (" << reta->obterCoordenadaInicial().x << " , " << reta->obterCoordenadaInicial().y
+				std::cout << "[ObjectFile][" << __LINE__ << "] clipar uma reta (" << reta->obterCoordenadaInicial().x << " , " << reta->obterCoordenadaInicial().y
 						  << ")  -->  (" << reta->obterCoordenadaFinal().x << " , " << reta->obterCoordenadaFinal().y << ")\n";
 				Reta * retaClipada;
 				if( algoritmoClip ) {
@@ -124,12 +125,23 @@ void ObjectFile::cliparObjetos() {
 					LiangBarsky cliper( window );
 					retaClipada = dynamic_cast<Reta *>( cliper.clip( reta ) );
 				}
-			//	std::cout << "[ObjectFile][" << __LINE__<<"] clipou uma reta (" << retaClipada->obterCoordenadaInicial().x << " , " << retaClipada->obterCoordenadaInicial().y
-			//			  << ")  -->  (" << retaClipada->obterCoordenadaFinal().x << " , " << retaClipada->obterCoordenadaFinal().y << ")\n";
+				//	std::cout << "[ObjectFile][" << __LINE__<<"] clipou uma reta (" << retaClipada->obterCoordenadaInicial().x << " , " << retaClipada->obterCoordenadaInicial().y
+				//			  << ")  -->  (" << retaClipada->obterCoordenadaFinal().x << " , " << retaClipada->obterCoordenadaFinal().y << ")\n";
 				reta->atualizarCoordenadaExibicao( retaClipada );
 				break;
 			}
-			case Objeto::wireframe: {break;};
+			case Objeto::wireframe: {
+				Wireframe * wireframe = dynamic_cast<Wireframe *>( obj );
+				Wireframe * wireframeClipado;
+				if( wireframe->ehPreenchido() ) {
+					//`E para estar ja na rotacao correta...
+					std::vector<Wireframe *> clipados = WeilerAtherton( window ).clip( wireframe );
+					wireframe->atualizarCoordenadaExibicao( clipados );
+				}else{
+					//TODO Clip de wireframes nao ehPreenchidos
+				}
+				break;
+			}//Wireframe
 		}
 	}
 }
