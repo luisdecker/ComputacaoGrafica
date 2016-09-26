@@ -138,9 +138,14 @@ void ObjectFile::cliparObjetos() {
 					std::vector<Wireframe *> clipados = WeilerAtherton( window ).clip( wireframe );
 					wireframe->atualizarCoordenadaExibicao( clipados );
 				} else {
-					std::vector<Wireframe *> clipados;
-					clipados.push_back( to_wireframe( WireframeClipper( window ).clip( wireframe ) ) );
-					wireframe->atualizarCoordenadaExibicao( clipados );
+					Wireframe * clipado = to_wireframe( WireframeClipper( window ).clip( wireframe ) );
+					if( clipado == nullptr ) {
+						wireframe->atualizarRetas( std::vector<Reta *>() );
+						break;
+					}
+
+					wireframe->atualizarRetas( clipado->obterRetas() );
+
 				}
 				break;
 			}//Wireframe

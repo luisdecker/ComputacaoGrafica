@@ -17,6 +17,7 @@ private:
 	RetasWireframe converterParaRetas( Wireframe * wireframe );
 	RetasWireframe cliparRetas( RetasWireframe retas );
 	ListaPontos LigarRetas( RetasWireframe retasClipadas );
+	RetasWireframe rodarRetas(RetasWireframe retas, double angulo, Ponto2D pontoCentral);
 };
 
 #endif // WIREFRAMECLIPPER_H

@@ -91,27 +91,40 @@ bool DrawingArea::on_draw( const Cairo::RefPtr<Cairo::Context> & cr ) {
 				Wireframe * wf = dynamic_cast<Wireframe *>( objeto );
 
 				if( wf->possuiTodosPontosInclusos() ) {
+					if( wf->ehPreenchido() ) {
+						std::vector< std::vector<Ponto2D> > todosPontosSCN = wf->obterPontosSCN();
+						for( std::vector<Ponto2D> pontosWF : todosPontosSCN ) {
 
-					std::vector< std::vector<Ponto2D> > todosPontosSCN = wf->obterPontosSCN();
-					for( std::vector<Ponto2D> pontosWF : todosPontosSCN ) {
+							Ponto2D inicial = viewPort->tranformarCoordenadasSCN( *mainWindow, pontosWF.front() );
+							cr->move_to( inicial.x + deslocamento, inicial.y + deslocamento );
 
-						Ponto2D inicial = viewPort->tranformarCoordenadasSCN( *mainWindow, pontosWF.front() );
-						cr->move_to( inicial.x + deslocamento, inicial.y + deslocamento );
+							for( Ponto2D ponto : pontosWF ) {
+								ponto = viewPort->tranformarCoordenadasSCN( *mainWindow, ponto );
+								cr->line_to( ponto.x + deslocamento, ponto.y + deslocamento );
+							}
 
-						for( Ponto2D ponto : pontosWF ) {
-							ponto = viewPort->tranformarCoordenadasSCN( *mainWindow, ponto );
-							cr->line_to( ponto.x + deslocamento, ponto.y + deslocamento );
+							cr->close_path();
+
+							if( wf->ehPreenchido() ) {
+								cr->fill();
+							}
+
+							cr->stroke();
+
+
 						}
-
-						cr->close_path();
-
-						if( wf->ehPreenchido() ) {
-							cr->fill();
+					} else {
+						for( Reta * reta : wf->obterRetas() ) {
+							Ponto2D inicial = reta->obterCoordenadaInicialSCN();
+							inicial = viewPort->tranformarCoordenadasSCN( *mainWindow, inicial );
+							Ponto2D final = reta->obterCoordenadaFinalSCN();
+							final = viewPort->tranformarCoordenadasSCN( *mainWindow, final );
+							//	std::cout << "[DrawingArea]Vai desenhar uma reta de " << inicial.x << "," << inicial.y
+							//		  << " até " << final.x << "," << final.y << std::endl;
+							cr->move_to( inicial.x + deslocamento, inicial.y + deslocamento );
+							cr->line_to( final.x + deslocamento, final.y + deslocamento );
+							cr->stroke();
 						}
-
-						cr->stroke();
-
-
 					}
 				}
 				break;
@@ -142,3 +155,5 @@ bool DrawingArea::on_draw( const Cairo::RefPtr<Cairo::Context> & cr ) {
 // cr->close_path();
 // cr->fill();
 // cr->stroke();
+
+

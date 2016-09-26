@@ -147,28 +147,35 @@ void Reta::atualizarCoordenadaSCN( Matriz transformacao ) {
 //-----------------------------------------------
 void Wireframe::atualizarCoordenadaSCN( Matriz transformacao ) {
 	if( desenhar ) {
-		std::vector<std::vector<Ponto2D> > pontosSCN;
-		for( Wireframe * wireframe : pontosExibicao ) {
-			if( wireframe != nullptr ) {
-				std::vector<Ponto2D> pontosMundoObj = wireframe->obterPontos(); // Pontos originais de cada wireframe (subobjeto)
-				std::vector<Ponto2D> pontosSCNObjeto;//Pontos convertidos de cada wireframe (subobjeto)
-				for( Ponto2D ponto : pontosMundoObj ) {
-					Matriz matPonto( Tranformadas::ponto2DParaHomogeneo( ponto ) );
-					matPonto = matPonto * transformacao;
-					Ponto3D pontoSCNHomogeneo = Tranformadas::matrizParaPonto3D( matPonto );
-					Ponto2D novoPonto = set2DPoint( pontoSCNHomogeneo.x, pontoSCNHomogeneo.y ); //Um ponto em coordenadas homogeneas
-					pontosSCNObjeto.push_back( novoPonto );
-				}//Aqui, completou a lista de um dos subobjetos
-				pontosSCN.push_back( pontosSCNObjeto );
+		if( preenchido ) {
+			std::vector<std::vector<Ponto2D> > pontosSCN;
+			for( Wireframe * wireframe : pontosExibicao ) {
+				if( wireframe != nullptr ) {
+					std::vector<Ponto2D> pontosMundoObj = wireframe->obterPontos(); // Pontos originais de cada wireframe (subobjeto)
+					std::vector<Ponto2D> pontosSCNObjeto;//Pontos convertidos de cada wireframe (subobjeto)
+					for( Ponto2D ponto : pontosMundoObj ) {
+						Matriz matPonto( Tranformadas::ponto2DParaHomogeneo( ponto ) );
+						matPonto = matPonto * transformacao;
+						Ponto3D pontoSCNHomogeneo = Tranformadas::matrizParaPonto3D( matPonto );
+						Ponto2D novoPonto = set2DPoint( pontoSCNHomogeneo.x, pontoSCNHomogeneo.y ); //Um ponto em coordenadas homogeneas
+						pontosSCNObjeto.push_back( novoPonto );
+					}//Aqui, completou a lista de um dos subobjetos
+					pontosSCN.push_back( pontosSCNObjeto );
+				}
+			}//Completou a lista de subobjetos
+
+			this->pontosSCN = pontosSCN;
+		} else {
+			std::vector<Reta *> retasSCN;
+			for( Reta * reta : retasWireframe ) {
+				reta->atualizarCoordenadaExibicao( reta );
+				reta->atualizarCoordenadaSCN( transformacao );
+
 			}
-		}//Completou a lista de subobjetos
-
-		this->pontosSCN = pontosSCN;
+		}
 	}
+
 }
-
-
-
 //-----------------------------------------------
 void Ponto::atualizarCoordenadaExibicao( Objeto * objeto ) {
 	if( objeto == nullptr ) {
@@ -190,10 +197,10 @@ void Reta::atualizarCoordenadaExibicao( Objeto * objeto ) {
 	this->pontoInicialExibicao = reta->obterCoordenadaInicial();
 	this->pontoFinalExibicao = reta->obterCoordenadaFinal();
 
-	std::cout << "[Reta][" << __LINE__ << "] Atualizou coordenada de exibicao: (" << this->pontoInicial.x << " , " << this->pontoInicial.y
-			  << ") -> (" << this->pontoFinal.x << " , " << this->pontoFinal.y << ")\nPara ("
-			  << this->pontoInicialExibicao.x << " , " << this->pontoInicialExibicao.y
-			  << ") -> (" << this->pontoFinalExibicao.x << " , " << this->pontoFinalExibicao.y << ")" << std::endl;
+	/*	std::cout << "[Reta][" << __LINE__ << "] Atualizou coordenada de exibicao: (" << this->pontoInicial.x << " , " << this->pontoInicial.y
+				  << ") -> (" << this->pontoFinal.x << " , " << this->pontoFinal.y << ")\nPara ("
+				  << this->pontoInicialExibicao.x << " , " << this->pontoInicialExibicao.y
+				  << ") -> (" << this->pontoFinalExibicao.x << " , " << this->pontoFinalExibicao.y << ")" << std::endl;*/
 
 	desenhar = true;
 }
@@ -218,6 +225,23 @@ void Wireframe::atualizarCoordenadaExibicao( std::vector< Wireframe * > subObjet
 	this->pontosExibicao = subObjetos;
 	desenhar = true;
 }
+//-----------------------------------------------
+void Wireframe::atualizarRetas( std::vector< Reta * > retas ) {
+	if( retas.empty() ) {
+		desenhar = false;
+		
+	}
+	this->retasWireframe = retas;
+	desenhar = true;
+}
+//-----------------------------------------------
+std::vector< Reta * > Wireframe::obterRetas() {
+	if( this->retasWireframe.empty() ) {
+		return std::vector<Reta *>();
+	}
+	return std::vector<Reta *>( retasWireframe );
+}
+
 
 
 

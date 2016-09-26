@@ -5,14 +5,15 @@ Objeto * WireframeClipper::clip( Objeto * objeto ) {
 		std::cout << "[WireframeClipper][" << __LINE__ << "] Tentou clipar algo diferente de um wireframe!" << std::endl;
 		return nullptr;
 	}
-	objeto = Tranformadas::rotacionar( objeto, -( janela->obterRotacao() ), janela->obterCentro() );
+	//std::cout << "[WireframeClipper][" << __LINE__ << "] Rodando um wireframe em " << -janela->obterRotacao() << std::endl;
+	//Objeto * objetoRotacionado = Tranformadas::rotacionar( objeto, -( janela->obterRotacao() ), janela->obterCentro() );
 	Wireframe * wireframe = to_wireframe( objeto );
 	RetasWireframe retasOriginais = converterParaRetas( wireframe );
 	RetasWireframe retasClipadas = cliparRetas( retasOriginais );
 	if( retasClipadas.empty() ) {return nullptr;}
-	ListaPontos novosPontos = LigarRetas( retasClipadas );
-	Wireframe * novoWireframe = new Wireframe( objeto->nome, novosPontos );
-	novoWireframe = to_wireframe( Tranformadas::rotacionar( novoWireframe, janela->obterRotacao(), janela->obterCentro() ) );
+	Wireframe * novoWireframe = new Wireframe( objeto->nome );
+	//retasClipadas = rodarRetas( retasClipadas, janela->obterRotacao(), janela->obterCentro() );
+	novoWireframe->atualizarRetas( retasClipadas );
 	return novoWireframe;
 
 }
@@ -34,10 +35,10 @@ WireframeClipper::RetasWireframe WireframeClipper::converterParaRetas( Wireframe
 //-----------------------------------------------
 WireframeClipper::RetasWireframe WireframeClipper::cliparRetas( WireframeClipper::RetasWireframe retas ) {
 	RetasWireframe retasClipadas;
-	Window2D janelazerada( janela->inferiorEsquerdo(), janela->superiorDireito() );
+	//Window2D janelazerada( janela->inferiorEsquerdo(), janela->superiorDireito() );
 	for( Reta * reta : retas ) {
 
-		reta = to_reta( CohenSutherland( &janelazerada ).clip( reta ) );
+		reta = to_reta( CohenSutherland( janela ).clip( reta ) );
 		if( reta != nullptr ) retasClipadas.push_back( reta );
 	}
 	return retasClipadas;
@@ -55,4 +56,12 @@ WireframeClipper::ListaPontos WireframeClipper::LigarRetas( WireframeClipper::Re
 		lista.push_back( reta->obterCoordenadaFinal() );
 	}
 	return lista;
+}
+//-----------------------------------------------
+WireframeClipper::RetasWireframe WireframeClipper::rodarRetas( WireframeClipper::RetasWireframe retas, double angulo, Ponto2D pontoCentral ) {
+	std::cout << "[WireframeClipper][" << __LINE__ << "] Rodando retas do wireframe em " << angulo << std::endl;
+	for( Reta * reta : retas ) {
+		reta = to_reta( Tranformadas::rotacionar( reta, angulo, pontoCentral ) );
+	}
+	return retas;
 }

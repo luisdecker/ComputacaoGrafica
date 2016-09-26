@@ -57,10 +57,10 @@ void MainWindow::update() {
 	
 	if(radioCohen->get_active()){
 		of->setarCohenSutherland();
-		std::cout << "[MainWindow]["<< __LINE__ << "] Clipando com sutherland" << std::endl;
+	//	std::cout << "[MainWindow]["<< __LINE__ << "] Clipando com sutherland" << std::endl;
 	}else{
 		of->setarLiamBarsky();
-	std::cout << "[MainWindow]["<< __LINE__ << "] Clipando com liam" << std::endl;
+//	std::cout << "[MainWindow]["<< __LINE__ << "] Clipando com liam" << std::endl;
 		
 	}
 	
