@@ -64,7 +64,7 @@ std::vector< Ponto2D > Wireframe::obterPontos() {
 }
 //-----------------------------------------------
 std::vector<std::vector< Ponto2D >> Wireframe::obterPontosSCN() {
-	return std::vector<std::vector<Ponto2D>>(this->pontosSCN);
+	return std::vector<std::vector<Ponto2D>>( this->pontosSCN );
 }
 //-----------------------------------------------
 void Wireframe::adicionarPonto( Ponto2D ponto ) {
@@ -149,22 +149,25 @@ void Wireframe::atualizarCoordenadaSCN( Matriz transformacao ) {
 	if( desenhar ) {
 		std::vector<std::vector<Ponto2D> > pontosSCN;
 		for( Wireframe * wireframe : pontosExibicao ) {
-			std::vector<Ponto2D> pontosMundoObj = wireframe->obterPontos(); // Pontos originais de cada wireframe (subobjeto)
-			std::vector<Ponto2D> pontosSCNObjeto;//Pontos convertidos de cada wireframe (subobjeto)
-			for( Ponto2D ponto : pontosMundoObj ) {
-				Matriz matPonto( Tranformadas::ponto2DParaHomogeneo( ponto ) );
-				matPonto = matPonto * transformacao;
-				Ponto3D pontoSCNHomogeneo = Tranformadas::matrizParaPonto3D( matPonto );
-				Ponto2D novoPonto = set2DPoint( pontoSCNHomogeneo.x, pontoSCNHomogeneo.y ); //Um ponto em coordenadas homogeneas
-				pontosSCNObjeto.push_back( novoPonto );
-			}//Aqui, completou a lista de um dos subobjetos
-			pontosSCN.push_back( pontosSCNObjeto );
+			if( wireframe != nullptr ) {
+				std::vector<Ponto2D> pontosMundoObj = wireframe->obterPontos(); // Pontos originais de cada wireframe (subobjeto)
+				std::vector<Ponto2D> pontosSCNObjeto;//Pontos convertidos de cada wireframe (subobjeto)
+				for( Ponto2D ponto : pontosMundoObj ) {
+					Matriz matPonto( Tranformadas::ponto2DParaHomogeneo( ponto ) );
+					matPonto = matPonto * transformacao;
+					Ponto3D pontoSCNHomogeneo = Tranformadas::matrizParaPonto3D( matPonto );
+					Ponto2D novoPonto = set2DPoint( pontoSCNHomogeneo.x, pontoSCNHomogeneo.y ); //Um ponto em coordenadas homogeneas
+					pontosSCNObjeto.push_back( novoPonto );
+				}//Aqui, completou a lista de um dos subobjetos
+				pontosSCN.push_back( pontosSCNObjeto );
+			}
 		}//Completou a lista de subobjetos
 
 		this->pontosSCN = pontosSCN;
 	}
-
 }
+
+
 
 //-----------------------------------------------
 void Ponto::atualizarCoordenadaExibicao( Objeto * objeto ) {
@@ -197,6 +200,7 @@ void Reta::atualizarCoordenadaExibicao( Objeto * objeto ) {
 //-------------------------------------------
 void Wireframe::atualizarCoordenadaExibicao( Objeto * objeto ) {
 	if( objeto == nullptr ) {
+		this->pontosExibicao = std::vector<Wireframe *>();
 		desenhar = false;
 		return;
 	}
@@ -206,6 +210,11 @@ void Wireframe::atualizarCoordenadaExibicao( Objeto * objeto ) {
 }
 //-------------------------------------------
 void Wireframe::atualizarCoordenadaExibicao( std::vector< Wireframe * > subObjetos ) {
+	if( subObjetos.empty() ) {
+		this->pontosExibicao = std::vector<Wireframe *>();
+		desenhar = false;
+		return;
+	}
 	this->pontosExibicao = subObjetos;
 	desenhar = true;
 }

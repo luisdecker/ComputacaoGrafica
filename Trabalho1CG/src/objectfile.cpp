@@ -137,8 +137,10 @@ void ObjectFile::cliparObjetos() {
 					//`E para estar ja na rotacao correta...
 					std::vector<Wireframe *> clipados = WeilerAtherton( window ).clip( wireframe );
 					wireframe->atualizarCoordenadaExibicao( clipados );
-				}else{
-					//TODO Clip de wireframes nao ehPreenchidos
+				} else {
+					std::vector<Wireframe *> clipados;
+					clipados.push_back( to_wireframe( WireframeClipper( window ).clip( wireframe ) ) );
+					wireframe->atualizarCoordenadaExibicao( clipados );
 				}
 				break;
 			}//Wireframe

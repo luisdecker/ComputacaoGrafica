@@ -109,7 +109,7 @@ Objeto * Tranformadas::redimensionar( Objeto * obj, Ponto2D escala ) {
 	}
 }
 //-----------------------------------------------
-Objeto * Tranformadas::rotacionar( Objeto * obj, double graus, Ponto2D pontoReferencia ) {
+Objeto * Tranformadas::	rotacionar( Objeto * obj, double graus, Ponto2D pontoReferencia ) {
 	
 	switch( obj->tipoObjeto ) {
 		case Objeto::ponto: {

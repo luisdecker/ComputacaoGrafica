@@ -32,6 +32,10 @@
 //#include "window.h" //Circular
 #include "matriz.hpp"
 #include "transformadas.hpp"
+#define to_ponto(x) dynamic_cast<Ponto*>(x)
+#define to_reta(x) dynamic_cast<Reta*>(x)
+#define to_wireframe(x) dynamic_cast<Wireframe*>(x)
+
 
 class Tranformadas;
 class Objeto {
