@@ -132,7 +132,7 @@ bool WeilerAtherton::estaDentroDaWindow(Ponto2D p)
     return count&1; 
 }
  
-void WeilerAtherton::clip(Wireframe * obj){
+std::vector<Wireframe*> WeilerAtherton::clip(Wireframe * obj){
 
 	std::vector<Ponto2D*> inClipPoints,inSubjectPoints;
 	
@@ -379,42 +379,8 @@ void WeilerAtherton::clip(Wireframe * obj){
 	        	}
 
 	        }
-	        std::vector<Ponto2D*>::iterator itSubject;
-	        std::vector<Ponto2D*>::iterator itClip;
-
-	        std::cout << "Imprimindo pontos do wireframe\n";
-
-	        for(itSubject = subjectPoints.begin(); itSubject < subjectPoints.end(); itSubject++){
-	        	Ponto2D ponto = **itSubject;
-	        	std::cout<<"x: " <<ponto.x << " y: "<<ponto.y <<" entrada:"<<ponto.entrada<< " intersec: " <<ponto.interseccao <<"\n";
-	        }
-
-
-	        std::cout << "\n\nImprimindo pontos da window\n";
-
-	        for(itClip = clipPoints.begin(); itClip < clipPoints.end(); itClip++){
-	        	Ponto2D ponto = **itClip;
-	        	std::cout<<"x: " <<ponto.x << " y: "<<ponto.y <<" entrada:"<<ponto.entrada<< " intersec: " <<ponto.interseccao<<"\n";
-	        }
-
-	        std::cout <<"\n\n";
-
-	        for(int i = 0; i < objs.size();i++){
-
-	        	Wireframe *wf = objs[i];
-
-	        	std::vector<Ponto2D> pontos = wf->obterPontos();
-
-	        	for(int j = 0; j < pontos.size();j++){     		
-	        		std::cout<<"x: " <<pontos[j].x << " y: "<<pontos[j].y <<"\n";
-
-	        	}
-
-	        	std::cout <<"\n\n";
-
-
-	        }
-	        // return objs;
+	        
+	        return objs;
 }
 
 std::vector<Ponto2D*>::iterator WeilerAtherton::procuraPonto(std::vector<Ponto2D*> &lista, Ponto2D pontoBusca){
