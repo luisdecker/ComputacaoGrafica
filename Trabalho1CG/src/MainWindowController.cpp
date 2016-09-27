@@ -20,27 +20,27 @@ Objeto * MainWindowController::obtemUltimoObjInserido() {
 
 void MainWindowController::windowRight() {
 
-	this->window->moverParaDireita( ZOOM );
+	this->window->moverParaDireita( PASSO);
 	this->obf->atualizaSCNTodosObjetos();
 }
 
 void MainWindowController::windowLeft() {
 
-	this->window->moverParaEsquerda( ZOOM );
+	this->window->moverParaEsquerda( PASSO );
 	this->obf->atualizaSCNTodosObjetos();
 
 }
 
 void MainWindowController::windowUp() {
 
-	this->window->moverParaCima( ZOOM );
+	this->window->moverParaCima( PASSO );
 	this->obf->atualizaSCNTodosObjetos();
 
 }
 
 void MainWindowController::windowDown() {
 
-	this->window->moverParaBaixo( ZOOM );
+	this->window->moverParaBaixo( PASSO );
 	this->obf->atualizaSCNTodosObjetos();
 
 }
@@ -60,14 +60,14 @@ void MainWindowController::windowZoomOut() {
 }
 
 void MainWindowController::windowRodaAntiHorario() {
-	this->window->rotacionar( -ANGULO / 57.2957795131 );
-	this->obf->atualizaWindow( window );
+	this->window->rotacionar( ANGULO );
+	//this->obf->atualizaWindow( window );
 	this->obf->atualizaSCNTodosObjetos();
 
 }
 void MainWindowController::windowRodaHorario() {
-	this->window->rotacionar( ANGULO / 57.2957795131 );
-	this->obf->atualizaWindow( window );
+	this->window->rotacionar( -ANGULO );
+	//this->obf->atualizaWindow( window );
 	this->obf->atualizaSCNTodosObjetos();
 
 }

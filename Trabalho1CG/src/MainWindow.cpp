@@ -22,6 +22,9 @@ MainWindow::MainWindow( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builde
 	builder->get_widget( "btn_ahorario", btnAntiHorario );
 	btnTransf->set_sensitive( false );
 
+	builder->get_widget( "rd_liam", radioLiam );
+	builder->get_widget( "rd_cohen", radioCohen );
+
 	refTreeSelection = m_TreeView->get_selection();
 
 	m_Columns = new ModelColumns();
@@ -49,9 +52,23 @@ MainWindow::MainWindow( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builde
 
 void MainWindow::update() {
 
-
+	
+	/*Selecao do metodo de clipping*/
+	
+	if(radioCohen->get_active()){
+		of->setarCohenSutherland();
+	//	std::cout << "[MainWindow]["<< __LINE__ << "] Clipando com sutherland" << std::endl;
+	}else{
+		of->setarLiamBarsky();
+//	std::cout << "[MainWindow]["<< __LINE__ << "] Clipando com liam" << std::endl;
+		
+	}
+	
+	
 	assert( !( of == nullptr ) ); //Verifica se não é null pointer
 	m_refTreeModel->clear();
+	of->atualizaSCNTodosObjetos();
+
 	for( Objeto * obj : of->obterObjetos() ) {
 
 		Gtk::TreeModel::Row row = *( m_refTreeModel->append() );
@@ -108,7 +125,7 @@ void MainWindow::setObjectFile( ObjectFile * obf ) {
 	obf->atualizaWindow( window );
 
 	of->subscribe( this );
-
+	
 }
 
 void MainWindow::setIncludeObjectDialog( IncludeObjectDialog * includeObjDiag ) {
@@ -133,6 +150,7 @@ void MainWindow::setWindow( Window2D * window ) {
 
 	this->window = window;
 	controller->setWindow( window );
+	window->subscribe(this);
 
 }
 

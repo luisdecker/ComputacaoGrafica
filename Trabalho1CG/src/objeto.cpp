@@ -24,7 +24,7 @@
 
 //-----------------------------------------------
 Ponto::Ponto( std::string nome, Ponto2D coordenada ) {
-	this->coordenada = coordenada, this->nome = nome, this->tipoObjeto = Objeto::ponto; desenhar = true;
+	this->coordenada = coordenada, this->nome = nome, this->tipoObjeto = Objeto::ponto; desenhar = false;
 }
 //-----------------------------------------------
 Ponto2D Ponto::obterCoordenada() {
@@ -36,7 +36,7 @@ Ponto2D Ponto::obterCoordenadaSCN() {
 }
 //-----------------------------------------------
 Reta::Reta( std::string nome, Ponto2D pontoInicial, Ponto2D pontoFinal ) {
-	this->pontoInicial = pontoInicial, this->pontoFinal = pontoFinal, this->nome = nome, this->tipoObjeto = Objeto::reta;desenhar = true;
+	this->pontoInicial = pontoInicial, this->pontoFinal = pontoFinal, this->nome = nome, this->tipoObjeto = Objeto::reta; desenhar = false;
 }
 //-----------------------------------------------
 Ponto2D Reta::obterCoordenadaInicial() {
@@ -56,15 +56,15 @@ Ponto2D Reta::obterCoordenadaFinalSCN() {
 }
 //-------------------------------------------
 Wireframe::Wireframe( std::string nome, std::vector< Ponto2D > pontos ) {
-	this->pontos = pontos, this->nome = nome, this->tipoObjeto = Objeto::wireframe;desenhar = true;
+	this->pontos = pontos, this->nome = nome, this->tipoObjeto = Objeto::wireframe; desenhar = false;
 }
 //-----------------------------------------------
 std::vector< Ponto2D > Wireframe::obterPontos() {
 	return std::vector<Ponto2D>( this->pontos );
 }
 //-----------------------------------------------
-std::vector< Ponto2D > Wireframe::obterPontosSCN() {
-	return std::vector<Ponto2D>( this->pontosSCN );
+std::vector<std::vector< Ponto2D >> Wireframe::obterPontosSCN() {
+	return std::vector<std::vector<Ponto2D>>( this->pontosSCN );
 }
 //-----------------------------------------------
 void Wireframe::adicionarPonto( Ponto2D ponto ) {
@@ -125,40 +125,57 @@ void Ponto::atualizarCoordenadaSCN( Matriz transformacao ) {
 }
 //-----------------------------------------------
 void Reta::atualizarCoordenadaSCN( Matriz transformacao ) {
-
-
-	Matriz matrizCoordenadaInicial;
-	Matriz matrizCoordenadaFinal;
-
 	if( desenhar ) {
+
+		Matriz matrizCoordenadaInicial;
+		Matriz matrizCoordenadaFinal;
+
+
 		matrizCoordenadaInicial = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( pontoInicialExibicao ) );
 		matrizCoordenadaFinal = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( pontoFinalExibicao ) );
-	} else {
-		matrizCoordenadaInicial = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( obterCoordenadaInicial() ) );
-		matrizCoordenadaFinal = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( obterCoordenadaFinal() ) );
+
+
+		matrizCoordenadaInicial = matrizCoordenadaInicial * transformacao;
+		matrizCoordenadaFinal = matrizCoordenadaFinal * transformacao;
+		Ponto3D coordenadaHomogeneaInicial = Tranformadas::matrizParaPonto3D( matrizCoordenadaInicial );
+		Ponto3D coordenadaHomogeneaFinal = Tranformadas::matrizParaPonto3D( matrizCoordenadaFinal );
+		this->pontoInicialSCN = set2DPoint( coordenadaHomogeneaInicial.x, coordenadaHomogeneaInicial.y );
+		this->pontoFinalSCN = set2DPoint( coordenadaHomogeneaFinal.x, coordenadaHomogeneaFinal.y );
 	}
-	matrizCoordenadaInicial = matrizCoordenadaInicial * transformacao;
-	matrizCoordenadaFinal = matrizCoordenadaFinal * transformacao;
-	Ponto3D coordenadaHomogeneaInicial = Tranformadas::matrizParaPonto3D( matrizCoordenadaInicial );
-	Ponto3D coordenadaHomogeneaFinal = Tranformadas::matrizParaPonto3D( matrizCoordenadaFinal );
-	this->pontoInicialSCN = set2DPoint( coordenadaHomogeneaInicial.x, coordenadaHomogeneaInicial.y );
-	this->pontoFinalSCN = set2DPoint( coordenadaHomogeneaFinal.x, coordenadaHomogeneaFinal.y );
 
 }
-
 //-----------------------------------------------
 void Wireframe::atualizarCoordenadaSCN( Matriz transformacao ) {
-	std::vector<Ponto2D> coordenadasSCN;
-	for( Ponto2D coordenada : obterPontos() ) {
-		Matriz matrizCoordenada = Tranformadas::ponto3DparaMatriz( Tranformadas::ponto2DParaHomogeneo( coordenada ) );
-		matrizCoordenada = matrizCoordenada * transformacao;
-		Ponto3D coordenadaHomogenea = Tranformadas::matrizParaPonto3D( matrizCoordenada );
-		Ponto2D coordenadaSCN = set2DPoint( coordenadaHomogenea.x, coordenadaHomogenea.y );
-		coordenadasSCN.push_back( coordenadaSCN );
-	}
-	this->pontosSCN = coordenadasSCN;
-}
+	if( desenhar ) {
+		if( preenchido ) {
+			std::vector<std::vector<Ponto2D> > pontosSCN;
+			for( Wireframe * wireframe : pontosExibicao ) {
+				if( wireframe != nullptr ) {
+					std::vector<Ponto2D> pontosMundoObj = wireframe->obterPontos(); // Pontos originais de cada wireframe (subobjeto)
+					std::vector<Ponto2D> pontosSCNObjeto;//Pontos convertidos de cada wireframe (subobjeto)
+					for( Ponto2D ponto : pontosMundoObj ) {
+						Matriz matPonto( Tranformadas::ponto2DParaHomogeneo( ponto ) );
+						matPonto = matPonto * transformacao;
+						Ponto3D pontoSCNHomogeneo = Tranformadas::matrizParaPonto3D( matPonto );
+						Ponto2D novoPonto = set2DPoint( pontoSCNHomogeneo.x, pontoSCNHomogeneo.y ); //Um ponto em coordenadas homogeneas
+						pontosSCNObjeto.push_back( novoPonto );
+					}//Aqui, completou a lista de um dos subobjetos
+					pontosSCN.push_back( pontosSCNObjeto );
+				}
+			}//Completou a lista de subobjetos
 
+			this->pontosSCN = pontosSCN;
+		} else {
+			std::vector<Reta *> retasSCN;
+			for( Reta * reta : retasWireframe ) {
+				reta->atualizarCoordenadaExibicao( reta );
+				reta->atualizarCoordenadaSCN( transformacao );
+
+			}
+		}
+	}
+
+}
 //-----------------------------------------------
 void Ponto::atualizarCoordenadaExibicao( Objeto * objeto ) {
 	if( objeto == nullptr ) {
@@ -179,19 +196,52 @@ void Reta::atualizarCoordenadaExibicao( Objeto * objeto ) {
 	Reta * reta = dynamic_cast<Reta *>( objeto );
 	this->pontoInicialExibicao = reta->obterCoordenadaInicial();
 	this->pontoFinalExibicao = reta->obterCoordenadaFinal();
+
+	/*	std::cout << "[Reta][" << __LINE__ << "] Atualizou coordenada de exibicao: (" << this->pontoInicial.x << " , " << this->pontoInicial.y
+				  << ") -> (" << this->pontoFinal.x << " , " << this->pontoFinal.y << ")\nPara ("
+				  << this->pontoInicialExibicao.x << " , " << this->pontoInicialExibicao.y
+				  << ") -> (" << this->pontoFinalExibicao.x << " , " << this->pontoFinalExibicao.y << ")" << std::endl;*/
+
 	desenhar = true;
 }
 //-------------------------------------------
 void Wireframe::atualizarCoordenadaExibicao( Objeto * objeto ) {
 	if( objeto == nullptr ) {
+		this->pontosExibicao = std::vector<Wireframe *>();
 		desenhar = false;
 		return;
 	}
 	Wireframe * wireframe = dynamic_cast<Wireframe *>( objeto );
-	this->pontosExibicao = wireframe->obterPontos();
+	this-> pontosExibicao = wireframe->pontosExibicao;
 	desenhar = true;
 }
 //-------------------------------------------
+void Wireframe::atualizarCoordenadaExibicao( std::vector< Wireframe * > subObjetos ) {
+	if( subObjetos.empty() ) {
+		this->pontosExibicao = std::vector<Wireframe *>();
+		desenhar = false;
+		return;
+	}
+	this->pontosExibicao = subObjetos;
+	desenhar = true;
+}
+//-----------------------------------------------
+void Wireframe::atualizarRetas( std::vector< Reta * > retas ) {
+	if( retas.empty() ) {
+		desenhar = false;
+		
+	}
+	this->retasWireframe = retas;
+	desenhar = true;
+}
+//-----------------------------------------------
+std::vector< Reta * > Wireframe::obterRetas() {
+	if( this->retasWireframe.empty() ) {
+		return std::vector<Reta *>();
+	}
+	return std::vector<Reta *>( retasWireframe );
+}
+
 
 
 

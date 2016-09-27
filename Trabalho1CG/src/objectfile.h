@@ -31,6 +31,8 @@
 #include "liangbarsky.h"
 #include "cohensutherland.h"
 #include "clipponto.h"
+#include "WeilerAtherton.hpp"
+#include "wireframeclipper.h"
 
 class ObjectFile : public Subject {
 public:

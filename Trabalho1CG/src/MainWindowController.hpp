@@ -5,7 +5,8 @@
 #include "window.h"
 
 #define ZOOM 1
-#define ANGULO 15
+#define PASSO 10
+#define ANGULO 10
 
 class MainWindowController {
 

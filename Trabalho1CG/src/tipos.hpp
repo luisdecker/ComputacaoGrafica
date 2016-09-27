@@ -25,8 +25,11 @@
 
 struct Ponto2D {
 
-    double x, y;
-    bool visitado = false, interseccao=false, entrada = false;
+	double x, y;
+	bool visitado = false, interseccao = false, entrada = false;
+	Ponto2D( double xx, double yy ) {this->x = xx, this->y = yy;}
+	Ponto2D() {}
+	bool operator==( Ponto2D outro ) { return x == outro.x && this->y == outro.y;}
 
 };
 struct Ponto3D {
