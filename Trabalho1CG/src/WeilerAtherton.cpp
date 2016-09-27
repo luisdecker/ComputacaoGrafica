@@ -24,6 +24,8 @@ WeilerAtherton::WeilerAtherton(Window2D *window){
 	infEsq->y = window->inferiorEsquerdo().y;
 	clipPoints.push_back(infEsq); 
 
+	windowPoints = clipPoints;
+
 
 }
 
@@ -48,10 +50,9 @@ Ponto2D * WeilerAtherton::calculaInterseccaoEntreRetas(Ponto2D a, Ponto2D b, Pon
 
 }
 
-
 //dados três pontos p, q, r, a função verifica se q está sobre o segmento pr.
 
-bool  WeilerAtherton::onSegment(Ponto2D p, Ponto2D q, Ponto2D r){
+bool  WeilerAtherton::pontoEstaSobreAReta(Ponto2D p, Ponto2D q, Ponto2D r){
     if (q.x <= std::max(p.x, r.x) && q.x >= std::min(p.x, r.x) &&
         q.y <= std::max(p.y, r.y) && q.y >= std::min(p.y, r.y))
        return true;
@@ -64,7 +65,7 @@ bool  WeilerAtherton::onSegment(Ponto2D p, Ponto2D q, Ponto2D r){
 // 0 --> p, q and r são colineares
 // 1 --> sentido horário
 // 2 --> sentido anti-horário
-int  WeilerAtherton::orientation(Ponto2D p, Ponto2D q, Ponto2D r){
+int  WeilerAtherton::orientacao(Ponto2D p, Ponto2D q, Ponto2D r){
     
     int val = (q.y - p.y) * (r.x - q.x) -
               (q.x - p.x) * (r.y - q.y);
@@ -76,33 +77,62 @@ int  WeilerAtherton::orientation(Ponto2D p, Ponto2D q, Ponto2D r){
  
 //determina interseccção entre duas retas, especificadas por suas coordenadas cartesianas
 //explicação em detalhes no livro de algoritmos do cormen.
-bool  WeilerAtherton::doIntersect(Ponto2D p1, Ponto2D q1, Ponto2D p2, Ponto2D q2){
+bool  WeilerAtherton::existeInterseccao(Ponto2D p1, Ponto2D q1, Ponto2D p2, Ponto2D q2){
     
-    int o1 = orientation(p1, q1, p2);
-    int o2 = orientation(p1, q1, q2);
-    int o3 = orientation(p2, q2, p1);
-    int o4 = orientation(p2, q2, q1);
+    int o1 = orientacao(p1, q1, p2);
+    int o2 = orientacao(p1, q1, q2);
+    int o3 = orientacao(p2, q2, p1);
+    int o4 = orientacao(p2, q2, q1);
  
     
     if (o1 != o2 && o3 != o4)
         return true;
  
     
-    if (o1 == 0 && onSegment(p1, p2, q1)) return true;
+    if (o1 == 0 && pontoEstaSobreAReta(p1, p2, q1)) return true;
  
     
-    if (o2 == 0 && onSegment(p1, q2, q1)) return true;
+    if (o2 == 0 && pontoEstaSobreAReta(p1, q2, q1)) return true;
  
     
-    if (o3 == 0 && onSegment(p2, p1, q2)) return true;
+    if (o3 == 0 && pontoEstaSobreAReta(p2, p1, q2)) return true;
  
      
-    if (o4 == 0 && onSegment(p2, q1, q2)) return true;
+    if (o4 == 0 && pontoEstaSobreAReta(p2, q1, q2)) return true;
  
     return false; 
 }
+
+bool WeilerAtherton::estaDentroDaWindow(Ponto2D p)
+{
+  
+    // Cria um ponto para o segmento da linha p até o infinito
+    Ponto2D extremo = set2DPoint(INF, p.y);
  
-std::vector<Wireframe*> WeilerAtherton::clip(Wireframe * obj){
+    // Conta as intersecções da linha com os lados da window
+    int count = 0, i = 0;
+    do
+    {
+        int proximo = (i+1)%windowPoints.size();
+
+        //verifica se a reta do ponto p ao extremo intercepta uma das retas do polígono
+
+        if (existeInterseccao(*windowPoints[i], *windowPoints[proximo], p, extremo))
+        {
+
+            if (orientacao(*windowPoints[i], p, *windowPoints[proximo]) == 0)
+               return pontoEstaSobreAReta(*windowPoints[i], p, *windowPoints[proximo]);
+ 
+            count++;
+        }
+        i = proximo;
+    } while (i != 0);
+ 
+  
+    return count&1; 
+}
+ 
+void WeilerAtherton::clip(Wireframe * obj){
 
 	std::vector<Ponto2D*> inClipPoints,inSubjectPoints;
 	
@@ -135,63 +165,94 @@ std::vector<Wireframe*> WeilerAtherton::clip(Wireframe * obj){
 	                Ponto2D *P = inSubjectPoints[(j + lenSubjPoints - 1) % lenSubjPoints];
 	                Ponto2D *Q =  inSubjectPoints[j]; 
 	 
-	                if (doIntersect(*A, *B, *P, *Q)) {
+	                if (existeInterseccao(*A, *B, *P, *Q)) {
 	                   
 	                    	Ponto2D *pontoInterseccao = calculaInterseccaoEntreRetas(*A, *B, *P, *Q);
 	                    	pontoInterseccao->interseccao = true;
 
-	                    	std::vector<Ponto2D*>::iterator itP = procuraPonto(subjectPoints, *P);
+	                    	if(!estaDentroDaWindow(*P)){
+	                    		pontoInterseccao->entrada = true;
+	                    	}
+
 	                    	
+	                    	if(!pontoJaInserido(subjectPoints, *pontoInterseccao)){
 
-	                    	if(pontoInterseccao->x > P->x){
-
-	                    		itP++;
-	                    		Ponto2D * aux = *itP;
-
-	                    		while(pontoInterseccao->x > aux->x){
-	                    			itP++;
-	                    			aux = *itP;
-	                    		}
-
-	                    		subjectPoints.insert(itP,pontoInterseccao);     
+	                    		std::vector<Ponto2D*>::iterator itP = procuraPonto(subjectPoints, *P);
 	                    		
-	                    	}else if(pontoInterseccao->x < P->x){
-	                    		 itP++;
-	                    		 Ponto2D * aux = *itP;
 
-	                    		 while(pontoInterseccao->x < aux->x){
-	                    		 	itP++;
-	                    		 	aux = *itP;
-	                    		 }
-
-	                    		 subjectPoints.insert(itP,pontoInterseccao); 
-	                    	}else if(pontoInterseccao->x == P->x){
-	                    		if(pontoInterseccao->y > P->y){
+	                    		if(pontoInterseccao->x > P->x){
 
 	                    			itP++;
+
+	                    			if(itP == subjectPoints.end()){
+	                    				itP = subjectPoints.begin();
+	                    			}
 	                    			Ponto2D * aux = *itP;
 
-	                    			while(pontoInterseccao->y > aux->y){
+	                    			while(pontoInterseccao->x > aux->x){
 	                    				itP++;
 	                    				aux = *itP;
 	                    			}
 
 	                    			subjectPoints.insert(itP,pontoInterseccao);     
 	                    			
-	                    			}else{
+	                    		}else if(pontoInterseccao->x < P->x){
 	                    			 itP++;
+
+	                    			 if(itP == subjectPoints.end()){
+	                    			 	itP = subjectPoints.begin();
+	                    			 }
 	                    			 Ponto2D * aux = *itP;
 
-	                    			 while(pontoInterseccao->y < aux->y){
+	                    			 while(pontoInterseccao->x < aux->x){
 	                    			 	itP++;
 	                    			 	aux = *itP;
 	                    			 }
 
-	                    			 subjectPoints.insert(itP,pontoInterseccao);
-	                    			}
+	                    			 subjectPoints.insert(itP,pontoInterseccao); 
+	                    		}else if(pontoInterseccao->x == P->x){
+	                    			if(pontoInterseccao->y > P->y){
 
+	                    				itP++;
+
+	                    				if(itP == subjectPoints.end()){
+	                    					itP = subjectPoints.begin();
+	                    				}
+
+	                    				Ponto2D * aux = *itP;
+
+	                    				while(pontoInterseccao->y > aux->y){
+	                    					itP++;
+	                    					aux = *itP;
+	                    				}
+
+	                    				subjectPoints.insert(itP,pontoInterseccao);     
+	                    				
+	                    				}else{
+	                    				 itP++;
+
+	                    				 if(itP == subjectPoints.end()){
+	                    				 	itP = subjectPoints.begin();
+	                    				 }
+	                    				 Ponto2D * aux = *itP;
+
+	                    				 while(pontoInterseccao->y < aux->y){
+	                    				 	itP++;
+	                    				 	aux = *itP;
+	                    				 }
+
+	                    				 subjectPoints.insert(itP,pontoInterseccao);
+	                    				}
+
+	                    		}
+	                    	}else{
+	                    		std::vector<Ponto2D*>::iterator itIntersec = procuraPonto(subjectPoints, *pontoInterseccao);
+	                    		*itIntersec = pontoInterseccao;
 	                    	}
 
+	                    	
+	                    	
+	                    	if(!pontoJaInserido(clipPoints, *pontoInterseccao)){
 	                    	std::vector<Ponto2D*>::iterator itA = procuraPonto(clipPoints, *A);
 
 	                    	if(pontoInterseccao->x > A->x){
@@ -251,13 +312,16 @@ std::vector<Wireframe*> WeilerAtherton::clip(Wireframe * obj){
 
 	                    		clipPoints.insert(itA,pontoInterseccao); 
 	                    	}
+	                    }else{
+	                    		std::vector<Ponto2D*>::iterator itIntersec = procuraPonto(clipPoints, *pontoInterseccao);
+	                    		*itIntersec = pontoInterseccao;
+	                    	}
                  	
 
 	                }
 	            }
 	        }
 
-	        definePontosDeEntrada();
 
 	        std::vector<Wireframe*> objs;
 
@@ -315,9 +379,42 @@ std::vector<Wireframe*> WeilerAtherton::clip(Wireframe * obj){
 	        	}
 
 	        }
+	        std::vector<Ponto2D*>::iterator itSubject;
+	        std::vector<Ponto2D*>::iterator itClip;
+
+	        std::cout << "Imprimindo pontos do wireframe\n";
+
+	        for(itSubject = subjectPoints.begin(); itSubject < subjectPoints.end(); itSubject++){
+	        	Ponto2D ponto = **itSubject;
+	        	std::cout<<"x: " <<ponto.x << " y: "<<ponto.y <<" entrada:"<<ponto.entrada<< " intersec: " <<ponto.interseccao <<"\n";
+	        }
 
 
-	        return objs;
+	        std::cout << "\n\nImprimindo pontos da window\n";
+
+	        for(itClip = clipPoints.begin(); itClip < clipPoints.end(); itClip++){
+	        	Ponto2D ponto = **itClip;
+	        	std::cout<<"x: " <<ponto.x << " y: "<<ponto.y <<" entrada:"<<ponto.entrada<< " intersec: " <<ponto.interseccao<<"\n";
+	        }
+
+	        std::cout <<"\n\n";
+
+	        for(int i = 0; i < objs.size();i++){
+
+	        	Wireframe *wf = objs[i];
+
+	        	std::vector<Ponto2D> pontos = wf->obterPontos();
+
+	        	for(int j = 0; j < pontos.size();j++){     		
+	        		std::cout<<"x: " <<pontos[j].x << " y: "<<pontos[j].y <<"\n";
+
+	        	}
+
+	        	std::cout <<"\n\n";
+
+
+	        }
+	        // return objs;
 }
 
 std::vector<Ponto2D*>::iterator WeilerAtherton::procuraPonto(std::vector<Ponto2D*> &lista, Ponto2D pontoBusca){
@@ -335,6 +432,25 @@ std::vector<Ponto2D*>::iterator WeilerAtherton::procuraPonto(std::vector<Ponto2D
 		}
 
 	}
+
+}
+
+bool WeilerAtherton::pontoJaInserido(std::vector<Ponto2D*> &lista, Ponto2D pontoBusca){
+	std::vector<Ponto2D*>::iterator itVec;
+
+	for(itVec = lista.begin(); itVec < lista.end(); itVec++){
+
+		Ponto2D pontoLista = **itVec;
+
+		if(pontoLista.x == pontoBusca.x && pontoLista.y == pontoBusca.y){
+
+			return true;
+
+		}
+
+	}
+
+	return false;
 }
 
 
@@ -373,35 +489,4 @@ std::vector<Ponto2D*>::iterator WeilerAtherton::proximoPontoEntrada(){
 
 }
 
-void WeilerAtherton::definePontosDeEntrada(){
-	
-	int i;
-	int lenSubjPoints = subjectPoints.size();
-
-
-	for(i = 0; i < lenSubjPoints; i++){
-
-		if(subjectPoints[i]->interseccao){
-			Ponto2D *A = subjectPoints[(i + lenSubjPoints - 2) % lenSubjPoints];
-			Ponto2D *B = subjectPoints[(i + lenSubjPoints - 1) % lenSubjPoints];
-			Ponto2D *C = subjectPoints[i];
-
-			if(orientation(*A,*B,*C)==1){
-				break;
-			}
-		}
-	}
-
-	bool ultimo = true;
-
-	for(int j = i; j < i + lenSubjPoints; j++){
-
-		if(subjectPoints[j % lenSubjPoints]->interseccao){
-			subjectPoints[j % lenSubjPoints]->entrada = ultimo;
-			ultimo = !ultimo;
-		}
-
-	}
-
-}
 
