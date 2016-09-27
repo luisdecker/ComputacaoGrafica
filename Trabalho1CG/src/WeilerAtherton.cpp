@@ -322,64 +322,67 @@ std::vector<Wireframe*> WeilerAtherton::clip(Wireframe * obj){
 	            }
 	        }
 
-
 	        std::vector<Wireframe*> objs;
 
-	        while(!todosPontosEntradaVisitados()){
+	        if(existePontoDeInterseccao()){
+	        	while(!todosPontosEntradaVisitados()){
 
-	        	Wireframe * wf = new Wireframe("teste");
-	        	objs.push_back(wf);
+	        		Wireframe * wf = new Wireframe("teste");
+	        		objs.push_back(wf);
 
-	        	std::vector<Ponto2D*>::iterator iterSubj = proximoPontoEntrada();
-	        	Ponto2D *primeiro = *iterSubj;
-	        	wf->adicionarPonto(*primeiro);
+	        		std::vector<Ponto2D*>::iterator iterSubj = proximoPontoEntrada();
+	        		Ponto2D *primeiro = *iterSubj;
+	        		wf->adicionarPonto(*primeiro);
 
-	        	iterSubj++;
-	        	bool objRecortado = false;
-
-	        	while(!objRecortado){        		
-
-	        		if(iterSubj == subjectPoints.end()){
-	        			iterSubj = subjectPoints.begin();
-	        		}
-
-	        		Ponto2D *auxPoint = *iterSubj;
-	        		auxPoint->visitado = true;
-	        		wf->adicionarPonto(*auxPoint);
-	        		
-	        		if(auxPoint->interseccao){
-
-	        			std::vector<Ponto2D*>::iterator iterClip = procuraPonto(clipPoints,*auxPoint);
-
-	        			iterClip++;
-
-	        			while(!objRecortado){    
-
-	        			if(iterClip == clipPoints.end()){
-	        				iterClip = clipPoints.begin();
-	        			}
-	        			Ponto2D *auxPoint2 = *iterClip;
-	        			auxPoint2->visitado = true;
-
-	        			if(*iterClip == primeiro){
-	        				objRecortado = true;
-	        			}else if(auxPoint2->interseccao){
-	        				wf->adicionarPonto(*auxPoint2);
-	        				iterSubj = procuraPonto(subjectPoints,*auxPoint2);
-	        				break;
-	        			}
-	        			iterClip++;
-	        		}
-
-	        		}
-	        		
 	        		iterSubj++;
-	        		
-	        		
-	        	}
+	        		bool objRecortado = false;
 
+	        		while(!objRecortado){        		
+
+	        			if(iterSubj == subjectPoints.end()){
+	        				iterSubj = subjectPoints.begin();
+	        			}
+
+	        			Ponto2D *auxPoint = *iterSubj;
+	        			auxPoint->visitado = true;
+	        			wf->adicionarPonto(*auxPoint);
+	        			
+	        			if(auxPoint->interseccao){
+
+	        				std::vector<Ponto2D*>::iterator iterClip = procuraPonto(clipPoints,*auxPoint);
+
+	        				iterClip++;
+
+	        				while(!objRecortado){    
+
+	        				if(iterClip == clipPoints.end()){
+	        					iterClip = clipPoints.begin();
+	        				}
+	        				Ponto2D *auxPoint2 = *iterClip;
+	        				auxPoint2->visitado = true;
+
+	        				if(*iterClip == primeiro){
+	        					objRecortado = true;
+	        				}else if(auxPoint2->interseccao){
+	        					wf->adicionarPonto(*auxPoint2);
+	        					iterSubj = procuraPonto(subjectPoints,*auxPoint2);
+	        					break;
+	        				}
+	        				iterClip++;
+	        			}
+
+	        			}
+	        			
+	        			iterSubj++;
+	        			
+	        			
+	        		}
+
+	        	}
+	        }else{
+	        	objs.push_back(obj);
 	        }
-	        
+       	        
 	        return objs;
 }
 
@@ -433,6 +436,24 @@ bool WeilerAtherton::todosPontosEntradaVisitados(){
 
 	return true;
 
+}
+
+bool WeilerAtherton::existePontoDeInterseccao(){
+	std::vector<Ponto2D*>::iterator subjIter;
+
+	Ponto2D * aux;
+
+	for(subjIter = subjectPoints.begin(); subjIter < subjectPoints.end(); subjIter++){
+
+		aux = *subjIter;
+
+		if(aux->interseccao){
+
+			return true;
+		}
+	}
+
+	return false;
 }
 
 std::vector<Ponto2D*>::iterator WeilerAtherton::proximoPontoEntrada(){

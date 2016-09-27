@@ -31,6 +31,7 @@ public:
 		std::vector<Ponto2D*>::iterator proximoPontoEntrada();
 		bool estaDentroDaWindow(Ponto2D p);
 		bool pontoJaInserido(std::vector<Ponto2D*> &lista, Ponto2D pontoBusca);
+		bool existePontoDeInterseccao();
 
 };
 
