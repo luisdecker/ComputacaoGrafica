@@ -185,15 +185,36 @@ public:
 
 private:
 	bool preenchido;
+	//-----------------------------------------------
 	bool todosPontosInclusos;
+	//-----------------------------------------------
 	std::vector<Ponto2D> pontos;//Vetor de pontos ordenados. O poligono é ligado seguinto a ordem desta lista.
+	//-----------------------------------------------
 	std::vector<std::vector<Ponto2D>> pontosSCN;//Pontos na SCN.
-	std::vector<Reta*> retasWireframeSCN;//Retas para o desenho de um wireframe em SCN
+	//-----------------------------------------------
+	std::vector<Reta *> retasWireframeSCN; //Retas para o desenho de um wireframe em SCN
+	//-----------------------------------------------
 	std::vector<Wireframe *> pontosExibicao;//Pontos apos clip.
+	//-----------------------------------------------
 	std::vector<Reta * >retasWireframe; //Retas para o desenho de um wireframe.
 
 };
 
+
+class CurvaBezier : public Objeto {
+public:
+	//Construtor padrao
+	CurvaBezier( std::string nome );
+	//-----------------------------------------------
+	//Atualiza coordenadas de exibicao (Clipadas)
+	virtual void atualizarCoordenadaExibicao( Objeto * objeto );
+	//-----------------------------------------------
+	//Atualiza as cordanadas no Sistema de Coordenadas Normalizadas
+	virtual void atualizarCoordenadaSCN( Matriz transformacao );
+private:
+	//Pontos de controle da curva de bezier
+	std::vector<Ponto2D> pontosDeControle;
+};
 
 #endif // OBJETO_H
 
