@@ -56,15 +56,19 @@ int main( int argc, char * argv[] ) {
 	/*TESTES DO MODELO*/
 #ifdef TESTES_MODELO
 	std::cout << "=======================================================\n";
+	BezierClipper::listaPontos pontosControle;
+	pontosControle.push_back( set2DPoint( 100, 100 ) );
+	pontosControle.push_back( set2DPoint( 200, 300 ) );
+	pontosControle.push_back( set2DPoint( 300, 300 ) );
+	pontosControle.push_back( set2DPoint( 400, 100 ) );
+	CurvaBezier minhaCurvaFofinha( "Curva", pontosControle );
+	int i = 0;
+	for( Ponto2D ponto : minhaCurvaFofinha.obterPontosCalculados() ) {
+		std::cout << "Ponto " << i << ": ( " << ponto.x << " , " << ponto.y << " )\n";
+		i++;
+	}
 
-	Wireframe * wireframe = new Wireframe("alce");
-	wireframe->adicionarPonto(set2DPoint(100,100));
-	wireframe->adicionarPonto(set2DPoint(-100,100));
-	wireframe->adicionarPonto(set2DPoint(0,0));
-	
-	WeilerAtherton cliper(window);
-	std::vector<Wireframe*> frames = cliper.clip(wireframe);
-	
+
 	std::cout << "=======================================================\n";
 	return 0;
 #endif

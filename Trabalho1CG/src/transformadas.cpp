@@ -110,7 +110,7 @@ Objeto * Tranformadas::redimensionar( Objeto * obj, Ponto2D escala ) {
 }
 //-----------------------------------------------
 Objeto * Tranformadas::	rotacionar( Objeto * obj, double graus, Ponto2D pontoReferencia ) {
-	
+
 	switch( obj->tipoObjeto ) {
 		case Objeto::ponto: {
 			Ponto * ponto = dynamic_cast<Ponto *>( obj );
@@ -282,11 +282,11 @@ Matriz Tranformadas::gerarMatrizRedimensionamento( double escalaX, double escala
 //-----------------------------------------------
 Matriz Tranformadas::gerarMatrizRotacao( double graus ) {
 //	std::cout <<  "[Tranformadas] Gerando matriz de rotacao para " << graus <<" \n";
-	graus = graus * (M_PI / 180);
+	graus = graus * ( M_PI / 180 );
 	graus = -graus;
-	
+
 //	std::cout <<  "[Tranformadas] Gerando matriz de rotacao para " << graus <<" \n";
-	
+
 	Matriz rotacao( 3, 3 );
 	rotacao.at( 1, 1 ) = cos( graus );
 	rotacao.at( 1, 2 ) = -sin( graus );
@@ -301,22 +301,11 @@ Matriz Tranformadas::gerarMatrizRotacao( double graus ) {
 	return rotacao;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+long long int Tranformadas::fatorial( int n ) {
+	long long int fat = 1;
+	for( n; n > 1; n-- ) {fat *= n;}
+	return fat;
+}
 
 
 

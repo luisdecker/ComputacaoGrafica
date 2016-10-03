@@ -131,7 +131,7 @@ void ObjectFile::cliparObjetos() {
 				break;
 			}
 			case Objeto::wireframe: {
-				Wireframe * wireframe = dynamic_cast<Wireframe *>( obj );
+				Wireframe * wireframe = to_wireframe( obj );
 				Wireframe * wireframeClipado;
 				if( wireframe->ehPreenchido() ) {
 					//`E para estar ja na rotacao correta...
@@ -149,6 +149,12 @@ void ObjectFile::cliparObjetos() {
 				}
 				break;
 			}//Wireframe
+			case Objeto::bezier: {
+				CurvaBezier * curva = dynamic_cast<CurvaBezier *>( obj );
+				curva->atualizarCoordenadaExibicao( BezierClipper( window ).clip( curva ) );
+
+				break;
+			}
 		}
 	}
 }

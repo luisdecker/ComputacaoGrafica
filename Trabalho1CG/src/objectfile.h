@@ -33,6 +33,7 @@
 #include "clipponto.h"
 #include "WeilerAtherton.hpp"
 #include "wireframeclipper.h"
+#include "bezierclipper.h"
 
 class ObjectFile : public Subject {
 public:

@@ -40,7 +40,7 @@
 class Tranformadas;
 class Objeto {
 public:
-	enum tipo {ponto, reta, wireframe}; //Enumerador com os tipos de objeto
+	enum tipo {ponto, reta, wireframe, bezier}; //Enumerador com os tipos de objeto
 	//-----------------------------------------------
 	std::string nome;//O nome do objeto
 	//-----------------------------------------------
@@ -199,21 +199,81 @@ private:
 	std::vector<Reta * >retasWireframe; //Retas para o desenho de um wireframe.
 
 };
-
-
 class CurvaBezier : public Objeto {
 public:
 	//Construtor padrao
-	CurvaBezier( std::string nome );
+	CurvaBezier( std::string nome ) {
+		resolucao = 10;
+		this->nome = nome;
+		this->pontosDeControle.clear();
+		this->desenhar = false;
+		this->tipoObjeto = bezier;
+	}
+	//-----------------------------------------------
+	//Construtor para passagem de pontos de exibicao
+	CurvaBezier( std::vector<Ponto2D>pontosExibicao ) {
+		resolucao = 10;
+		this->nome = "Temporario";
+		this->pontosExibicao = pontosExibicao;
+		this->tipoObjeto = bezier;
+	}
+	//-----------------------------------------------
+	//Construtor com passagem de pontos de controle;
+	CurvaBezier( std::string nome, std::vector<Ponto2D> pontosControle ) {
+		resolucao = 10;
+		this->nome = nome;
+		this->pontosDeControle = pontosControle;
+		this->desenhar = false;
+		this->tipoObjeto = bezier;
+		this->pontosCalculados = caculaPontos( resolucao );
+	}
 	//-----------------------------------------------
 	//Atualiza coordenadas de exibicao (Clipadas)
 	virtual void atualizarCoordenadaExibicao( Objeto * objeto );
 	//-----------------------------------------------
 	//Atualiza as cordanadas no Sistema de Coordenadas Normalizadas
 	virtual void atualizarCoordenadaSCN( Matriz transformacao );
+	//-----------------------------------------------
+	//Calculas n pontos para a curva
+	std::vector<Ponto2D> caculaPontos( int numeroPontos );
+	//-----------------------------------------------
+	//Atualiza as coordenaadas de controle;
+	void atualizaCoordenadasControle( std::vector<Ponto2D> coordenadas );
+	//-----------------------------------------------
+	//Atualiza a resolucao da curva
+	void atualizaResolucao( int numeroPontos ) {this->resolucao = numeroPontos;}
+	//-----------------------------------------------
+	//Obtem os pontos SCN
+	std::vector<Ponto2D> obterCoordenadasSCN();
+	//-----------------------------------------------
+	//Obtem os pontos calculados
+	std::vector<Ponto2D> obterPontosCalculados() {return std::vector<Ponto2D>( pontosCalculados );}
+	//-----------------------------------------------
+	//Obtem as coordenadas de exibicao
+	std::vector<Ponto2D> obterCoordenadasExibicao() {return std::vector<Ponto2D> ( pontosExibicao );}
+
 private:
 	//Pontos de controle da curva de bezier
 	std::vector<Ponto2D> pontosDeControle;
+	//-----------------------------------------------
+	//Pontos interpolados da curva
+	std::vector<Ponto2D> pontosCalculados;
+	//-----------------------------------------------
+	//Pontos de exibicao (clipados) da curva
+	std::vector<Ponto2D> pontosExibicao;
+	//-----------------------------------------------
+	//Pontos SCN da curva;
+	std::vector<Ponto2D> pontosSCN;
+	//-----------------------------------------------
+	//Resolucao da curva (Numero de pontos)
+	int resolucao;
+	//-----------------------------------------------
+	//Gera o elemento Bk[L]
+	double gerarBk( double l, double k, double t );
+	//-----------------------------------------------
+	//Calcula um ponto da curva, para dado t
+	Ponto2D calculaPonto( double t );
+
 };
 
 #endif // OBJETO_H

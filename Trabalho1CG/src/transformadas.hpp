@@ -21,6 +21,7 @@ public:
 	static Matriz gerarMatrizTranslacao( Ponto2D direcao );
 	static Matriz gerarMatrizRotacao( double graus );
 	static Matriz gerarMatrizRedimensionamento( double escalaX, double escalaY );
+	static long long int fatorial( int n );
 
 };
 #endif
