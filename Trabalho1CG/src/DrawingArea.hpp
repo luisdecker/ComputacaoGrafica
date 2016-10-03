@@ -9,7 +9,7 @@
 #include <gtkmm/builder.h>
 #include "Observer.hpp"
 #include "cohensutherland.h"
-
+typedef std::vector<Ponto2D> ListaPontos;
 class DrawingArea : public Gtk::DrawingArea, public Observer {
 public:
 

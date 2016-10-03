@@ -52,19 +52,19 @@ MainWindow::MainWindow( BaseObjectType * cobject, const Glib::RefPtr<Gtk::Builde
 
 void MainWindow::update() {
 
-	
+
 	/*Selecao do metodo de clipping*/
-	
-	if(radioCohen->get_active()){
+
+	if( radioCohen->get_active() ) {
 		of->setarCohenSutherland();
-	//	std::cout << "[MainWindow]["<< __LINE__ << "] Clipando com sutherland" << std::endl;
-	}else{
+		//	std::cout << "[MainWindow]["<< __LINE__ << "] Clipando com sutherland" << std::endl;
+	} else {
 		of->setarLiamBarsky();
 //	std::cout << "[MainWindow]["<< __LINE__ << "] Clipando com liam" << std::endl;
-		
+
 	}
-	
-	
+
+
 	assert( !( of == nullptr ) ); //Verifica se não é null pointer
 	m_refTreeModel->clear();
 	of->atualizaSCNTodosObjetos();
@@ -84,8 +84,14 @@ void MainWindow::update() {
 			break;
 			case 2: {
 				row[m_Columns->typeObj] = "Wireframe";
+
+				break;
 			}
-			break;
+			case 3: {
+				row[m_Columns->typeObj] = "Bezier";
+				break;
+			}
+
 		}
 
 	}
@@ -125,7 +131,7 @@ void MainWindow::setObjectFile( ObjectFile * obf ) {
 	obf->atualizaWindow( window );
 
 	of->subscribe( this );
-	
+
 }
 
 void MainWindow::setIncludeObjectDialog( IncludeObjectDialog * includeObjDiag ) {
@@ -150,7 +156,7 @@ void MainWindow::setWindow( Window2D * window ) {
 
 	this->window = window;
 	controller->setWindow( window );
-	window->subscribe(this);
+	window->subscribe( this );
 
 }
 

@@ -115,8 +115,8 @@ void ObjectFile::cliparObjetos() {
 			}
 			case Objeto::reta: {
 				Reta * reta = dynamic_cast<Reta *>( obj );
-				std::cout << "[ObjectFile][" << __LINE__ << "] clipar uma reta (" << reta->obterCoordenadaInicial().x << " , " << reta->obterCoordenadaInicial().y
-						  << ")  -->  (" << reta->obterCoordenadaFinal().x << " , " << reta->obterCoordenadaFinal().y << ")\n";
+				//			std::cout << "[ObjectFile][" << __LINE__ << "] clipar uma reta (" << reta->obterCoordenadaInicial().x << " , " << reta->obterCoordenadaInicial().y
+				//					  << ")  -->  (" << reta->obterCoordenadaFinal().x << " , " << reta->obterCoordenadaFinal().y << ")\n";
 				Reta * retaClipada;
 				if( algoritmoClip ) {
 					CohenSutherland cliper( window );

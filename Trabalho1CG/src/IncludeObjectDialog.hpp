@@ -7,6 +7,7 @@
 #include <gtkmm/label.h>
 #include <gtkmm/button.h>
 #include <gtkmm/radiobutton.h>
+#include <string>
 #include "objectfile.h"
 #include "IncludeObjectController.hpp"
 #include "window.h"
@@ -35,6 +36,20 @@ protected:
 	Gtk::Entry * y_wire;
 	Gtk::RadioButton * rd_arame;
 	Gtk::RadioButton * rd_preench;
+	
+	//Botoes de bezier
+	Gtk::Entry * xPontoControle1;
+	Gtk::Entry * xPontoControle2;
+	Gtk::Entry * xPontoControle3;
+	Gtk::Entry * xPontoControle4;
+
+	Gtk::Entry * yPontoControle1;	
+	Gtk::Entry * yPontoControle2;	
+	Gtk::Entry * yPontoControle3;	
+	Gtk::Entry * yPontoControle4;
+	
+	
+
 
 public:
 

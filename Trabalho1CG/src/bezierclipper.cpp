@@ -4,8 +4,8 @@ CurvaBezier * BezierClipper::clip( CurvaBezier * curvaOriginal ) {
 		return nullptr;
 	}
 	listaRetas retasInterpoladas = paraRetas( curvaOriginal );
-	listaRetas retarClipadas = cliparRetas( retasInterpoladas );
-	listaPontos pontosClipados = paraPontos( retarClipadas );
+	listaRetas retasClipadas = cliparRetas( retasInterpoladas );
+	listaPontos pontosClipados = paraPontos( retasClipadas );
 	if( pontosClipados.empty() ) {
 		return nullptr;
 	}
@@ -30,6 +30,7 @@ BezierClipper::listaRetas BezierClipper::cliparRetas( BezierClipper::listaRetas 
 			retasClipadas.push_back( retaClipada );
 		}
 	}
+	return retasClipadas;
 }
 //-----------------------------------------------
 BezierClipper::listaPontos BezierClipper::paraPontos( BezierClipper::listaRetas retas ) {

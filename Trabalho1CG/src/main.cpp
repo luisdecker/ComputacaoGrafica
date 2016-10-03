@@ -14,6 +14,7 @@
 #include "objeto.h"
 #include "cohensutherland.h"
 #include "liangbarsky.h"
+#include "bezierclipper.h"
 #endif
 
 
@@ -67,6 +68,10 @@ int main( int argc, char * argv[] ) {
 		std::cout << "Ponto " << i << ": ( " << ponto.x << " , " << ponto.y << " )\n";
 		i++;
 	}
+	
+	BezierClipper(window).clip(&minhaCurvaFofinha);
+	
+	
 
 
 	std::cout << "=======================================================\n";

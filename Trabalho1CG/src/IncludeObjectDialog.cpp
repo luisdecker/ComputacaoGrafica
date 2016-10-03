@@ -22,6 +22,17 @@ IncludeObjectDialog::IncludeObjectDialog( BaseObjectType * cobject, const Glib::
 	builder->get_widget( "y_wire", y_wire );
 	builder->get_widget( "rd_arame", rd_arame );
 	builder->get_widget( "rd_preench", rd_preench );
+//bezier
+//X
+	builder->get_widget( "pontoControle1x", xPontoControle1 );
+	builder->get_widget( "pontoControle2x", xPontoControle2 );
+	builder->get_widget( "pontoControle3x", xPontoControle3 );
+	builder->get_widget( "pontoControle4x", xPontoControle4 );
+//Y
+	builder->get_widget( "pontoControle1y", yPontoControle1 );
+	builder->get_widget( "pontoControle2y", yPontoControle2 );
+	builder->get_widget( "pontoControle3y", yPontoControle3 );
+	builder->get_widget( "pontoControle4y", yPontoControle4 );
 
 	btn_add_point_wire->signal_clicked().connect( sigc::mem_fun( *this, &IncludeObjectDialog::on_btn_add_point_wire_clicked ) );
 
@@ -54,10 +65,10 @@ void IncludeObjectDialog::on_btn_add_point_wire_clicked() {
 void IncludeObjectDialog::executar() {
 
 	int result = run();
-
+	std::cout << "Executou a janelota"<<std::endl;
 	switch( result ) {
 		case Gtk::RESPONSE_OK: {
-
+std::cout << "ok na janelota"<<std::endl;
 			incluirObjeto();
 
 			close();
@@ -66,6 +77,7 @@ void IncludeObjectDialog::executar() {
 		break;
 
 		case Gtk::RESPONSE_CANCEL: {
+std::cout << "cancel na janelota"<<std::endl;
 
 			close();
 		}
@@ -130,13 +142,35 @@ void IncludeObjectDialog::incluirObjeto() {
 
 		//case 2:wireframe
 		case 2: {
-
+// d
 			bool ehPreenchido = rd_preench->get_active();
 
 			controller->confirmaInclusaoWireframe( objName, true, ehPreenchido );
+			break;
+		}
+		case 3: {
+			std::vector<Ponto2D> pontosControle;
+
+			double xp1 = stod( xPontoControle1->get_text() );
+			double xp2 = stod( xPontoControle2->get_text() );
+			double xp3 = stod( xPontoControle3->get_text() );
+			double xp4 = stod( xPontoControle4->get_text() );
+
+			double yp1 = stod( yPontoControle1->get_text() );
+			double yp2 = stod( yPontoControle2->get_text() );
+			double yp3 = stod( yPontoControle3->get_text() );
+			double yp4 = stod( yPontoControle4->get_text() );
+
+			pontosControle.push_back( set2DPoint( xp1, yp1 ) );
+			pontosControle.push_back( set2DPoint( xp2, yp2 ) );
+			pontosControle.push_back( set2DPoint( xp3, yp3 ) );
+			pontosControle.push_back( set2DPoint( xp4, yp4 ) );
+
+			controller->incluirBezier(objName,pontosControle);
 
 		}
-		break;
+
+
 	}
 
 	in_name_obj->set_text( "" );

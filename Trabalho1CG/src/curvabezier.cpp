@@ -28,7 +28,7 @@ std::vector<Ponto2D> CurvaBezier::caculaPontos( int numeroPontos ) {
 	std::vector<Ponto2D> pontosDaCurva;
 	double passo = 1. / numeroPontos;
 	for( double t = 0; t < 1 ; t += passo ) {
-		
+
 		pontosDaCurva.push_back( calculaPonto( t ) );
 	}
 	return pontosDaCurva;
@@ -45,7 +45,7 @@ void CurvaBezier::atualizarCoordenadaExibicao( Objeto * objeto ) {
 		return;
 	}
 	this->pontosExibicao = curva->pontosExibicao;
-	desenhar = true;
+	desenhar = true;	
 }
 //-----------------------------------------------
 void CurvaBezier::atualizaCoordenadasControle( std::vector<Ponto2D> coordenadas ) {

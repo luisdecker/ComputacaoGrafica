@@ -29,6 +29,20 @@ bool IncludeObjectController::incluirReta( string nome, double x0, double y0, do
 	return true;
 }
 //-----------------------------------------------
+bool IncludeObjectController::incluirBezier( string nome, ListaPontos pontosControle ) {
+	CurvaBezier * curva = new CurvaBezier( nome, pontosControle );
+
+	if( !obf->contemObjeto( nome ) ) {
+		obf->inserirObjeto( curva );
+	} else {
+		obf->atualizarObjeto( curva );
+	}
+
+	return true;
+
+}
+
+//-----------------------------------------------
 bool IncludeObjectController::incluirPontoWireframe( string nome, double x, double y ) {
 	if( obf->contemObjeto( nome ) ) {
 		Wireframe * wire = dynamic_cast<Wireframe * >( obf->obterObjetoNome( nome ) );
