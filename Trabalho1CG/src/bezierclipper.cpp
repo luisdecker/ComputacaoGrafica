@@ -24,10 +24,12 @@ BezierClipper::listaRetas BezierClipper::paraRetas( CurvaBezier * curva ) {
 //-----------------------------------------------
 BezierClipper::listaRetas BezierClipper::cliparRetas( BezierClipper::listaRetas retas ) {
 	listaRetas retasClipadas;
-	for( Reta * reta : retas ) {
-		Reta * retaClipada = to_reta(CohenSutherland( janela ).clip( reta ));
-		if( retaClipada != nullptr ) {
-			retasClipadas.push_back( retaClipada );
+	if( !retas.empty() ) {
+		for( Reta * reta : retas ) {
+			Reta * retaClipada = to_reta( CohenSutherland( janela ).clip( reta ) );
+			if( retaClipada != nullptr ) {
+				retasClipadas.push_back( retaClipada );
+			}
 		}
 	}
 	return retasClipadas;
@@ -35,9 +37,11 @@ BezierClipper::listaRetas BezierClipper::cliparRetas( BezierClipper::listaRetas 
 //-----------------------------------------------
 BezierClipper::listaPontos BezierClipper::paraPontos( BezierClipper::listaRetas retas ) {
 	listaPontos pontos;
-	pontos.push_back( retas.front()->obterCoordenadaInicial() );
-	for( Reta * reta : retas	) {
-		pontos.push_back( reta->obterCoordenadaFinal() );
+	if( !retas.empty() ) {
+		pontos.push_back( retas.front()->obterCoordenadaInicial() );
+		for( Reta * reta : retas	) {
+			pontos.push_back( reta->obterCoordenadaFinal() );
+		}
 	}
 	return pontos;
 }

@@ -203,7 +203,7 @@ class CurvaBezier : public Objeto {
 public:
 	//Construtor padrao
 	CurvaBezier( std::string nome ) {
-		resolucao = 10;
+		resolucao = 20;
 		this->nome = nome;
 		this->pontosDeControle.clear();
 		this->desenhar = false;
@@ -212,7 +212,7 @@ public:
 	//-----------------------------------------------
 	//Construtor para passagem de pontos de exibicao
 	CurvaBezier( std::vector<Ponto2D>pontosExibicao ) {
-		resolucao = 10;
+		resolucao = 20;
 		this->nome = "Temporario";
 		this->pontosExibicao = pontosExibicao;
 		this->tipoObjeto = bezier;
@@ -220,7 +220,7 @@ public:
 	//-----------------------------------------------
 	//Construtor com passagem de pontos de controle;
 	CurvaBezier( std::string nome, std::vector<Ponto2D> pontosControle ) {
-		resolucao = 10;
+		resolucao = 20;
 		this->nome = nome;
 		this->pontosDeControle = pontosControle;
 		this->desenhar = false;
