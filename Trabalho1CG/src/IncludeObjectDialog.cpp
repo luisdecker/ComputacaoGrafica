@@ -34,6 +34,47 @@ IncludeObjectDialog::IncludeObjectDialog( BaseObjectType * cobject, const Glib::
 	builder->get_widget( "pontoControle3y", yPontoControle3 );
 	builder->get_widget( "pontoControle4y", yPontoControle4 );
 
+//b-spline
+
+	builder->get_widget( "pto_ctrl_spl_x1", pto_ctrl_spl_x1 );
+	builder->get_widget( "pto_ctrl_spl_x2", pto_ctrl_spl_x2 );
+	builder->get_widget( "pto_ctrl_spl_x3", pto_ctrl_spl_x3 );
+	builder->get_widget( "pto_ctrl_spl_x4", pto_ctrl_spl_x4 );
+	builder->get_widget( "pto_ctrl_spl_x5", pto_ctrl_spl_x5 );
+	builder->get_widget( "pto_ctrl_spl_x6", pto_ctrl_spl_x6 );
+	builder->get_widget( "pto_ctrl_spl_x7", pto_ctrl_spl_x7 );
+	builder->get_widget( "pto_ctrl_spl_x8", pto_ctrl_spl_x8 );
+	builder->get_widget( "pto_ctrl_spl_x9", pto_ctrl_spl_x9 );
+	builder->get_widget( "pto_ctrl_spl_x10", pto_ctrl_spl_x10 );
+	builder->get_widget( "pto_ctrl_spl_x11", pto_ctrl_spl_x11 );
+	builder->get_widget( "pto_ctrl_spl_x12", pto_ctrl_spl_x12 );
+	builder->get_widget( "pto_ctrl_spl_x13", pto_ctrl_spl_x13 );
+	builder->get_widget( "pto_ctrl_spl_x14", pto_ctrl_spl_x14 );
+	builder->get_widget( "pto_ctrl_spl_x15", pto_ctrl_spl_x15 );
+	builder->get_widget( "pto_ctrl_spl_x16", pto_ctrl_spl_x16 );
+	builder->get_widget( "pto_ctrl_spl_x17", pto_ctrl_spl_x17 );
+	builder->get_widget( "pto_ctrl_spl_x18", pto_ctrl_spl_x18 );
+
+	builder->get_widget( "pto_ctrl_spl_y1", pto_ctrl_spl_y1 );
+	builder->get_widget( "pto_ctrl_spl_y2", pto_ctrl_spl_y2 );
+	builder->get_widget( "pto_ctrl_spl_y3", pto_ctrl_spl_y3 );
+	builder->get_widget( "pto_ctrl_spl_y4", pto_ctrl_spl_y4 );
+	builder->get_widget( "pto_ctrl_spl_y5", pto_ctrl_spl_y5 );
+	builder->get_widget( "pto_ctrl_spl_y6", pto_ctrl_spl_y6 );
+	builder->get_widget( "pto_ctrl_spl_y7", pto_ctrl_spl_y7 );
+	builder->get_widget( "pto_ctrl_spl_y8", pto_ctrl_spl_y8 );
+	builder->get_widget( "pto_ctrl_spl_y9", pto_ctrl_spl_y9 );
+	builder->get_widget( "pto_ctrl_spl_y10", pto_ctrl_spl_y10 );
+	builder->get_widget( "pto_ctrl_spl_y11", pto_ctrl_spl_y11 );
+	builder->get_widget( "pto_ctrl_spl_y12", pto_ctrl_spl_y12 );
+	builder->get_widget( "pto_ctrl_spl_y13", pto_ctrl_spl_y13 );
+	builder->get_widget( "pto_ctrl_spl_y14", pto_ctrl_spl_y14 );
+	builder->get_widget( "pto_ctrl_spl_y15", pto_ctrl_spl_y15 );
+	builder->get_widget( "pto_ctrl_spl_y16", pto_ctrl_spl_y16 );
+	builder->get_widget( "pto_ctrl_spl_y17", pto_ctrl_spl_y17 );
+	builder->get_widget( "pto_ctrl_spl_y18", pto_ctrl_spl_y18 );
+
+
 	btn_add_point_wire->signal_clicked().connect( sigc::mem_fun( *this, &IncludeObjectDialog::on_btn_add_point_wire_clicked ) );
 
 	controller = new IncludeObjectController();
@@ -142,7 +183,7 @@ void IncludeObjectDialog::incluirObjeto() {
 
 		//case 2:wireframe
 		case 2: {
-// d
+
 			bool ehPreenchido = rd_preench->get_active();
 
 			controller->confirmaInclusaoWireframe( objName, true, ehPreenchido );
@@ -168,9 +209,124 @@ void IncludeObjectDialog::incluirObjeto() {
 
 			controller->incluirBezier(objName,pontosControle);
 
+			break;
+
 		}
+		case 4:
 
+			std::vector<Ponto2D> pontosControle;
 
+			if(pto_ctrl_spl_x1->get_text_length() > 0 && pto_ctrl_spl_y1->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x1->get_text() );
+				double y = stod( pto_ctrl_spl_y1->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			if(pto_ctrl_spl_x2->get_text_length() > 0 && pto_ctrl_spl_y2->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x2->get_text() );
+				double y = stod( pto_ctrl_spl_y2->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			if(pto_ctrl_spl_x3->get_text_length() > 0 && pto_ctrl_spl_y3->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x3->get_text() );
+				double y = stod( pto_ctrl_spl_y3->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			if(pto_ctrl_spl_x4->get_text_length() > 0 && pto_ctrl_spl_y4->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x4->get_text() );
+				double y = stod( pto_ctrl_spl_y4->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			if(pto_ctrl_spl_x5->get_text_length() > 0 && pto_ctrl_spl_y5->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x5->get_text() );
+				double y = stod( pto_ctrl_spl_y5->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			if(pto_ctrl_spl_x6->get_text_length() > 0 && pto_ctrl_spl_y6->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x6->get_text() );
+				double y = stod( pto_ctrl_spl_y6->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			if(pto_ctrl_spl_x7->get_text_length() > 0 && pto_ctrl_spl_y7->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x7->get_text() );
+				double y = stod( pto_ctrl_spl_y7->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			if(pto_ctrl_spl_x8->get_text_length() > 0 && pto_ctrl_spl_y8->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x8->get_text() );
+				double y = stod( pto_ctrl_spl_y8->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			if(pto_ctrl_spl_x9->get_text_length() > 0 && pto_ctrl_spl_y9->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x9->get_text() );
+				double y = stod( pto_ctrl_spl_y9->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			if(pto_ctrl_spl_x10->get_text_length() > 0 && pto_ctrl_spl_y10->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x10->get_text() );
+				double y = stod( pto_ctrl_spl_y10->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			if(pto_ctrl_spl_x11->get_text_length() > 0 && pto_ctrl_spl_y11->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x11->get_text() );
+				double y = stod( pto_ctrl_spl_y11->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			if(pto_ctrl_spl_x12->get_text_length() > 0 && pto_ctrl_spl_y12->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x12->get_text() );
+				double y = stod( pto_ctrl_spl_y12->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			if(pto_ctrl_spl_x13->get_text_length() > 0 && pto_ctrl_spl_y13->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x13->get_text() );
+				double y = stod( pto_ctrl_spl_y13->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			if(pto_ctrl_spl_x14->get_text_length() > 0 && pto_ctrl_spl_y14->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x14->get_text() );
+				double y = stod( pto_ctrl_spl_y14->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			if(pto_ctrl_spl_x15->get_text_length() > 0 && pto_ctrl_spl_y15->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x15->get_text() );
+				double y = stod( pto_ctrl_spl_y15->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			if(pto_ctrl_spl_x16->get_text_length() > 0 && pto_ctrl_spl_y16->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x16->get_text() );
+				double y = stod( pto_ctrl_spl_y16->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			if(pto_ctrl_spl_x17->get_text_length() > 0 && pto_ctrl_spl_y17->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x17->get_text() );
+				double y = stod( pto_ctrl_spl_y17->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			if(pto_ctrl_spl_x18->get_text_length() > 0 && pto_ctrl_spl_y18->get_text_length() > 0){
+				double x = stod( pto_ctrl_spl_x18->get_text() );
+				double y = stod( pto_ctrl_spl_y18->get_text() );
+				pontosControle.push_back( set2DPoint( x, y ) );
+			}
+
+			controller->incluirBSpline(objName,pontosControle);
+
+		break;
 	}
 
 	in_name_obj->set_text( "" );

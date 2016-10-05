@@ -91,6 +91,10 @@ void MainWindow::update() {
 				row[m_Columns->typeObj] = "Bezier";
 				break;
 			}
+			case 4: {
+				row[m_Columns->typeObj] = "B-spline";
+				break;
+			}
 
 		}
 

@@ -146,6 +146,7 @@ bool DrawingArea::on_draw( const Cairo::RefPtr<Cairo::Context> & cr ) {
 				cr->stroke();
 				break;
 			}//Bezier
+
 		}
 	}
 
@@ -153,23 +154,5 @@ bool DrawingArea::on_draw( const Cairo::RefPtr<Cairo::Context> & cr ) {
 
 }
 
-// // cr->rectangle(20, 140, 100, 100);
-// cr->move_to(20, 140);
-//  cr->rel_line_to(100, 0);
-//  cr->rel_line_to(0, 100);
-//  cr->rel_line_to(-100, 0);
-//  cr->close_path();
-// cr->stroke();
-
-// cr->move_to(60, 220);
-//  cr->line_to(150, 0);
-//  // cr->move_to(150, 0);
-//  cr->line_to(0, 150);
-//  // cr->move_to(0, 150);
-//  cr->line_to(-150, 0);
-//  // cr->move_to(-150, 0);
-// cr->close_path();
-// cr->fill();
-// cr->stroke();
 
 

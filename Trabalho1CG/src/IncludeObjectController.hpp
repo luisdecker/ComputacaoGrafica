@@ -19,6 +19,7 @@ public:
 	bool incluirPontoWireframe( string nome, double x, double y );
 	bool confirmaInclusaoWireframe( string nome, bool todosPontosInclusos, bool preenchido );
 	bool incluirBezier( string nome, ListaPontos pontosControle );
+	bool incluirBSpline( string nome, ListaPontos pontosControle );
 
 };
 

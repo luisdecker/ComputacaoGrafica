@@ -47,6 +47,7 @@ Matriz Matriz::multiplicar( Matriz outra )  {
 
 			for( int coluna1 = 1;  coluna1 <= this->colunas; coluna1++ ) {
 				soma += this->at( linha1, coluna1 ) * outra.at( coluna1, coluna2 );
+
 			}
 			resposta.at( linha1, coluna2 ) = soma;
 		}

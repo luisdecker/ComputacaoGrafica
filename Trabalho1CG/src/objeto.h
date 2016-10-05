@@ -40,7 +40,7 @@
 class Tranformadas;
 class Objeto {
 public:
-	enum tipo {ponto, reta, wireframe, bezier}; //Enumerador com os tipos de objeto
+	enum tipo {ponto, reta, wireframe, bezier,bspline}; //Enumerador com os tipos de objeto
 	//-----------------------------------------------
 	std::string nome;//O nome do objeto
 	//-----------------------------------------------
@@ -273,6 +273,76 @@ private:
 	//-----------------------------------------------
 	//Calcula um ponto da curva, para dado t
 	Ponto2D calculaPonto( double t );
+
+};
+
+class CurvaBSpline : public Objeto {
+public:
+	//Construtor padrao
+	CurvaBSpline( std::string nome ) {
+		resolucao = 10;
+		this->nome = nome;
+		this->pontosDeControle.clear();
+		this->desenhar = false;
+		this->tipoObjeto = bspline;
+	}
+	//-----------------------------------------------
+	//Construtor para passagem de pontos de exibicao
+	CurvaBSpline( std::vector<Ponto2D>pontosExibicao ) {
+		resolucao = 10;
+		this->nome = "Temporario";
+		this->pontosExibicao = pontosExibicao;
+		this->tipoObjeto = bspline;
+	}
+	//-----------------------------------------------
+	//Construtor com passagem de pontos de controle;
+	CurvaBSpline( std::string nome, std::vector<Ponto2D> pontosControle ) {
+		resolucao = 10;
+		this->nome = nome;
+		this->pontosDeControle = pontosControle;
+		this->desenhar = false;
+		this->tipoObjeto = bspline;
+		calculaPontos();
+	}
+	//-----------------------------------------------
+	//Atualiza coordenadas de exibicao (Clipadas)
+	virtual void atualizarCoordenadaExibicao( Objeto * objeto );
+	//-----------------------------------------------
+	//Atualiza as cordanadas no Sistema de Coordenadas Normalizadas
+	virtual void atualizarCoordenadaSCN( Matriz transformacao );
+	//-----------------------------------------------
+	//Obtem os pontos SCN
+	std::vector<Ponto2D> obterCoordenadasSCN();
+	//-----------------------------------------------
+	//Obtem os pontos calculados
+	std::vector<Ponto2D> obterPontosCalculados() {return std::vector<Ponto2D>( pontosCalculados );}
+	//-----------------------------------------------
+	//Obtem as coordenadas de exibicao
+	std::vector<Ponto2D> obterCoordenadasExibicao() {return std::vector<Ponto2D> ( pontosExibicao );}
+
+private:
+	//Pontos de controle da curva de bezier
+	std::vector<Ponto2D> pontosDeControle;
+	//-----------------------------------------------
+	//Pontos interpolados da curva
+	std::vector<Ponto2D> pontosCalculados;
+	//-----------------------------------------------
+	//Pontos de exibicao (clipados) da curva
+	std::vector<Ponto2D> pontosExibicao;
+	//-----------------------------------------------
+	//Pontos SCN da curva;
+	std::vector<Ponto2D> pontosSCN;
+	//-----------------------------------------------
+	//Resolucao da curva (Numero de pontos)
+	int resolucao;
+	//-----------------------------------------------
+	// Calcula os pontos usando forward differences
+	std::vector<Ponto2D> calculaPontosFwdDiff(Matriz diferencasIniciaisX, Matriz diferencasIniciaisY);
+
+	//-----------------------------------------------
+	// Chama a rotina calculaPontosFwdDiff para cada quatro pontos de controle
+	void calculaPontos();
+	
 
 };
 

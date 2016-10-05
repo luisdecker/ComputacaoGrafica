@@ -47,6 +47,46 @@ protected:
 	Gtk::Entry * yPontoControle2;	
 	Gtk::Entry * yPontoControle3;	
 	Gtk::Entry * yPontoControle4;
+
+	//inputs b-spline
+
+	Gtk::Entry * pto_ctrl_spl_x1;
+	Gtk::Entry * pto_ctrl_spl_x2;
+	Gtk::Entry * pto_ctrl_spl_x3;
+	Gtk::Entry * pto_ctrl_spl_x4;
+	Gtk::Entry * pto_ctrl_spl_x5;
+	Gtk::Entry * pto_ctrl_spl_x6;
+	Gtk::Entry * pto_ctrl_spl_x7;
+	Gtk::Entry * pto_ctrl_spl_x8;
+	Gtk::Entry * pto_ctrl_spl_x9;
+	Gtk::Entry * pto_ctrl_spl_x10;
+	Gtk::Entry * pto_ctrl_spl_x11;
+	Gtk::Entry * pto_ctrl_spl_x12;
+	Gtk::Entry * pto_ctrl_spl_x13;
+	Gtk::Entry * pto_ctrl_spl_x14;
+	Gtk::Entry * pto_ctrl_spl_x15;
+	Gtk::Entry * pto_ctrl_spl_x16;
+	Gtk::Entry * pto_ctrl_spl_x17;
+	Gtk::Entry * pto_ctrl_spl_x18;
+
+	Gtk::Entry * pto_ctrl_spl_y1;
+	Gtk::Entry * pto_ctrl_spl_y2;
+	Gtk::Entry * pto_ctrl_spl_y3;
+	Gtk::Entry * pto_ctrl_spl_y4;
+	Gtk::Entry * pto_ctrl_spl_y5;
+	Gtk::Entry * pto_ctrl_spl_y6;
+	Gtk::Entry * pto_ctrl_spl_y7;
+	Gtk::Entry * pto_ctrl_spl_y8;
+	Gtk::Entry * pto_ctrl_spl_y9;
+	Gtk::Entry * pto_ctrl_spl_y10;
+	Gtk::Entry * pto_ctrl_spl_y11;
+	Gtk::Entry * pto_ctrl_spl_y12;
+	Gtk::Entry * pto_ctrl_spl_y13;
+	Gtk::Entry * pto_ctrl_spl_y14;
+	Gtk::Entry * pto_ctrl_spl_y15;
+	Gtk::Entry * pto_ctrl_spl_y16;
+	Gtk::Entry * pto_ctrl_spl_y17;
+	Gtk::Entry * pto_ctrl_spl_y18;
 	
 	
 

@@ -43,6 +43,20 @@ bool IncludeObjectController::incluirBezier( string nome, ListaPontos pontosCont
 }
 
 //-----------------------------------------------
+bool IncludeObjectController::incluirBSpline( string nome, ListaPontos pontosControle ) {
+	CurvaBSpline * curva = new CurvaBSpline( nome, pontosControle );
+
+	if( !obf->contemObjeto( nome ) ) {
+		obf->inserirObjeto( curva );
+	} else {
+		obf->atualizarObjeto( curva );
+	}
+
+	return true;
+
+}
+
+//-----------------------------------------------
 bool IncludeObjectController::incluirPontoWireframe( string nome, double x, double y ) {
 	if( obf->contemObjeto( nome ) ) {
 		Wireframe * wire = dynamic_cast<Wireframe * >( obf->obterObjetoNome( nome ) );

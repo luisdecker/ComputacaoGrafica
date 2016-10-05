@@ -17,8 +17,29 @@
 #include "bezierclipper.h"
 #endif
 
+#include "objeto.h"
+
+
 
 int main( int argc, char * argv[] ) {
+
+		// std::vector<Ponto2D> pontosControle;
+
+		// pontosControle.push_back( set2DPoint( 1, 1 ) );
+		// pontosControle.push_back( set2DPoint( 2, 2 ) );
+		// pontosControle.push_back( set2DPoint( 3, 2 ) );
+		// pontosControle.push_back( set2DPoint( 4, 1 ) );
+		// pontosControle.push_back( set2DPoint( 5, 3 ) );
+
+		// CurvaBSpline minhaCurvaFofinha( "Curva", pontosControle );
+		// int i = 0;
+		// for( Ponto2D ponto : minhaCurvaFofinha.obterPontosCalculados() ) {
+		// 	std::cout << "Ponto " << i << ": ( " << ponto.x << " , " << ponto.y << " )\n";
+		// 	i++;
+		// }
+
+
+
 
 	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create( argc, argv, "org.gtkmm.example" );
 
