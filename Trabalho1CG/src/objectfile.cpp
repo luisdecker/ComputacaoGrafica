@@ -129,7 +129,7 @@ void ObjectFile::cliparObjetos() {
 				//			  << ")  -->  (" << retaClipada->obterCoordenadaFinal().x << " , " << retaClipada->obterCoordenadaFinal().y << ")\n";
 				reta->atualizarCoordenadaExibicao( retaClipada );
 				break;
-			}
+			}//Reta
 			case Objeto::wireframe: {
 				Wireframe * wireframe = to_wireframe( obj );
 				Wireframe * wireframeClipado;
@@ -137,7 +137,7 @@ void ObjectFile::cliparObjetos() {
 					//`E para estar ja na rotacao correta...
 					std::vector<Wireframe *> clipados = WeilerAtherton( window ).clip( wireframe );
 					wireframe->atualizarCoordenadaExibicao( clipados );
-				} else {
+				} else {//Wireframe ehPreenchido
 					Wireframe * clipado = to_wireframe( WireframeClipper( window ).clip( wireframe ) );
 					if( clipado == nullptr ) {
 						wireframe->atualizarRetas( std::vector<Reta *>() );
@@ -151,10 +151,15 @@ void ObjectFile::cliparObjetos() {
 			}//Wireframe
 			case Objeto::bezier: {
 				CurvaBezier * curva = dynamic_cast<CurvaBezier *>( obj );
-				curva->atualizarCoordenadaExibicao( BezierClipper( window ).clip( curva ) );
+				curva->atualizarCoordenadaExibicao( CurveClipper( window ).clip( curva ) );
 
 				break;
+			}//Bezier
+			case Objeto::bspline: {
+				CurvaBSpline * curva = dynamic_cast<CurvaBSpline *>( obj );
+				curva->atualizarCoordenadaExibicao( CurveClipper( window ).clip( curva ) );
 			}
+
 		}
 	}
 }

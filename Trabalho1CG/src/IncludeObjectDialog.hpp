@@ -1,6 +1,7 @@
 #ifndef INCLUDEOBJECTDIALOG_H
 #define INCLUDEOBJECTDIALOG_H
 
+
 #include <gtkmm/dialog.h>
 #include <gtkmm/notebook.h>
 #include <gtkmm/entry.h>

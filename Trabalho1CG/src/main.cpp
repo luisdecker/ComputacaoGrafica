@@ -8,13 +8,16 @@
 #include "objectfile.h"
 
 #include <iostream>
+
 //#define TESTES_MODELO
 
 #ifdef TESTES_MODELO
+
 #include "objeto.h"
 #include "cohensutherland.h"
 #include "liangbarsky.h"
-#include "bezierclipper.h"
+#include "curveclipper.h"
+
 #endif
 
 #include "objeto.h"
@@ -76,7 +79,7 @@ int main( int argc, char * argv[] ) {
 	mainWindow->set_resizable( false );
 
 	/*TESTES DO MODELO*/
-#ifdef TESTES_MODELO
+#ifdef TESTES_MODELO2
 	std::cout << "=======================================================\n";
 	BezierClipper::listaPontos pontosControle;
 	pontosControle.push_back( set2DPoint( 100, 100 ) );

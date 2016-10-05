@@ -4,7 +4,7 @@
 #include "objectfile.h"
 #include "window.h"
 
-#define ZOOM 1
+#define ZOOM 5
 #define PASSO 10
 #define ANGULO 10
 

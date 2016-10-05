@@ -40,7 +40,7 @@
 class Tranformadas;
 class Objeto {
 public:
-	enum tipo {ponto, reta, wireframe, bezier,bspline}; //Enumerador com os tipos de objeto
+	enum tipo {ponto, reta, wireframe, bezier, bspline}; //Enumerador com os tipos de objeto
 	//-----------------------------------------------
 	std::string nome;//O nome do objeto
 	//-----------------------------------------------
@@ -216,6 +216,7 @@ public:
 		this->nome = "Temporario";
 		this->pontosExibicao = pontosExibicao;
 		this->tipoObjeto = bezier;
+		this->desenhar = false;
 	}
 	//-----------------------------------------------
 	//Construtor com passagem de pontos de controle;
@@ -293,6 +294,8 @@ public:
 		this->nome = "Temporario";
 		this->pontosExibicao = pontosExibicao;
 		this->tipoObjeto = bspline;
+		this->desenhar = false;
+
 	}
 	//-----------------------------------------------
 	//Construtor com passagem de pontos de controle;
@@ -337,12 +340,12 @@ private:
 	int resolucao;
 	//-----------------------------------------------
 	// Calcula os pontos usando forward differences
-	std::vector<Ponto2D> calculaPontosFwdDiff(Matriz diferencasIniciaisX, Matriz diferencasIniciaisY);
+	std::vector<Ponto2D> calculaPontosFwdDiff( Matriz diferencasIniciaisX, Matriz diferencasIniciaisY );
 
 	//-----------------------------------------------
 	// Chama a rotina calculaPontosFwdDiff para cada quatro pontos de controle
 	void calculaPontos();
-	
+
 
 };
 

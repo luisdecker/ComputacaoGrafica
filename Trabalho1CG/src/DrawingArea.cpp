@@ -146,6 +146,23 @@ bool DrawingArea::on_draw( const Cairo::RefPtr<Cairo::Context> & cr ) {
 				cr->stroke();
 				break;
 			}//Bezier
+			case Objeto::bspline: {
+				CurvaBSpline * curva = dynamic_cast<CurvaBSpline *>( objeto );
+				ListaPontos pontosSCN = curva->obterCoordenadasSCN(), pontosExpandidos;
+				for( Ponto2D pontoSCN : pontosSCN ) {
+					Ponto2D pontoExpandido = viewPort->tranformarCoordenadasSCN( *mainWindow, pontoSCN );
+					pontosExpandidos.push_back( pontoExpandido );
+				}
+				Ponto2D pontoInicial = pontosExpandidos.front();
+				cr->move_to( pontoInicial.x + deslocamento, pontoInicial.y + deslocamento );
+				for( Ponto2D pontoExpandido : pontosExpandidos ) {
+					cr->line_to( pontoExpandido.x + deslocamento, pontoExpandido.y + deslocamento );
+					cr->move_to( pontoExpandido.x + deslocamento, pontoExpandido.y + deslocamento );
+				}
+				cr->stroke();
+				break;
+				break;
+			}
 
 		}
 	}

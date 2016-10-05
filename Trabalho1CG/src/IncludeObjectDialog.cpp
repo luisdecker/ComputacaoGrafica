@@ -106,10 +106,10 @@ void IncludeObjectDialog::on_btn_add_point_wire_clicked() {
 void IncludeObjectDialog::executar() {
 
 	int result = run();
-	std::cout << "Executou a janelota"<<std::endl;
+	std::cout << "Executou a janelota" << std::endl;
 	switch( result ) {
 		case Gtk::RESPONSE_OK: {
-std::cout << "ok na janelota"<<std::endl;
+			std::cout << "ok na janelota" << std::endl;
 			incluirObjeto();
 
 			close();
@@ -118,7 +118,7 @@ std::cout << "ok na janelota"<<std::endl;
 		break;
 
 		case Gtk::RESPONSE_CANCEL: {
-std::cout << "cancel na janelota"<<std::endl;
+			std::cout << "cancel na janelota" << std::endl;
 
 			close();
 		}
@@ -189,6 +189,7 @@ void IncludeObjectDialog::incluirObjeto() {
 			controller->confirmaInclusaoWireframe( objName, true, ehPreenchido );
 			break;
 		}
+		//case 3: Bezier
 		case 3: {
 			std::vector<Ponto2D> pontosControle;
 
@@ -207,126 +208,136 @@ void IncludeObjectDialog::incluirObjeto() {
 			pontosControle.push_back( set2DPoint( xp3, yp3 ) );
 			pontosControle.push_back( set2DPoint( xp4, yp4 ) );
 
-			controller->incluirBezier(objName,pontosControle);
+			controller->incluirBezier( objName, pontosControle );
 
 			break;
 
 		}
+		//Case 4: spline
 		case 4:
 
 			std::vector<Ponto2D> pontosControle;
 
-			if(pto_ctrl_spl_x1->get_text_length() > 0 && pto_ctrl_spl_y1->get_text_length() > 0){
+			if( pto_ctrl_spl_x1->get_text_length() > 0 && pto_ctrl_spl_y1->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x1->get_text() );
 				double y = stod( pto_ctrl_spl_y1->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			if(pto_ctrl_spl_x2->get_text_length() > 0 && pto_ctrl_spl_y2->get_text_length() > 0){
+			if( pto_ctrl_spl_x2->get_text_length() > 0 && pto_ctrl_spl_y2->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x2->get_text() );
 				double y = stod( pto_ctrl_spl_y2->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			if(pto_ctrl_spl_x3->get_text_length() > 0 && pto_ctrl_spl_y3->get_text_length() > 0){
+			if( pto_ctrl_spl_x3->get_text_length() > 0 && pto_ctrl_spl_y3->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x3->get_text() );
 				double y = stod( pto_ctrl_spl_y3->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			if(pto_ctrl_spl_x4->get_text_length() > 0 && pto_ctrl_spl_y4->get_text_length() > 0){
+			if( pto_ctrl_spl_x4->get_text_length() > 0 && pto_ctrl_spl_y4->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x4->get_text() );
 				double y = stod( pto_ctrl_spl_y4->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			if(pto_ctrl_spl_x5->get_text_length() > 0 && pto_ctrl_spl_y5->get_text_length() > 0){
+			if( pto_ctrl_spl_x5->get_text_length() > 0 && pto_ctrl_spl_y5->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x5->get_text() );
 				double y = stod( pto_ctrl_spl_y5->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			if(pto_ctrl_spl_x6->get_text_length() > 0 && pto_ctrl_spl_y6->get_text_length() > 0){
+			if( pto_ctrl_spl_x6->get_text_length() > 0 && pto_ctrl_spl_y6->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x6->get_text() );
 				double y = stod( pto_ctrl_spl_y6->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			if(pto_ctrl_spl_x7->get_text_length() > 0 && pto_ctrl_spl_y7->get_text_length() > 0){
+			if( pto_ctrl_spl_x7->get_text_length() > 0 && pto_ctrl_spl_y7->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x7->get_text() );
 				double y = stod( pto_ctrl_spl_y7->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			if(pto_ctrl_spl_x8->get_text_length() > 0 && pto_ctrl_spl_y8->get_text_length() > 0){
+			if( pto_ctrl_spl_x8->get_text_length() > 0 && pto_ctrl_spl_y8->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x8->get_text() );
 				double y = stod( pto_ctrl_spl_y8->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			if(pto_ctrl_spl_x9->get_text_length() > 0 && pto_ctrl_spl_y9->get_text_length() > 0){
+			if( pto_ctrl_spl_x9->get_text_length() > 0 && pto_ctrl_spl_y9->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x9->get_text() );
 				double y = stod( pto_ctrl_spl_y9->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			if(pto_ctrl_spl_x10->get_text_length() > 0 && pto_ctrl_spl_y10->get_text_length() > 0){
+			if( pto_ctrl_spl_x10->get_text_length() > 0 && pto_ctrl_spl_y10->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x10->get_text() );
 				double y = stod( pto_ctrl_spl_y10->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			if(pto_ctrl_spl_x11->get_text_length() > 0 && pto_ctrl_spl_y11->get_text_length() > 0){
+			if( pto_ctrl_spl_x11->get_text_length() > 0 && pto_ctrl_spl_y11->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x11->get_text() );
 				double y = stod( pto_ctrl_spl_y11->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			if(pto_ctrl_spl_x12->get_text_length() > 0 && pto_ctrl_spl_y12->get_text_length() > 0){
+			if( pto_ctrl_spl_x12->get_text_length() > 0 && pto_ctrl_spl_y12->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x12->get_text() );
 				double y = stod( pto_ctrl_spl_y12->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			if(pto_ctrl_spl_x13->get_text_length() > 0 && pto_ctrl_spl_y13->get_text_length() > 0){
+			if( pto_ctrl_spl_x13->get_text_length() > 0 && pto_ctrl_spl_y13->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x13->get_text() );
 				double y = stod( pto_ctrl_spl_y13->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			if(pto_ctrl_spl_x14->get_text_length() > 0 && pto_ctrl_spl_y14->get_text_length() > 0){
+			if( pto_ctrl_spl_x14->get_text_length() > 0 && pto_ctrl_spl_y14->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x14->get_text() );
 				double y = stod( pto_ctrl_spl_y14->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			if(pto_ctrl_spl_x15->get_text_length() > 0 && pto_ctrl_spl_y15->get_text_length() > 0){
+			if( pto_ctrl_spl_x15->get_text_length() > 0 && pto_ctrl_spl_y15->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x15->get_text() );
 				double y = stod( pto_ctrl_spl_y15->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			if(pto_ctrl_spl_x16->get_text_length() > 0 && pto_ctrl_spl_y16->get_text_length() > 0){
+			if( pto_ctrl_spl_x16->get_text_length() > 0 && pto_ctrl_spl_y16->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x16->get_text() );
 				double y = stod( pto_ctrl_spl_y16->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			if(pto_ctrl_spl_x17->get_text_length() > 0 && pto_ctrl_spl_y17->get_text_length() > 0){
+			if( pto_ctrl_spl_x17->get_text_length() > 0 && pto_ctrl_spl_y17->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x17->get_text() );
 				double y = stod( pto_ctrl_spl_y17->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			if(pto_ctrl_spl_x18->get_text_length() > 0 && pto_ctrl_spl_y18->get_text_length() > 0){
+			if( pto_ctrl_spl_x18->get_text_length() > 0 && pto_ctrl_spl_y18->get_text_length() > 0 ) {
 				double x = stod( pto_ctrl_spl_x18->get_text() );
 				double y = stod( pto_ctrl_spl_y18->get_text() );
 				pontosControle.push_back( set2DPoint( x, y ) );
 			}
 
-			controller->incluirBSpline(objName,pontosControle);
 
-		break;
+/*
+			std::cout << "[DEBUG MODE ON!][IncludeObjectDialog] Inserindo bspline padrao" << std::endl;
+			pontosControle.clear();
+			pontosControle.push_back( set2DPoint( 100, 0 ) );
+			pontosControle.push_back( set2DPoint( 200, 400 ) );
+			pontosControle.push_back( set2DPoint( 300, 400 ) );
+			pontosControle.push_back( set2DPoint( 400, 0 ) );
+*/
+			controller->incluirBSpline( objName, pontosControle );
+
+			break;
 	}
 
 	in_name_obj->set_text( "" );
